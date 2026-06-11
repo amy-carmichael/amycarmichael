@@ -92,6 +92,12 @@ html {
   scrollbar-gutter: stable;
 }
 
+/* Typing tagline caret blink */
+@keyframes tt-blink {
+  0%, 50% { opacity: 1; }
+  50.01%, 100% { opacity: 0; }
+}
+
 body {
   font-family: 'Futura PT', sans-serif;
   font-optical-sizing: auto;
@@ -332,34 +338,3 @@ body::before {
 
 /* Skill chips (.exp-skill) intentionally omitted — Skills is a bare heading
    for now. Re-add from the handoff's resume.css when a skills list exists. */
-
-/* ── Homepage window scene ─────────────────────────────────────────────── */
-.window-scene {
-  display: block;
-  width: min(92vw, 760px);
-  max-height: 100%;
-  height: auto;
-  margin: 0 auto;
-}
-
-/* Each subject slides in from behind the left shutter, holds in the opening
-   to "look out", then exits right. Three copies share this one timeline with
-   staggered negative delays so only one shows at a time. */
-@keyframes windowPeek {
-  0%   { transform: translateX(-720px); }
-  9%   { transform: translateX(0); }
-  24%  { transform: translateX(0); }
-  33%  { transform: translateX(720px); }
-  100% { transform: translateX(720px); }
-}
-
-.window-subject {
-  animation: windowPeek 18s linear infinite;
-  will-change: transform;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  /* No sliding — just show the first subject looking out. */
-  .window-subject { animation: none; transform: translateX(0); }
-  .window-subject:not(:first-child) { display: none; }
-}
