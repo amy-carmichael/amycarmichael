@@ -1,0 +1,334 @@
+@import "tailwindcss";
+
+/* Futura PT — local static weights (replaces Lexend Deca) */
+@font-face {
+  font-family: 'Futura PT';
+  src: url('./assets/Futura PT/FuturaCyrillicLight.ttf') format('truetype');
+  font-weight: 300; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Futura PT';
+  src: url('./assets/Futura PT/FuturaCyrillicBook.ttf') format('truetype');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Futura PT';
+  src: url('./assets/Futura PT/FuturaCyrillicMedium.ttf') format('truetype');
+  font-weight: 500; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Futura PT';
+  src: url('./assets/Futura PT/FuturaCyrillicDemi.ttf') format('truetype');
+  font-weight: 600; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Futura PT';
+  src: url('./assets/Futura PT/FuturaCyrillicBold.ttf') format('truetype');
+  font-weight: 700; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Futura PT';
+  src: url('./assets/Futura PT/FuturaCyrillicExtraBold.ttf') format('truetype');
+  font-weight: 800; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Futura PT';
+  src: url('./assets/Futura PT/FuturaCyrillicHeavy.ttf') format('truetype');
+  font-weight: 900; font-style: normal; font-display: swap;
+}
+
+:root {
+  /* Colors */
+  --color-bg-primary: #F8F9FA;
+  --color-bg-white: #FFFFFF;
+  --color-bg-secondary: #E0E2EC;
+  --color-bg-surface: #E8EBF0;
+  --color-text-primary: #2C3238;
+  --color-text-secondary: #5F6368;
+  --color-text-tertiary: #85898D;
+  --color-accent-primary: blue;
+  --color-accent-tertiary: #C5CAE9;
+  --color-accent-primary-hover: #F1F3F4;
+  --color-accent-soft: #E9EEF1;
+  --color-accent-secondary: red;
+  --color-accent-secondary-hover: #9E377A;
+  --color-border: #CF8D9F;
+  --color-error: #F47174;
+  --color-accent-green: #2E9E6B; /* meez brand green — inventory title + resume timeline dot */
+
+  /* Layout */
+  --header-h: 48px;
+  --tabs-h: 48px;
+}
+
+@layer base {
+  h1 { @apply display-large; }
+  h2 { @apply headline-large; }
+  h3 { @apply headline-medium; }
+  h4 { @apply title-large; }
+  h5 { @apply title-medium; }
+  h6 { @apply body-small font-medium; }
+  p { @apply body-medium; }
+
+  a {
+    text-decoration: none;
+    cursor: pointer;
+    color: inherit;
+  }
+
+  a:visited {
+    color: inherit;
+  }
+
+  button {
+    font-family: inherit;
+    background: transparent;
+    border: none;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+  scrollbar-gutter: stable;
+}
+
+body {
+  font-family: 'Futura PT', sans-serif;
+  font-optical-sizing: auto;
+  margin: 0;
+  padding: 0;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: -20vh;
+  left: -20vw;
+  width: 140vw;
+  height: 140vh;
+  background: radial-gradient(circle at top left, rgba(106,103,255,0.1), transparent 30%),
+              radial-gradient(circle at bottom right, rgba(168,166,255,0.1), transparent 30%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Logo Styles */
+.logo {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4px 12px 4px 12px;
+  border: 1px solid var(--color-accent-primary);
+  border-radius: 100px;
+  font-size: 1.125rem;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0.1px;
+  text-decoration: none;
+}
+
+.logo-gradient {
+  color: var(--color-accent-primary);
+}
+
+/* Navigation Links */
+.nav-link {
+  transition: all .3s ease;
+  color: var(--color-text-primary);
+  border: 1px solid transparent;
+  padding: .25rem 8px;
+  border-radius: 9999px;
+}
+
+.nav-link:hover {
+  color: var(--color-text-primary);
+  text-decoration: underline;
+  text-decoration-color: var(--color-accent-secondary);
+  text-underline-offset: 6px;
+}
+
+.nav-link.active {
+  color: var(--color-accent-primary);
+  text-decoration: underline;
+  text-decoration-color: var(--color-accent-secondary);
+  text-underline-offset: 6px;
+}
+
+/* Buttons */
+.btn-primary {
+  background-color: var(--color-accent-soft);
+  color: #16161D;
+  font-weight: 500;
+  transition: all .2s ease;
+  border: 1px solid transparent;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-accent-primary-hover);
+}
+
+/* Typography Utility Classes */
+@utility display-large {
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+@utility headline-large {
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+@utility headline-medium {
+  font-size: 1.75rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+@utility headline-small {
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+@utility title-large {
+  font-size: 1.375rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+@utility title-medium {
+  font-size: 1.125rem;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+@utility title-small {
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+@utility body-large {
+  font-size: 1.125rem;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+@utility body-medium {
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+@utility body-small {
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+@utility body-bold {
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+@utility button {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+@utility label-large {
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+@utility label-small {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.025em;
+  line-height: 1.2;
+}
+
+/* Modal */
+.modal {
+  display: none;
+}
+
+.modal.active {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Overlay */
+.overlay {
+  display: none;
+}
+
+.overlay.active {
+  display: block;
+}
+
+/* Resume sections (About page) */
+.exp-surface {
+  position: relative;
+}
+
+.exp-company { position: relative; }
+.exp-company + .exp-company { margin-top: 26px; } /* spacing-only separation within Experience */
+
+.exp-company-head { display: flex; gap: 16px; align-items: flex-start; }
+
+/* logo square — designed background; real logo / initial sits on top */
+.exp-logo {
+  flex: 0 0 auto;
+  width: 48px; height: 48px;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+  background: var(--color-bg-surface);
+  box-shadow: inset 0 0 0 1px rgba(44, 50, 56, 0.06);
+}
+.exp-logo img { width: 72%; height: 72%; object-fit: contain; }
+
+.exp-company-meta { padding-top: 5px; }
+
+/* roles + dotted timeline rail (meez) */
+.exp-roles { margin-left: 80px; margin-top: 16px; }
+@media (max-width: 640px) { .exp-roles { margin-left: 0; } }
+.exp-role { display: flex; gap: 14px; padding-bottom: 22px; }
+.exp-role:last-child { padding-bottom: 0; }
+
+.exp-gutter { flex: 0 0 12px; position: relative; }
+.exp-dot {
+  position: absolute; top: 5px; left: 50%; transform: translateX(-50%);
+  width: 10px; height: 10px; border-radius: 50%;
+  background: #BCC0C7;                      /* past role — grey */
+}
+.exp-dot--current { background: var(--color-accent-green); box-shadow: 0 0 0 3px rgba(46, 158, 107, 0.16); } /* current — green */
+.exp-rail-line {
+  position: absolute; top: 17px; bottom: -22px; left: 50%; transform: translateX(-50%);
+  border-left: 2px dotted #C2C6CD;
+}
+
+.exp-bullets { list-style: none; margin: 12px 0 0; padding: 0; }
+.exp-bullets li { position: relative; padding-left: 18px; margin-bottom: 7px; text-wrap: pretty; }
+.exp-bullets li:last-child { margin-bottom: 0; }
+.exp-bullets li::before { content: ''; position: absolute; left: 3px; top: 0.62em; width: 4px; height: 4px; border-radius: 50%; background: var(--color-text-tertiary); }
+
+/* single-role companies */
+.exp-single { padding-top: 3px; }
+
+/* the ONLY rule between the four sections */
+.exp-section-divider { height: 0; border: none; border-top: 1px solid rgba(44, 50, 56, 0.14); margin: 40px 0 28px; }
+
+.exp-edu-item + .exp-edu-item { margin-top: 20px; }
+
+/* Skill chips (.exp-skill) intentionally omitted — Skills is a bare heading
+   for now. Re-add from the handoff's resume.css when a skills list exists. */
