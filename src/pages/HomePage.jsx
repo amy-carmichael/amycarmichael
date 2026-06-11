@@ -1,12 +1,8 @@
 import React from 'react';
+import { WindowScene } from '../components/home/WindowScene';
 
 export const HomePage = () => (
-  <section className="relative w-full h-[calc(100dvh-var(--header-h))]">
-    <iframe
-      src="https://my.spline.design/glassmorphlandingpage-dh7coiFbtwzbcWZdOMVl2Nlo/"
-      title="Interactive 3D landing scene"
-      frameBorder="0"
-      className="block h-full w-full"
-    />
+  <section className="relative flex w-full items-center justify-center h-[calc(100dvh-var(--header-h))]">
+    <WindowScene />
   </section>
 );

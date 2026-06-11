@@ -21,10 +21,8 @@ export const MeezPage = () => {
   const setRef = (i) => (el) => { pageRefs.current[i] = el; };
 
   const [activePage, setActivePage] = useState(0);
-  // After a click/keyboard jump, ignore scroll-spy briefly so the two don't fight.
   const suppressUntil = useRef(0);
 
-  // Scroll-spy: the most-visible page becomes the active page.
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -63,7 +61,6 @@ export const MeezPage = () => {
     [goToPage]
   );
 
-  // Left/right arrow keys step through pages (ignored while typing in a field).
   useEffect(() => {
     const onKey = (e) => {
       const tag = (e.target.tagName || '').toLowerCase();
@@ -78,11 +75,8 @@ export const MeezPage = () => {
   return (
     <section className="pt-4 pb-28 md:pb-32 max-w-[1024px] mx-auto">
       <div className="flex flex-col gap-4">
-        {/* 01 — Intro / title: meez wordmark, pitch, pills + role on the left;
-            five-photo collage in two staggered columns on the right. */}
         <Panel ref={setRef(0)} index={0} bg={IMG.introBg} tone="light">
           <div className="flex h-full w-full flex-col gap-8 md:flex-row md:items-center">
-            {/* Left — text column */}
             <div className="flex w-full flex-col md:w-[44%]">
               <div className="flex flex-col gap-6">
                 <img
@@ -108,9 +102,6 @@ export const MeezPage = () => {
               </div>
             </div>
 
-            {/* Right — two-column photo collage. The left column (2 photos) is
-                vertically centered against the taller right column (3 photos), so the
-                leftover height sits as blue space above the receipts shot. */}
             <div className="flex w-full items-center gap-3 md:flex-1">
               <div className="flex flex-1 flex-col gap-3">
                 <img src={IMG.introC0} alt="" className="w-full aspect-[5/3] rounded-[8px] object-cover" />
@@ -125,7 +116,6 @@ export const MeezPage = () => {
           </div>
         </Panel>
 
-        {/* 02 — Filters 1 (THE WHY): title + story card left, filter mockup right. */}
         <Panel ref={setRef(1)} index={1} bg={IMG.filters1Bg} tone="light" eyebrow="Features" numberTopRight>
           <div className="flex h-full w-full flex-col gap-6 md:flex-row md:items-center md:gap-8">
             <div className="flex w-full flex-col gap-5 md:w-[38%]">
@@ -142,7 +132,6 @@ export const MeezPage = () => {
           </div>
         </Panel>
 
-        {/* 03 — Filters 2 (THE PROCESS): collage mockup above, story card below. */}
         <Panel ref={setRef(2)} index={2} bg={IMG.filter2Bg} tone="dark" eyebrow="Features: Filters" numberTopRight metaColor="text-[var(--color-text-primary)]">
           <div className="flex h-full w-full flex-col items-center justify-center gap-8 md:flex-row">
             <NarrativeCard label="The Process" tone="light" className="w-full max-w-[280px] shrink-0 md:w-[280px]">
@@ -156,7 +145,6 @@ export const MeezPage = () => {
           </div>
         </Panel>
 
-        {/* 04 — Filters 3 (NEW): three-column photo/mockup collage + two story cards. */}
         <Panel ref={setRef(3)} index={3} bgClass="bg-[#e4ecf6]" tone="dark" eyebrow="Features: Filters" numberTopRight metaColor="text-[var(--color-text-primary)]">
           <div className="flex h-full w-full flex-col gap-6">
             <div className="flex flex-col gap-5 md:min-h-0 md:flex-1 md:flex-row">
@@ -180,7 +168,6 @@ export const MeezPage = () => {
           </div>
         </Panel>
 
-        {/* 05 — Server Cards 1 (THE WHY): title + story card left, recipe-card mockup right. */}
         <Panel ref={setRef(4)} index={4} bg={IMG.scPg1Bg} tone="dark" eyebrow="Features" numberTopRight metaColor="text-[var(--color-text-primary)]">
           <div className="flex h-full w-full flex-col gap-6 md:flex-row md:items-stretch md:gap-6">
             <div className="flex w-full flex-col md:w-[500px]">
@@ -204,8 +191,6 @@ export const MeezPage = () => {
           </div>
         </Panel>
 
-        {/* 06 — Server Cards 2 (THE PROCESS): two independent columns —
-            create-card mockup over pots photo (left); desserts photo over story card (right). */}
         <Panel ref={setRef(5)} index={5} bg={IMG.scPg2Bg} tone="dark" eyebrow="Features: Server Cards" numberTopRight metaColor="text-white">
           <div className="flex h-full w-full flex-col gap-4 md:flex-row">
             <div className="flex w-full flex-col gap-4 md:w-1/2">
@@ -225,7 +210,6 @@ export const MeezPage = () => {
           </div>
         </Panel>
 
-        {/* 07 — Server Cards 3 (NEW): photo + two mockups + staff photo, NEXT card on the right. */}
         <Panel ref={setRef(6)} index={6} bgClass="bg-[#a7b3a8]" tone="dark" eyebrow="Features: Server Cards" numberTopRight metaColor="text-[var(--color-text-primary)]">
           <div className="flex h-full w-full flex-col gap-4 md:flex-row">
             <div className="flex flex-1 flex-col gap-3">
@@ -254,7 +238,6 @@ export const MeezPage = () => {
           </div>
         </Panel>
 
-        {/* 08 — Inventory 1 (THE PROBLEM): title + story card + photo left, count mockup right. */}
         <Panel ref={setRef(7)} index={7} bg={IMG.invPg1Bg} tone="light" eyebrow="Features" numberTopRight metaColor="text-white">
           <div className="flex h-full w-full flex-col gap-6 md:flex-row md:gap-8">
             <div className="flex w-full flex-col gap-4 md:w-[46%]">
@@ -276,7 +259,6 @@ export const MeezPage = () => {
           </div>
         </Panel>
 
-        {/* 09 — Inventory 2 (NEW): count mockup + PROCESS left; OUTCOME/WHAT'S NEXT + photos right. */}
         <Panel ref={setRef(8)} index={8} bgClass="bg-gradient-to-br from-[#5f78c2] to-[#9a8fc6]" tone="light" eyebrow="Features: Inventory" numberTopRight metaColor="text-white">
           <div className="flex h-full w-full flex-col gap-4 md:flex-row">
             <div className="flex w-full flex-col gap-4 md:w-[42%]">
@@ -300,7 +282,6 @@ export const MeezPage = () => {
           </div>
         </Panel>
 
-        {/* 10 — The Design System: title + copy left, 2×2 stat grid right */}
         <Panel
           ref={setRef(9)}
           index={9}
@@ -328,7 +309,6 @@ export const MeezPage = () => {
           }
         />
 
-        {/* 11 — Design System (color tokens): spreadsheet + caption left, token mockup right */}
         <Panel
           ref={setRef(10)}
           index={10}
@@ -359,7 +339,6 @@ export const MeezPage = () => {
         />
       </div>
 
-      {/* Floating frosted pager/stepper, fixed to the bottom center. */}
       <div className="fixed bottom-6 left-1/2 z-50 -translate-x-1/2">
         <MeezStepper
           sections={SECTIONS}

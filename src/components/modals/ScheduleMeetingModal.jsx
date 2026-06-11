@@ -65,7 +65,6 @@ export const ScheduleMeetingModal = ({ closeModal }) => {
                     className="w-full"
                     style={{ minWidth: '280px', height: 'min(700px, 78vh)' }}
                 >
-                    {/* Fallback shown until the embed mounts */}
                     <div className="flex h-full w-full items-center justify-center px-6 text-center">
                         <p className="body-small text-[var(--color-text-secondary)]">
                             Loading scheduler…{' '}

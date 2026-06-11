@@ -2,14 +2,11 @@ import React, { useEffect, useRef, useState } from 'react';
 import { ScheduleMeetingModal } from '../modals/ScheduleMeetingModal';
 import { ContactOptions } from './ContactOptions';
 
-// "Contact" nav CTA: a caret button that opens a small dropdown with two
-// actions — copy email to clipboard, or open the Calendly scheduling modal.
 export const ContactMenu = () => {
     const [open, setOpen] = useState(false);
     const [showSchedule, setShowSchedule] = useState(false);
     const wrapRef = useRef(null);
 
-    // Close the dropdown on outside click or Escape.
     useEffect(() => {
         if (!open) return;
         const onDown = (e) => {
@@ -36,12 +33,12 @@ export const ContactMenu = () => {
                 onClick={() => setOpen((v) => !v)}
                 aria-haspopup="true"
                 aria-expanded={open}
-                className="nav-link flex items-center gap-1 button uppercase cursor-pointer"
+                className="group nav-link flex items-center gap-1 button uppercase cursor-pointer"
             >
                 Contact
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className={`h-4 w-4 transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
+                    className={`h-4 w-4 transition-all duration-200 group-hover:text-[var(--color-accent-secondary)] ${open ? 'rotate-180' : ''}`}
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"

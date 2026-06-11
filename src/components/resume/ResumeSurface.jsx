@@ -1,7 +1,6 @@
 import React from 'react';
 import { MEEZ, OTHERS, EDUCATION, CERTIFICATIONS, SKILLS } from './resumeData';
 
-// Eyebrow heading for each résumé section — repeated 4× below.
 const SECTION_LABEL =
   'label-large uppercase tracking-[0.08em] text-[var(--color-text-tertiary)] mb-[18px]';
 
@@ -35,7 +34,6 @@ const MeezBlock = () => (
       {MEEZ.roles.map((r, i) => (
         <div className="exp-role" key={r.title}>
           <div className="exp-gutter">
-            {/* current (first) role → green dot; others → grey */}
             <span className={'exp-dot' + (i === 0 ? ' exp-dot--current' : '')} />
             {i < MEEZ.roles.length - 1 && <span className="exp-rail-line" aria-hidden="true" />}
           </div>
@@ -71,12 +69,10 @@ const SingleCompany = ({ c }) => (
 
 export const ResumeSurface = () => (
   <div className="exp-surface">
-    {/* 1 — Experience (no divider above the first section) */}
     <h3 className={SECTION_LABEL}>Experience</h3>
     <MeezBlock />
     {OTHERS.map((c) => <SingleCompany c={c} key={c.title} />)}
 
-    {/* 2 — Education */}
     <hr className="exp-section-divider" />
     <h3 className={SECTION_LABEL}>Education</h3>
     {EDUCATION.map((e) => (
@@ -86,7 +82,6 @@ export const ResumeSurface = () => (
       </div>
     ))}
 
-    {/* 3 — Certifications */}
     <hr className="exp-section-divider" />
     <h3 className={SECTION_LABEL}>Certifications</h3>
     <div>
@@ -99,11 +94,10 @@ export const ResumeSurface = () => (
       ))}
     </div>
 
-    {/* 4 — Skills */}
     <hr className="exp-section-divider" />
     <h3 className={SECTION_LABEL}>Skills</h3>
     {SKILLS.map((s) => (
-      <p className="body-small text-[var(--color-text-secondary)]" key={s}>{s}</p>
+      <p className="body-small text-[var(--color-text-primary)]" key={s}>{s}</p>
     ))}
   </div>
 );

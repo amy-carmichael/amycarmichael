@@ -2,10 +2,6 @@ import React, { useState } from 'react';
 import { ScheduleMeetingModal } from '../modals/ScheduleMeetingModal';
 import { ContactOptions } from './ContactOptions';
 
-// The hamburger overlay holds two horizontally-sliding panels: the main nav
-// list and a Contact sub-view. Tapping "Contact" slides the track left to
-// reveal the sub-view (the link's right-pointing arrow signals this forward
-// nav); the back arrow slides it home.
 export const MobileMenu = ({ showPage, toggleMobileMenu }) => {
   const [showContact, setShowContact] = useState(false);
   const [showSchedule, setShowSchedule] = useState(false);
@@ -19,7 +15,6 @@ export const MobileMenu = ({ showPage, toggleMobileMenu }) => {
           className="flex w-[200%] min-h-dvh transition-transform duration-300 ease-out"
           style={{ transform: showContact ? 'translateX(-50%)' : 'translateX(0)' }}
         >
-          {/* Panel 1 — main nav list */}
           <div className="w-1/2 flex flex-col" aria-hidden={showContact} {...(showContact ? { inert: '' } : {})}>
             <div className="grid grid-cols-3 items-center mb-3" style={headerRow}>
               <button onClick={toggleMobileMenu} className="justify-self-start p-2 -ml-2 cursor-pointer" aria-label="Close menu">
@@ -68,7 +63,6 @@ export const MobileMenu = ({ showPage, toggleMobileMenu }) => {
             </div>
           </div>
 
-          {/* Panel 2 — Contact sub-view */}
           <div className="w-1/2 flex flex-col" aria-hidden={!showContact} {...(showContact ? {} : { inert: '' })}>
             <div className="grid grid-cols-3 items-center mb-3" style={headerRow}>
               <button onClick={() => setShowContact(false)} className="justify-self-start p-2 -ml-2 cursor-pointer" aria-label="Back to menu">

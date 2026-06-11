@@ -53,7 +53,6 @@ export const INTRO = {
 };
 
 export const COPY = {
-  // Filters
   filtersWhy:
     "meez's object lists are large and table-heavy, and the flat tables are hard to scan, so users had no fast way to narrow a list to a relevant subset. Existing navigation patterns encouraged users to think in disconnected content types, making it difficult to find the information needed to complete the task at hand.",
   filtersProcess:
@@ -62,14 +61,12 @@ export const COPY = {
     'The redesign transformed search from a simple retrieval tool into an operational workflow tool, enabling users to quickly identify issues such as missing costs, missing purchase information, allergens, and incomplete records. It established a foundation for more efficient data management across the platform and reduced the effort required to navigate large datasets.',
   filtersFuture:
     'While the redesign established a scalable filtering framework, the next iteration is focused on expanding search and filtering into a more proactive workflow tool. Future opportunities include surfacing variable recommendations, saved views, and contextual shortcuts that help users resolve operational issues faster.',
-  // Server Cards
   serverWhy:
     "Front-of-house staff need quick, reliable references for allergens, menu descriptions, and guest-facing information, but meez's existing system was built for BOH operations. Restaurants were forced to rely on training, memory, and manager handoffs, creating inconsistency and increasing the risk of inaccurate allergen communication.",
   serverProcess:
     'A key focus of the project was reducing the amount of manual setup required to create and maintain server cards. Instead of introducing a separate workflow with its own content structure, I leveraged existing menu items as a reusable source of truth for recipe and ingredient groupings. This enabled users to create server cards from existing menu content and create menu items from existing server cards, reducing duplicate data entry while creating a stronger relationship between previously disconnected areas of the product. Throughout the design process, I used Claude to rapidly prototype and iterate on the flat, editor, and print-layout experiences.',
   serverNext:
     'Future focus would be on understanding how teams adopt server cards in day-to-day operations and where additional automation can reduce maintenance overhead. Future opportunities include expanding integrations with adjacent menu-management workflows and exploring new ways to distribute and consume server card content across both digital and physical touchpoints.',
-  // Inventory
   inventoryProblem:
     'Inventory management was disconnected from adjacent workflows, requiring users to move between recipes, ingredients, purchasing, and inventory to understand stock levels and make operational decisions. This fragmentation increased cognitive load and made it difficult for kitchens to maintain an accurate view of both inventory and costs.',
   inventoryOutcome:

@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
-// ─────────────────────────────────────────────────────────────────────────────
-// CHANGE THE PASSWORD HERE
-// Note: this is a casual, client-side gate. The password and the page content
-// both ship in the JS bundle, so this keeps casual visitors out but is NOT
-// real security against a technical person.
+// Meez case-study password (change here). Casual client-side gate only.
 const MEEZ_PASSWORD = 'Jupiter';
-// ─────────────────────────────────────────────────────────────────────────────
 
 const STORAGE_KEY = 'meez-unlocked';
 
@@ -15,7 +10,6 @@ export const MeezGate = ({ children }) => {
   const [value, setValue] = useState('');
   const [error, setError] = useState(false);
 
-  // Remember a previously-unlocked visitor.
   useEffect(() => {
     if (localStorage.getItem(STORAGE_KEY) === 'true') {
       setUnlocked(true);

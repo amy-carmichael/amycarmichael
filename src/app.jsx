@@ -3,7 +3,6 @@ import { Header } from './components/layout/Header';
 import { MobileMenu } from './components/layout/MobileMenu';
 import ErrorBoundary from './components/ErrorBoundary';
 
-// Import page components directly for now (lazy loading can be added later)
 import { HomePage } from './pages/HomePage';
 import { WorkPage } from './pages/WorkPage';
 import { AboutPage } from './pages/AboutPage';

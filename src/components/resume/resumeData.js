@@ -1,10 +1,9 @@
-// Resume content/data for the About-page resume sections.
 import meezIcon from '../../assets/meez-icon.png';
 
 export const MEEZ = {
   name: 'meez',
   duration: '3 yrs 5 mos',
-  icon: meezIcon, // square crop of the meez bar-mark
+  icon: meezIcon,
   roles: [
     {
       title: 'Senior Product Designer',
@@ -33,7 +32,6 @@ export const MEEZ = {
   ],
 };
 
-// Single-role companies. `mark` is the fallback initial shown in the logo square.
 export const OTHERS = [
   { title: 'Digital Designer', sub: 'Freelance', dates: 'Jan – Dec 2022', mark: 'F' },
   { title: 'Assistant to Showrunner/Executive Producer', sub: 'Netflix', dates: 'Apr – Nov 2021', mark: 'N' },

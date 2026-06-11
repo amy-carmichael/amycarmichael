@@ -45,7 +45,7 @@ export const WorkPage = ({ showPage }) => (
             type="button"
             className="cursor-pointer whitespace-nowrap rounded-[100px] px-8 pt-2 pb-3 text-xl font-normal text-[var(--color-accent-secondary)] bg-[var(--color-bg-white)] shadow-[0_2px_6px_rgba(0,0,0,0.2)] transition-colors duration-200 group-hover:bg-[var(--color-accent-secondary)] group-hover:text-[var(--color-bg-white)] md:text-3xl"
           >
-            Showrunner's Assistant
+            Netflix
           </button>
         </div>
       </div>

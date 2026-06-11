@@ -12,10 +12,6 @@ const ChevronRight = () => (
   </svg>
 );
 
-// Floating frosted pager/stepper. Arrows step one page at a time (driven by the
-// page-level handlers); the dots map to the 5 sections, and the active section's
-// dot expands into a named pill. Visual language adapted from the original
-// project StepperNav so it stays consistent with the rest of the site.
 export const MeezStepper = ({
   sections,
   activeSectionId,
