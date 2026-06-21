@@ -88,24 +88,10 @@ export const DS_STATS = [
 
 export const DS_CAPTION = '213 hard coded color values became 41 color tokens.';
 
-export const PAGES = [
-  { id: 'intro',          section: 'intro',         tone: 'light' },
-  { id: 'filters-1',      section: 'filters',       tone: 'light' },
-  { id: 'filters-2',      section: 'filters',       tone: 'dark'  },
-  { id: 'filters-3',      section: 'filters',       tone: 'dark'  },
-  { id: 'server-cards-1', section: 'server-cards',  tone: 'dark'  },
-  { id: 'server-cards-2', section: 'server-cards',  tone: 'dark'  },
-  { id: 'server-cards-3', section: 'server-cards',  tone: 'dark'  },
-  { id: 'inventory-1',    section: 'inventory',     tone: 'light' },
-  { id: 'inventory-2',    section: 'inventory',     tone: 'light' },
-  { id: 'design-system',  section: 'design-system', tone: 'dark'  },
-  { id: 'design-tokens',  section: 'design-system', tone: 'dark'  },
-];
-
-export const SECTIONS = [
-  { id: 'intro',         title: 'Intro' },
+// The four meez sub-projects, each with its own /work/<id> route.
+export const PROJECTS = [
   { id: 'filters',       title: 'Filters' },
   { id: 'server-cards',  title: 'Server Cards' },
   { id: 'inventory',     title: 'Inventory' },
   { id: 'design-system', title: 'Design System' },
-].map((s) => ({ ...s, firstPage: PAGES.findIndex((p) => p.section === s.id) }));
+];

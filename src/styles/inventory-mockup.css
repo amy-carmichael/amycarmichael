@@ -1,0 +1,556 @@
+/* ============================================================================
+   Inventory mockup styles
+   ----------------------------------------------------------------------------
+   Self-contained styles for the meez "Inventory" hi-fi mockup screens.
+   These screens intentionally do NOT share styling with the rest of the site,
+   so everything here is scoped under `.invm` and lives outside global.css.
+   Font: Circular CustCapNum (the product's real typeface).
+   ============================================================================ */
+
+/* ----- Fonts -------------------------------------------------------------- */
+@font-face {
+  font-family: 'Circular CustCapNum';
+  src: url('../assets/CircularCustCapNum/OpenType-TT/CircularCustCapNum-Book.otf') format('opentype');
+  font-weight: 400 450;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Circular CustCapNum';
+  src: url('../assets/CircularCustCapNum/OpenType-TT/CircularCustCapNum-BookItalic.otf') format('opentype');
+  font-weight: 400 450;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Circular CustCapNum';
+  src: url('../assets/CircularCustCapNum/OpenType-TT/CircularCustCapNum-Medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Circular CustCapNum';
+  src: url('../assets/CircularCustCapNum/OpenType-TT/CircularCustCapNum-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Circular CustCapNum';
+  src: url('../assets/CircularCustCapNum/OpenType-TT/CircularCustCapNum-Black.otf') format('opentype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ----- Tokens (scoped) ---------------------------------------------------- */
+.invm {
+  /* surfaces */
+  --invm-bg: #fbfbfb;
+  --invm-surface: #ffffff;
+  --invm-surface-alt: #e8ebf0;
+  --invm-border: #ececec;
+  --invm-border-soft: #ececec; /* all borders use #ECECEC per design direction */
+
+  /* text */
+  --invm-text: #050841;
+  --invm-text-secondary: #5b5d70;
+  --invm-text-tertiary: #95969c;
+  --invm-placeholder: #a5a9c1;
+
+  /* brand / accents */
+  --invm-blue: #3d5df6;
+  --invm-blue-deep: #202962;
+  --invm-green: #40b49a;
+  --invm-orange: #f3a642;
+
+  /* item types */
+  --invm-recipe: #3c4679;
+  --invm-ingredient: #3f908a;
+
+  font-family: 'Circular CustCapNum', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: var(--invm-text);
+  font-weight: 400;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+.invm *,
+.invm *::before,
+.invm *::after {
+  box-sizing: border-box;
+}
+
+/* SVG icon alignment helper */
+.invm-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+}
+
+/* Brand avatar (PNG) */
+.invm-avatar {
+  border-radius: 999px;
+  object-fit: cover;
+  flex: none;
+  display: block;
+}
+
+/* ----- Stack of screens --------------------------------------------------- */
+.invm-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  width: 100%;
+}
+.invm-screen-label {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--invm-text-tertiary);
+  margin: 0 0 -16px 2px;
+}
+
+/* ----- Screen frame ------------------------------------------------------- */
+/* Flat full-bleed app screen (matches the Figma artboards — no card chrome).
+   Desktop = 1120px wide; mobile = 390px. */
+.invm-frame {
+  width: 1120px;
+  max-width: 100%;
+  margin: 0 auto;
+  background: var(--invm-bg);
+  overflow: hidden;
+}
+.invm-frame--mobile {
+  width: 390px;
+}
+.invm-frame--tall {
+  height: 900px;
+}
+
+/* The 1024px content column centered in the 1120 frame (→ 48px side gutters) */
+.invm-content {
+  width: 1024px;
+  max-width: 100%;
+  margin: 0 auto;
+  padding-bottom: 48px;
+}
+
+/* ----- Desktop navbar ----------------------------------------------------- */
+/* Two equal halves; chromeless (#FBFBFB, no bottom border). */
+.invm-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  height: 64px;
+  padding: 0 8px;
+  background: var(--invm-bg);
+}
+.invm-nav__left,
+.invm-nav__right {
+  flex: 1 0 0;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+/* No gap between +New and the Help/Notifications group; keep 8px after search */
+.invm-nav__right {
+  gap: 0;
+}
+.invm-nav__right .invm-new-btn {
+  margin-left: 8px;
+}
+.invm-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  white-space: nowrap;
+}
+.invm-breadcrumb__crumb {
+  color: var(--invm-text);
+}
+.invm-breadcrumb__sep {
+  color: var(--invm-text-tertiary);
+}
+.invm-iconbtn-group {
+  display: flex;
+  align-items: center;
+  flex: none;
+}
+.invm-icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--invm-placeholder);
+  background: none;
+  border: none;
+  cursor: default;
+}
+/* Nav buttons (menu / help / notifications) carry 10px padding → 44px target */
+.invm-nav .invm-icon-btn {
+  padding: 10px;
+}
+
+/* Search field (navbar) — elastic, fills the right half */
+.invm-searchfield {
+  flex: 1 0 0;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 40px;
+  padding: 0 8px;
+  background: var(--invm-surface);
+  border: 1px solid var(--invm-border);
+  border-radius: 4px;
+  color: var(--invm-placeholder);
+  font-size: 15px;
+}
+
+/* "New" button */
+.invm-new-btn {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 32px;
+  padding: 0 16px;
+  background: var(--invm-blue);
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: default;
+}
+
+/* ----- Page header (within content) -------------------------------------- */
+.invm-header {
+  padding-top: 36px;
+}
+.invm-header__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+}
+.invm-loc {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.invm-loc__logo {
+  width: 70px;
+  height: 70px;
+  border-radius: 999px;
+  flex: none;
+}
+.invm-title {
+  font-size: 28px;
+  font-weight: 900;
+  line-height: 1.3;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+/* Sheet-name title (template/count) has a text-width bottom border */
+.invm-title--sheet {
+  display: inline-block;
+  border-bottom: 1px solid var(--invm-border);
+}
+.invm-subtitle {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+  font-size: 15px;
+  color: var(--invm-blue-deep);
+}
+.invm-sub-dot {
+  color: var(--invm-blue-deep);
+}
+.invm-loc-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.invm-loc-chip__logo {
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+}
+.invm-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--invm-blue);
+  font-weight: 500;
+}
+.invm-helper {
+  margin-top: 14px;
+  font-size: 14px;
+  color: var(--invm-text-tertiary);
+}
+
+/* Outlined pill button ("Post count") */
+.invm-pill-btn {
+  display: inline-flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 22px;
+  background: var(--invm-surface);
+  border: 1px solid var(--invm-text);
+  border-radius: 999px;
+  color: var(--invm-text);
+  font-size: 15px;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: default;
+}
+
+/* ----- Content search bar (full width) ------------------------------------ */
+.invm-searchbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 44px;
+  max-width: 625px;
+  margin-top: 24px;
+  padding: 0 16px;
+  background: var(--invm-surface);
+  border: 1px solid var(--invm-border-soft);
+  border-radius: 4px;
+  color: var(--invm-placeholder);
+  font-size: 15px;
+}
+
+/* ----- Table -------------------------------------------------------------- */
+.invm-table {
+  width: 100%;
+  margin-top: 24px;
+}
+.invm-thead {
+  display: flex;
+  align-items: center;
+  height: 39px;
+  padding: 0 16px;
+}
+.invm-th {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 15px;
+  color: var(--invm-placeholder);
+}
+.invm-row {
+  display: flex;
+  align-items: center;
+  height: 56px;
+  padding: 0 16px;
+  border-top: 1px solid var(--invm-border);
+  background: var(--invm-surface);
+  font-size: 15px;
+}
+.invm-row:last-child {
+  border-bottom: 1px solid var(--invm-border);
+}
+.invm-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+.invm-cell--muted {
+  color: var(--invm-text);
+}
+
+/* Item name cell (icon + label) */
+.invm-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.invm-item__name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Type icon (recipe / ingredient) */
+.invm-typeicon {
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  color: #fff;
+}
+.invm-typeicon--recipe { background: var(--invm-recipe); }
+.invm-typeicon--ingredient { background: var(--invm-ingredient); }
+
+/* Status indicator */
+.invm-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--invm-text);
+}
+.invm-status__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  flex: none;
+}
+.invm-status--saved .invm-status__dot { background: var(--invm-green); }
+.invm-status--pending .invm-status__dot { background: var(--invm-blue); }
+.invm-status--not-started .invm-status__dot { background: var(--invm-orange); }
+
+/* Row action buttons (delete / drag) */
+.invm-row-actions {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-left: auto;
+}
+.invm-row-actions .invm-icon-btn {
+  width: 44px;
+  height: 44px;
+  color: var(--invm-placeholder);
+}
+
+/* Read-only "input" cells used in count / template screens */
+.invm-input {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 12px;
+  border: 1px solid var(--invm-border-soft);
+  border-radius: 4px;
+  background: var(--invm-surface);
+  color: var(--invm-text);
+  font-size: 15px;
+}
+.invm-input--ghost {
+  border-color: transparent;
+  background: transparent;
+  padding-left: 0;
+}
+
+/* Submit CTA */
+.invm-submit-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 28px;
+}
+.invm-submit-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 54px;
+  padding: 0 40px;
+  background: var(--invm-blue);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: default;
+}
+.invm-submit-btn--block {
+  width: 100%;
+}
+
+/* ----- Mobile navbar / layout -------------------------------------------- */
+.invm-mnav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 40px;
+  padding: 0 16px;
+  background: var(--invm-surface);
+  border-bottom: 1px solid var(--invm-border);
+}
+.invm-mnav__left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.invm-mnav__logo {
+  width: 19px;
+  height: auto;
+  display: block;
+}
+.invm-mnav__right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.invm-mbody {
+  padding: 12px 29px;
+}
+.invm-mtitle {
+  font-size: 22px;
+  font-weight: 900;
+  margin: 0 0 12px;
+}
+.invm-msearch {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 56px;
+  padding: 0 14px;
+  background: var(--invm-surface);
+  border: 1px solid var(--invm-border);
+  border-radius: 4px;
+  color: var(--invm-placeholder);
+  font-size: 15px;
+}
+
+/* Mobile item rows: 2-row block (name on top, Qty | Unit below),
+   separated only by #ECECEC hairlines — no cards, no radius. */
+.invm-mrows {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+}
+.invm-mcard {
+  background: var(--invm-surface);
+  border-top: 1px solid var(--invm-border);
+  border-bottom: 1px solid var(--invm-border);
+}
+.invm-mcard__name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 56px;
+  padding: 0 8px;
+  font-size: 15px;
+  border-bottom: 1px solid var(--invm-border);
+}
+.invm-mcard__fields {
+  display: flex;
+}
+.invm-mcard__field {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  height: 56px;
+  padding: 0 8px;
+  font-size: 15px;
+}
+.invm-mcard__field:first-child {
+  border-right: 1px solid var(--invm-border);
+}
+.invm-msubmit {
+  padding: 16px;
+}

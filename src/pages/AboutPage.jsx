@@ -5,17 +5,17 @@ import { ResumeSurface } from '../components/resume/ResumeSurface';
 import { StarDivider } from '../components/about/StarDivider';
 
 export const AboutPage = () => (
-  <section className="pt-6 pb-6 md:pt-10 md:pb-20 max-w-[1024px] mx-auto">
+  <section className="pt-6 pb-6 md:pt-10 md:pb-20 max-w-[1200px] mx-auto">
     <h1 className="headline-small mb-6 md:hidden">About me</h1>
-    <div className="flex flex-col lg:flex-row gap-12">
-      <div className="flex flex-row items-start justify-between gap-6 lg:contents">
+    <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
+      <div className="flex flex-col items-start gap-6 lg:contents">
         <img
           src={portrait}
-          alt="Amy Carmichael"
+          alt="Amy Carmichael, Senior Product Designer"
           className="rounded-lg flex-shrink-0 lg:order-1"
           style={{ maxWidth: '240px', height: 'auto' }}
         />
-        <div className="flex flex-col items-end gap-4 flex-shrink-0 min-w-[120px] lg:order-3">
+        <div className="flex flex-col items-start gap-4 flex-shrink-0 min-w-[120px] lg:order-3">
           <a
             href={resumePdf}
             target="_blank"
@@ -52,13 +52,15 @@ export const AboutPage = () => (
               <path d="M12 1.27a11 11 0 00-3.48 21.46c.55.09.73-.28.73-.55v-1.84c-3.03.64-3.67-1.46-3.67-1.46-.55-1.29-1.28-1.65-1.28-1.65-.92-.65.1-.65.1-.65 1.1 0 1.73 1.1 1.73 1.1.92 1.65 2.57 1.2 3.21.92a2 2 0 01.64-1.47c-2.47-.27-5.04-1.19-5.04-5.5 0-1.1.46-2.1 1.2-2.84a3.76 3.76 0 010-2.93s.91-.28 3.11 1.1c1.8-.49 3.7-.49 5.5 0 2.1-1.38 3.02-1.1 3.02-1.1a3.76 3.76 0 010 2.93c.83.74 1.2 1.74 1.2 2.94 0 4.21-2.57 5.13-5.04 5.4.45.37.82.92.82 2.02v3.03c0 .27.1.64.73.55A11 11 0 0012 1.27" />
             </svg>
           </a>
+          <p className="body-small italic text-[var(--color-accent-primary)] text-left max-w-[220px] mt-6">
+            This site was produced by Amy Carmichael in association with Claude Code.
+          </p>
         </div>
       </div>
       <div className="space-y-6 flex-1 min-w-0 lg:order-2">
         <p className="body-medium text-[var(--color-text-primary)]">
           I'm a Senior Product Designer specializing in complex B2B SaaS products. I bring together
-          user needs, business goals, and technical constraints to create products that feel cohesive,
-          intuitive, and built to scale.
+          user needs, business goals and technical constraints to create products that are cohesive and built to scale.
         </p>
         <p className="body-medium text-[var(--color-text-primary)]">
           Over the past several years, I've led product initiatives from discovery through launch,

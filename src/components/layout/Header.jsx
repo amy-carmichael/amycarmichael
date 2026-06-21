@@ -3,21 +3,21 @@ import { ContactMenu } from './ContactMenu';
 
 export const Header = React.memo(({ showPage, toggleMobileMenu, activePage, mobileMenuButtonRef }) => (
   <header className="fixed top-0 left-0 right-0 z-50 bg-[var(--color-bg-primary)] px-4 md:px-8 lg:px-12" style={{ height: 'var(--header-h)', boxShadow: '0 1px 3px rgba(0, 0, 0, 0.04)' }}>
-    <div className="h-full" style={{ maxWidth: '1024px', margin: '0 auto' }}>
+    <div className="h-full" style={{ maxWidth: '1200px', margin: '0 auto' }}>
       <nav className="flex items-center h-full" role="navigation" aria-label="Main navigation">
         <div className="hidden md:grid md:w-full md:grid-cols-3 md:items-center">
           <div className="flex items-center justify-self-start">
             <a
               href="#/work"
-              className={`nav-link button uppercase ${activePage === 'work' || activePage === 'meez' || activePage === 'netflix' ? 'active' : ''}`}
+              className={`nav-link button uppercase ${activePage === 'work' || activePage.startsWith('work/') || activePage === 'netflix' ? 'active' : ''}`}
               onClick={(e) => { e.preventDefault(); showPage('work'); }}
             >
               Work
             </a>
             <a
-              href="#/about"
-              className={`nav-link button uppercase ${activePage === 'about' ? 'active' : ''}`}
-              onClick={(e) => { e.preventDefault(); showPage('about'); }}
+              href="#/about-me"
+              className={`nav-link button uppercase ${activePage === 'about-me' ? 'active' : ''}`}
+              onClick={(e) => { e.preventDefault(); showPage('about-me'); }}
             >
               About me
             </a>

@@ -20,7 +20,7 @@ export default defineConfig({
       output: {
         manualChunks: {
           vendor: ['react', 'react-dom'],
-          pages: ['./src/pages/HomePage.jsx', './src/pages/WorkPage.jsx', './src/pages/AboutPage.jsx', './src/pages/MeezPage.jsx'],
+          pages: ['./src/pages/HomePage.jsx', './src/pages/WorkPage.jsx', './src/pages/AboutPage.jsx', './src/pages/NetflixPage.jsx', './src/pages/work/FiltersPage.jsx', './src/pages/work/ServerCardsPage.jsx', './src/pages/work/InventoryPage.jsx', './src/pages/work/DesignSystemPage.jsx'],
         },
       },
     },

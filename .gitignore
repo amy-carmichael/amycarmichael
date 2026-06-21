@@ -22,3 +22,13 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Claude Code local config
+.claude/settings.local.json
+
+# Environment & secrets
+.env
+.env.local
+.env.*.local
+*.pem
+*.key

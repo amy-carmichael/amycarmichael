@@ -10,7 +10,7 @@ const images = Object.entries(modules)
   .map(([path, src]) => ({ key: path, src }));
 
 export const NetflixPage = () => (
-  <section className="pt-6 pb-6 md:pt-10 md:pb-20 max-w-[1024px] mx-auto">
+  <section className="pt-6 pb-6 md:pt-10 md:pb-20 max-w-[1200px] mx-auto">
     <div className="mb-6 flex flex-col gap-2 md:mb-10">
       <h1 className="headline-medium text-[var(--color-text-primary)]">Showrunner's Assistant – Netflix, 2022</h1>
     </div>

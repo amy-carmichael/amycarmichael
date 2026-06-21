@@ -42,9 +42,9 @@ export const MobileMenu = ({ showPage, toggleMobileMenu }) => {
                 Work
               </a>
               <a
-                href="#/about"
+                href="#/about-me"
                 className="title-medium uppercase py-2 cursor-pointer"
-                onClick={(e) => { e.preventDefault(); showPage('about'); toggleMobileMenu(); }}
+                onClick={(e) => { e.preventDefault(); showPage('about-me'); toggleMobileMenu(); }}
               >
                 About me
               </a>

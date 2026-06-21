@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 
-export const EMAIL = 'amycarmichaelprod@gmail.com';
+// Stored base64-encoded so the plaintext "name@domain" string never appears in
+// the source or the built JS bundle, where email harvesters scan for it. Decoded
+// at runtime only when the Contact menu is opened.
+export const EMAIL = atob('YW15Y2FybWljaGFlbHByb2RAZ21haWwuY29t');
 
 export const ContactOptions = ({ onSchedule }) => {
     const [copied, setCopied] = useState(false);

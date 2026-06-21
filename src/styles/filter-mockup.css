@@ -1,0 +1,245 @@
+/* ============================================================================
+   Filters feature — animated hi-fi mockup
+   Self-contained, scoped under `.fltm`. Pixel dimensions are taken verbatim from
+   Figma (the whole screen is a scaled-down 1024×665.6 artboard).
+   ============================================================================ */
+
+@font-face {
+  font-family: 'Circular CustCapNum';
+  src: url('../assets/CircularCustCapNum/OpenType-TT/CircularCustCapNum-Book.otf') format('opentype');
+  font-weight: 400 450; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Circular CustCapNum';
+  src: url('../assets/CircularCustCapNum/OpenType-TT/CircularCustCapNum-Medium.otf') format('opentype');
+  font-weight: 500; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Circular CustCapNum';
+  src: url('../assets/CircularCustCapNum/OpenType-TT/CircularCustCapNum-Black.otf') format('opentype');
+  font-weight: 900; font-style: normal; font-display: swap;
+}
+
+.fltm {
+  --bg: #fbfbfb;
+  --surface: #ffffff;
+  --text: #050841;
+  --muted: #95969c;
+  --ph: #a5a9c1;
+  --line: #f3f3f3;
+  --line2: #ececec;
+  --blue: #3d5df6;
+  --pill: #dbe4ff;
+  --rowhover: #f1f5fe;
+
+  /* MUI standard motion tokens */
+  --ease-std: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+
+  font-family: 'Circular CustCapNum', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--text);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.fltm *, .fltm *::before, .fltm *::after { box-sizing: border-box; }
+.fltm img { user-select: none; -webkit-user-drag: none; }
+
+/* ----- Frame -------------------------------------------------------------- */
+.fltm-frame {
+  position: relative;
+  width: 1024px;
+  height: 665.6px;
+  max-width: 100%;
+  background: var(--bg);
+  overflow: hidden;
+  cursor: none;
+}
+
+/* ----- Navbar (0.8× scaled) ----------------------------------------------- */
+.fltm-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 19.2px;
+  height: 51.2px;
+  padding: 0 6.4px;
+  background: var(--bg);
+}
+.fltm-nav__side { flex: 1 0 0; min-width: 0; display: flex; align-items: center; gap: 6.4px; }
+.fltm-iconbtn { display: flex; align-items: center; justify-content: center; padding: 8px; }
+.fltm-locator { display: flex; align-items: center; gap: 3.2px; }
+.fltm-locator__label { font-size: 19.2px; font-weight: 500; color: var(--text); }
+.fltm-search {
+  flex: 1 0 0; min-width: 0;
+  display: flex; align-items: center; gap: 3.2px;
+  height: 32px; padding: 0 6.4px;
+  background: var(--surface);
+  border: 0.8px solid var(--line);
+  border-radius: 3.2px;
+  color: var(--ph); font-size: 12px;
+}
+.fltm-new {
+  flex: none;
+  display: inline-flex; align-items: center; justify-content: center; gap: 3.2px;
+  height: 25.6px; padding: 0 12.8px;
+  background: var(--blue); color: #fff;
+  border: none; border-radius: 16px;
+  font-size: 12.8px; font-weight: 500;
+}
+.fltm-iconbtn-group { display: flex; align-items: center; }
+
+/* ----- Body --------------------------------------------------------------- */
+.fltm-body { padding: 19.2px 64px 0; }
+
+/* ----- Nav pill row ------------------------------------------------------- */
+.fltm-pillrow { display: flex; align-items: center; justify-content: space-between; height: 32px; }
+.fltm-pills { display: flex; align-items: center; gap: 8px; }
+.fltm-pill {
+  display: flex; align-items: center; gap: 6.4px;
+  height: 32px; padding: 0 12px 0 9.6px;
+  background: var(--surface); border: 0.8px solid var(--line);
+  border-radius: 56px;
+}
+.fltm-pill--active { background: var(--pill); border-color: transparent; }
+.fltm-pill__circle {
+  width: 19.2px; height: 19.2px; border-radius: 100px; flex: none;
+  display: flex; align-items: center; justify-content: center;
+}
+.fltm-pill__label { display: flex; align-items: baseline; gap: 4.8px; }
+.fltm-pill__name { font-size: 12px; color: var(--text); }
+.fltm-pill--active .fltm-pill__name { font-weight: 500; }
+.fltm-pill__count { font-size: 10.4px; color: var(--ph); }
+
+/* Filter trigger */
+.fltm-filterbtn {
+  display: flex; align-items: center; gap: 6.4px;
+  padding: 6.4px; border-radius: 100px;
+  font-size: 12px; color: var(--text);
+  transition: background-color 225ms var(--ease-std), color 225ms var(--ease-std);
+}
+.fltm-filterbtn--hover { background: rgba(5, 8, 65, 0.08); }
+.fltm-filterbtn--count { color: var(--blue); }
+
+/* ----- Active-filter bar (in-flow row; pushes the table down) ------------- */
+.fltm-filterbar {
+  position: relative;
+  height: 0; margin-top: 0; overflow: hidden;
+  transition: height 225ms var(--ease-std), margin-top 225ms var(--ease-std);
+}
+.fltm-filterbar--active { height: 24.4px; margin-top: 19.2px; }
+
+/* ----- Table -------------------------------------------------------------- */
+.fltm-table { margin-top: 19.2px; }
+.fltm-tgrid {
+  display: grid;
+  grid-template-columns: 28.8px minmax(0,1fr) minmax(0,5fr) minmax(0,2fr) minmax(0,1fr) minmax(0,2fr) 28.8px;
+  column-gap: 6.4px;
+  align-items: center;
+}
+/* Dividers drawn via inset shadow so the 0.8px line never adds to row height */
+.fltm-thead { padding: 6.4px; box-shadow: inset 0 -0.8px 0 var(--line2); }
+.fltm-th { font-size: 12px; color: var(--ph); display: flex; align-items: center; gap: 3.2px; }
+.fltm-trow {
+  padding: 12.8px 6.4px;
+  background: var(--surface);
+  box-shadow: inset 0 -0.8px 0 var(--line);
+}
+/* Icon cells (checkbox / more-menu): center the glyph + collapse the line-box
+   so row height = 44.8 and header = 30.8 exactly */
+.fltm-cc { display: flex; align-items: center; justify-content: center; }
+.fltm-tbody { transition: opacity 0.25s ease; }
+.fltm-name { font-size: 12px; font-weight: 500; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.fltm-status { display: flex; align-items: center; gap: 4.8px; }
+.fltm-status__dot { width: 6.4px; height: 6.4px; border-radius: 50%; flex: none; }
+.fltm-status__label { font-size: 12px; color: var(--text); white-space: nowrap; }
+.fltm-status--review .fltm-status__dot { background: #f3a642; }
+.fltm-status--draft .fltm-status__dot { background: var(--muted); }
+.fltm-status--published .fltm-status__dot { background: #3f908a; }
+.fltm-type { width: 19.2px; height: 19.2px; position: relative; flex: none; justify-self: center; }
+.fltm-type img.bg { position: absolute; inset: 0; }
+.fltm-type img.glyph { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); }
+.fltm-updated { font-size: 12px; color: var(--muted); white-space: nowrap; }
+.fltm-avatar { width: 19.2px; height: 19.2px; border-radius: 50%; object-fit: cover; display: block; }
+
+/* ----- Overlays (popovers) ------------------------------------------------ */
+.fltm-pop {
+  position: absolute; z-index: 20;
+  opacity: 0; transform: translateY(-4px); pointer-events: none;
+  /* MUI exit: accelerate, 195ms */
+  transition: opacity 195ms var(--ease-in), transform 195ms var(--ease-in);
+}
+.fltm-pop--open {
+  opacity: 1; transform: translateY(0);
+  /* MUI enter: decelerate, 225ms */
+  transition: opacity 225ms var(--ease-out), transform 225ms var(--ease-out);
+}
+
+/* Category dropdown */
+.fltm-dropdown {
+  width: 240px;
+  background: var(--surface);
+  border-radius: 3.2px;
+  padding: 6.4px;
+  display: flex; flex-direction: column; gap: 12.8px;
+  filter: drop-shadow(0 0.8px 1.6px rgba(0,0,0,0.15)) drop-shadow(0 2.4px 1.2px rgba(0,0,0,0.08));
+}
+.fltm-catrow {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 6.4px; border-radius: 3.2px;
+}
+.fltm-catrow--hover { background: var(--rowhover); }
+.fltm-catrow__label { display: flex; align-items: center; gap: 6.4px; font-size: 12px; color: var(--text); }
+.fltm-clearall { border-top: 0.8px solid var(--line2); padding: 6.4px; font-size: 12px; color: #ccc; }
+
+/* Filter chip */
+.fltm-chip { display: flex; align-items: stretch; gap: 0.8px; }
+.fltm-chip__main {
+  display: flex; align-items: center; gap: 3.2px;
+  background: var(--surface); border: 0.8px solid var(--blue);
+  border-radius: 79.2px 0 0 79.2px;
+  padding: 3.2px 4.8px 3.2px 6.4px;
+  transition: background-color 225ms var(--ease-std), border-color 225ms var(--ease-std);
+}
+.fltm-chip__text { display: flex; align-items: center; gap: 3.2px; font-size: 12px; color: var(--blue); width: 144px; overflow: hidden; }
+.fltm-chip__text b { font-weight: 500; flex: none; }
+.fltm-chip__text span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.fltm-chip__arrow { display: inline-flex; transition: transform 225ms var(--ease-std); }
+.fltm-chip__close {
+  display: flex; align-items: center;
+  transition: background-color 225ms var(--ease-std), border-color 225ms var(--ease-std);
+  background: var(--surface); border: 0.8px solid var(--blue);
+  border-radius: 0 80px 80px 0; padding: 3.2px 4.8px;
+}
+/* Active/applied chip — filled #DBE4FF, no border (Figma 105:17832) */
+.fltm-chip--active .fltm-chip__main,
+.fltm-chip--active .fltm-chip__close {
+  background: var(--pill);
+  border-color: transparent;
+}
+
+/* Checkbox sub-menu */
+.fltm-submenu {
+  width: 320px;
+  background: var(--bg);
+  border-radius: 3.2px; padding: 6.4px;
+  filter: drop-shadow(0 0.8px 1.6px rgba(0,0,0,0.15)) drop-shadow(0 2.4px 1.2px rgba(0,0,0,0.08));
+}
+.fltm-submenu__list { background: var(--surface); border: 0.8px solid var(--line2); border-radius: 3.2px; display: flex; flex-direction: column; }
+.fltm-checkitem { display: flex; align-items: center; gap: 6.4px; padding: 6.4px; font-size: 12px; color: var(--text); }
+
+/* ----- Animated cursor ---------------------------------------------------- */
+.fltm-cursor {
+  position: absolute; z-index: 40; top: 0; left: 0;
+  width: 17px; height: 17px; pointer-events: none;
+  /* MUI standard easing; complex move duration */
+  opacity: 1;
+  transform-origin: 3px 2px; /* arrow tip — press-scale doesn't nudge the pointer */
+  transition: transform 375ms var(--ease-std), scale 150ms var(--ease-std), opacity 195ms var(--ease-std);
+  filter: drop-shadow(0 1px 1px rgba(0,0,0,0.3));
+}
+.fltm-cursor--down { scale: 0.82; }
+.fltm-cursor--hidden { opacity: 0; }

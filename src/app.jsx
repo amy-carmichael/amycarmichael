@@ -6,8 +6,11 @@ import ErrorBoundary from './components/ErrorBoundary';
 import { HomePage } from './pages/HomePage';
 import { WorkPage } from './pages/WorkPage';
 import { AboutPage } from './pages/AboutPage';
-import { MeezPage } from './pages/MeezPage';
 import { NetflixPage } from './pages/NetflixPage';
+import { FiltersPage } from './pages/work/FiltersPage';
+import { ServerCardsPage } from './pages/work/ServerCardsPage';
+import { InventoryPage } from './pages/work/InventoryPage';
+import { DesignSystemPage } from './pages/work/DesignSystemPage';
 import { MeezGate } from './components/MeezGate';
 import './global.css';
 
@@ -66,13 +69,8 @@ const App = () => {
     
     useEffect(() => {
         const parseHash = () => {
-            const raw = (window.location.hash || '').replace(/^#\/?/, '');
-            if (!raw) {
-                setActivePage('home');
-                return;
-            }
-            const [page] = raw.split('/');
-            if (page) setActivePage(page);
+            const raw = (window.location.hash || '').replace(/^#\/?/, '').replace(/\/$/, '');
+            setActivePage(raw || 'home');
         };
 
         parseHash();
@@ -80,12 +78,18 @@ const App = () => {
         return () => window.removeEventListener('hashchange', parseHash);
     }, []);
 
-    const pages = {
-        home: <HomePage />,
-        work: <WorkPage showPage={showPage} />,
-        about: <AboutPage />,
-        meez: <MeezGate><MeezPage /></MeezGate>,
-        netflix: <NetflixPage />,
+    const renderPage = () => {
+        switch (activePage) {
+            case 'work': return <WorkPage showPage={showPage} />;
+            case 'about-me': return <AboutPage />;
+            case 'netflix': return <NetflixPage />;
+            case 'work/filters': return <MeezGate><FiltersPage showPage={showPage} /></MeezGate>;
+            case 'work/server-cards': return <MeezGate><ServerCardsPage showPage={showPage} /></MeezGate>;
+            case 'work/inventory': return <MeezGate><InventoryPage showPage={showPage} /></MeezGate>;
+            case 'work/design-system': return <MeezGate><DesignSystemPage showPage={showPage} /></MeezGate>;
+            case 'home': return <HomePage />;
+            default: return <HomePage />;
+        }
     };
 
     return (
@@ -113,7 +117,7 @@ const App = () => {
             <main id="main-content" ref={mainContentRef} className="px-4 md:px-8 lg:px-12 pt-[var(--header-h)]">
                 <div className="max-w-7xl mx-auto">
                     <ErrorBoundary>
-                        {pages[activePage]}
+                        {renderPage()}
                     </ErrorBoundary>
                 </div>
             </main>
