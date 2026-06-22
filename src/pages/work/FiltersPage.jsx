@@ -19,7 +19,7 @@ export const FiltersPage = ({ showPage }) => (
     <div className="flex flex-col gap-16 px-4 pt-8 pb-4 sm:gap-20">
       <CaseStudyTitle
         title="Filters"
-        subtitle="Design Lead to re-imagine a system for users narrow down large culinary libraries through structured search criteria."
+        subtitle="Design Lead for a filtering experience that helps teams move from broad search results to the right item faster."
       />
 
       {/* Mockup 1 — filter menu active */}

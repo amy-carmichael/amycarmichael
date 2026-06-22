@@ -9,10 +9,10 @@ import dsColorSystem from '../assets/design system/Meez color system.png';
 
 const GALLERY = [
   { route: 'work/filters',       title: 'Filters',       desc: 'Scalable search and filtering',      img: IMG.filters1Bg,     imgClass: 'object-cover', overlay: filterActiveMenu, scrim: 'from-black/75 via-black/5 to-transparent' },
-  { route: 'work/server-cards',  title: 'Server Cards',  desc: 'Front-of-house allergen references',  img: serverCardThumb,    imgClass: 'object-cover object-top' },
+  { route: 'work/server-cards',  title: 'Server Cards',  desc: 'Service and training interface for front-of-house staff',  img: serverCardThumb,    imgClass: 'object-cover object-top' },
   { route: 'work/inventory',     title: 'Inventory',     desc: 'Connected inventory and costing',     img: inventoryThumb,     imgClass: 'object-cover object-[50%_22%]', scrim: 'from-black/85 via-black/40 to-transparent' },
-  { route: 'work/design-system', title: 'Color Token Library', desc: 'Creating a product color palette',             img: dsThumbBg,          imgClass: 'object-cover', poster: dsColorSystem, scrim: 'from-black/70 via-black/10 to-transparent' },
-  { route: 'netflix',            title: 'Netflix',       desc: "Showrunner's assistant concept",      img: netflixThumb,       imgClass: 'object-cover object-[50%_-40px]' },
+  { route: 'work/design-system', title: 'Color Token Library', desc: "Creating the product's first color palette",             img: dsThumbBg,          imgClass: 'object-cover', poster: dsColorSystem, scrim: 'from-black/70 via-black/10 to-transparent' },
+  { route: 'netflix',            title: 'Netflix',       desc: "Showrunner's assistant",      img: netflixThumb,       imgClass: 'object-cover object-[50%_-40px]' },
 ];
 
 export const WorkPage = ({ showPage }) => (
