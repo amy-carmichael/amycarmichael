@@ -42,18 +42,29 @@
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   width: 100%;
-  display: flex;
-  justify-content: center;
+  /* Scroll container: when the viewport is narrower than the frame's min-width
+     the mockup scrolls horizontally instead of shrinking the design. */
+  overflow-x: auto;
+  scrollbar-width: thin;
 }
 .fltm *, .fltm *::before, .fltm *::after { box-sizing: border-box; }
 .fltm img { user-select: none; -webkit-user-drag: none; }
+/* Persistent horizontal scrollbar whenever the frame overflows the viewport */
+.fltm::-webkit-scrollbar { height: 8px; }
+.fltm::-webkit-scrollbar-track { background: transparent; }
+.fltm::-webkit-scrollbar-thumb { background: rgba(5, 8, 65, 0.25); border-radius: 4px; }
+.fltm::-webkit-scrollbar-thumb:hover { background: rgba(5, 8, 65, 0.4); }
 
 /* ----- Frame -------------------------------------------------------------- */
+/* Fluid between min 819.2 and max 1024; below 819.2 it holds and the .fltm
+   container scrolls (the content never scales below the min-width). */
 .fltm-frame {
   position: relative;
   width: 1024px;
   height: 665.6px;
   max-width: 100%;
+  min-width: 819.2px;
+  margin: 0 auto;
   background: var(--bg);
   overflow: hidden;
 }
@@ -144,6 +155,9 @@
 .fltm-filterbtn:hover,
 .fltm-filterbtn--open { background: rgba(5, 8, 65, 0.08); }
 .fltm-filterbtn--count { color: var(--blue); }
+/* Active (count) trigger uses a blue state layer on hover, not the default dark
+   one (Figma annotation on filter-trigger-btn 126:6516). */
+.fltm-filterbtn--count:hover { background: rgba(61, 93, 246, 0.08); }
 
 /* ----- Active-filter bar (in-flow; chips wrap + push the table down) ------ */
 /* Collapsed: clipped to 0 height so it stays out of flow. Active: visible
@@ -165,7 +179,7 @@
 .fltm-table { margin-top: 19.2px; flex: 1 1 0; min-height: 0; overflow: hidden; }
 .fltm-tgrid {
   display: grid;
-  grid-template-columns: 28.8px minmax(0,1fr) minmax(0,5fr) minmax(0,2fr) minmax(0,1fr) minmax(0,2fr) 28.8px;
+  grid-template-columns: 28.8px minmax(0,1fr) minmax(0,4fr) minmax(116px,1.5fr) minmax(0,1fr) minmax(90px,2fr) 28.8px;
   column-gap: 6.4px;
   align-items: center;
 }
@@ -250,7 +264,10 @@
 .fltm-clearall--active:hover { text-decoration: underline; }
 
 /* Filter chip */
-.fltm-chip { flex: none; display: flex; align-items: stretch; gap: 0.8px; }
+.fltm-chip { position: relative; flex: none; display: flex; align-items: stretch; gap: 0.8px; height: 24.4px; }
+/* Each category's menu hangs flush under its own chip, so it tracks the chip
+   wherever the bar wraps it. */
+.fltm-chipmenu { top: calc(100% + 4.8px); left: 0; }
 .fltm-chip__main {
   display: flex; align-items: center; gap: 3.2px;
   background: var(--surface); border: 0.8px solid var(--blue);
@@ -259,9 +276,10 @@
   cursor: pointer;
   transition: background-color 225ms var(--ease-std), border-color 225ms var(--ease-std);
 }
-.fltm-chip__text { display: flex; align-items: center; gap: 3.2px; font-size: 12px; color: var(--blue); width: 144px; overflow: hidden; }
+/* label + value — max-width 144px, no min (Figma annotation on 126:6551) */
+.fltm-chip__text { display: flex; align-items: center; gap: 3.2px; font-size: 12px; color: var(--blue); max-width: 144px; overflow: hidden; }
 .fltm-chip__text b { font-weight: 500; flex: none; }
-.fltm-chip__text span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.fltm-chip__text span { flex: 1 1 0; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .fltm-chip__arrow { display: inline-flex; transition: transform 225ms var(--ease-std); }
 .fltm-chip__close {
   display: flex; align-items: center;
@@ -271,7 +289,13 @@
   cursor: pointer;
 }
 .fltm-chip__close:hover { background: var(--rowhover); }
-.fltm-chip--active .fltm-chip__close:hover { background: #c7d4ff; }
+/* Hover state layer rgba(61,93,246,0.08) over the #DBE4FF fill — applies to
+   BOTH the content section and the Remove section (Figma annotation 126:6536). */
+.fltm-chip--active .fltm-chip__main:hover,
+.fltm-chip--active .fltm-chip__close:hover {
+  background-color: var(--pill);
+  background-image: linear-gradient(rgba(61, 93, 246, 0.08), rgba(61, 93, 246, 0.08));
+}
 /* Active/applied chip — filled #DBE4FF, no border (Figma 105:17832) */
 .fltm-chip--active .fltm-chip__main,
 .fltm-chip--active .fltm-chip__close {
@@ -290,6 +314,22 @@
 .fltm-submenu__list { background: var(--surface); border: 0.8px solid var(--line2); border-radius: 3.2px; display: flex; flex-direction: column; }
 .fltm-checkitem { display: flex; align-items: center; gap: 6.4px; padding: 6.4px; font-size: 12px; color: var(--text); cursor: pointer; }
 .fltm-checkitem:hover { background: var(--rowhover); }
+.fltm-submenu__list .fltm-checkitem:first-child { border-radius: 3.2px 3.2px 0 0; }
+.fltm-submenu__list .fltm-checkitem:last-child { border-radius: 0 0 3.2px 3.2px; }
+
+/* Search field — Created-by menu only (Figma search 122:14786) */
+.fltm-search-wrap { padding: 6.4px; }
+.fltm-menusearch {
+  display: flex; align-items: center; gap: 6.4px;
+  padding: 6.4px; border-radius: 3.2px;
+  background: var(--bg); border: 0.8px solid var(--line2);
+}
+.fltm-menusearch__input {
+  flex: 1 1 auto; min-width: 0; padding: 0;
+  border: none; outline: none; background: transparent;
+  font-family: inherit; font-size: 12px; color: var(--text);
+}
+.fltm-menusearch__input::placeholder { color: var(--ph); }
 
 /* Selection chips + AND/OR row (Figma selected-container 122:14641) */
 .fltm-selcontainer {

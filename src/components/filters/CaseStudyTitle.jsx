@@ -6,11 +6,11 @@ import React from 'react';
 // everything else uses design-system utilities and tokens.
 export const CaseStudyTitle = ({ title, subtitle, className = '' }) => (
   <header className={`flex flex-col items-center gap-6 py-12 text-center sm:py-16 ${className}`}>
-    <h1 className="font-black leading-tight tracking-tight text-[var(--color-text-primary)] text-[2.5rem] sm:text-[4rem]">
+    <h1 className="font-[600] leading-tight tracking-tight text-[var(--color-text-primary)] text-[2.5rem] sm:text-[4rem]">
       {title}
     </h1>
     {subtitle && (
-      <p className="title-medium max-w-2xl text-[var(--color-text-secondary)]">{subtitle}</p>
+      <p className="body-xlarge max-w-2xl text-[var(--color-text-primary)]">{subtitle}</p>
     )}
   </header>
 );

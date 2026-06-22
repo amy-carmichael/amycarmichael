@@ -1,25 +1,18 @@
 import React from 'react';
 import meezIconPng from '../../assets/inventory/meez_icon.png';
 import {
-  BrowserFrame, DesktopNav, Content, ViewReport, LocationChip, Dot,
+  BrowserFrame, DesktopNav, ViewReport, LocationChip, Dot,
   SearchBar, ItemName, Status, Th, RowActions, TypeIcon, Avatar,
 } from './primitives';
 import { MenuIcon, SearchIcon, BellIcon } from './icons';
 
-/* Column templates (content width 1024) */
-const LIST_COLS = '1fr 220px 220px';
-const TEMPLATE_COLS = '1fr 360px 96px';
-const COUNT_COLS = '4fr 2fr 3fr';
-
-// Count table cells: each cell pads itself (row has no outer padding); the first
-// two cells carry a right divider, the last has none. Header has no dividers.
-const countHead = { padding: '0 16px' };
-const countCellDiv = { display: 'flex', alignItems: 'center', height: '100%', padding: '0 16px', minWidth: 0, borderRight: '1px solid var(--invm-border)' };
-const countCell = { display: 'flex', alignItems: 'center', height: '100%', padding: '0 16px', minWidth: 0 };
-const gridReset = { padding: 0 };
+/* Column templates — fr units so the tables stay fluid as the frame shrinks. */
+const LIST_COLS = 'minmax(0,5fr) minmax(0,2fr) minmax(0,2fr)';
+const TEMPLATE_COLS = 'minmax(0,4fr) minmax(0,3fr) 70.4px';
+const COUNT_COLS = 'minmax(0,4fr) minmax(0,2fr) minmax(0,3fr)';
 
 /* ------------------------------------------------------------------ Screen 1
-   Inventory list — "West Village" location overview. */
+   Inventory list — "West Village" location overview (Figma 705:1892). */
 const LIST_ROWS = [
   { area: 'Prep island', items: 89, status: 'saved' },
   { area: 'Walk-in cooler', items: 44, status: 'pending' },
@@ -30,44 +23,42 @@ const LIST_ROWS = [
 ];
 
 export const InventoryListScreen = () => (
-  <BrowserFrame className="invm-frame--tall invm-screen-list">
+  <BrowserFrame className="invm-screen-list">
     <DesktopNav crumbs={['Home', 'Inventory']} />
-    <Content>
-      <header className="invm-header">
-        <div className="invm-header__top">
-          <div className="invm-loc">
-            <Avatar size={70} />
-            <div>
-              <h1 className="invm-title">West Village</h1>
-              <div className="invm-subtitle">
-                Last submitted: Aug 06, 2025 <Dot /> <ViewReport />
-              </div>
+    <div className="invm-list-body">
+      <header className="invm-col invm-list-header">
+        <Avatar size={56} />
+        <div className="invm-list-header__main">
+          <div className="invm-title-block">
+            <h1 className="invm-title">West Village</h1>
+            <div className="invm-subtitle">
+              Last submitted: Aug 06, 2025 <Dot /> <ViewReport />
             </div>
           </div>
           <button className="invm-pill-btn">Post count</button>
         </div>
       </header>
 
-      <div className="invm-table">
-        <div className="invm-thead" style={{ display: 'grid', gridTemplateColumns: LIST_COLS }}>
-          <Th label="Sheet to Shelf Area" sort />
+      <div className="invm-col invm-table">
+        <div className="invm-thead invm-thead--list" style={{ gridTemplateColumns: LIST_COLS }}>
+          <Th label="Sheet to Shelf Area" sort className="invm-th--pad" />
           <Th label="Total Items" />
           <Th label="Status" />
         </div>
         {LIST_ROWS.map((r) => (
-          <div key={r.area} className="invm-row" style={{ display: 'grid', gridTemplateColumns: LIST_COLS }}>
-            <div className="invm-cell">{r.area}</div>
+          <div key={r.area} className="invm-row invm-row--list" style={{ gridTemplateColumns: LIST_COLS }}>
+            <div className="invm-cell invm-cell--pad">{r.area}</div>
             <div className="invm-cell">{r.items}</div>
-            <div className="invm-cell"><Status status={r.status} /></div>
+            <div className="invm-cell invm-cell--status"><Status status={r.status} /></div>
           </div>
         ))}
       </div>
-    </Content>
+    </div>
   </BrowserFrame>
 );
 
 /* ------------------------------------------------------------------ Screen 2
-   Sheet template editor — "Walk-in cooler". */
+   Sheet template editor — "Walk-in cooler" (Figma 705:1967). */
 const TEMPLATE_ROWS = [
   { type: 'recipe', name: 'Salsa verde', unit: 'quart' },
   { type: 'ingredient', name: 'Lime, whole', unit: 'each' },
@@ -82,9 +73,9 @@ const TEMPLATE_ROWS = [
 export const SheetTemplateScreen = () => (
   <BrowserFrame className="invm-screen-template">
     <DesktopNav crumbs={['Inventory', 'Walk-in cooler']} />
-    <Content>
-      <header className="invm-header">
-        <h1 className="invm-title invm-title--sheet">Walk-in cooler</h1>
+    <div className="invm-doc-body">
+      <header className="invm-col invm-sheet-header">
+        <div className="invm-sheet-name"><h1 className="invm-sheet-title">Walk-in cooler</h1></div>
         <div className="invm-subtitle">
           <LocationChip name="New York" /> <Dot /> Last submitted: Jan 28, 2024 <Dot /> <ViewReport />
         </div>
@@ -94,28 +85,30 @@ export const SheetTemplateScreen = () => (
         </p>
       </header>
 
-      <SearchBar placeholder="Search recipes or ingredients to add to inventory sheet" />
+      <div className="invm-col"><SearchBar placeholder="Search recipes or ingredients to add" /></div>
 
-      <div className="invm-table">
-        <div className="invm-thead" style={{ display: 'grid', gridTemplateColumns: TEMPLATE_COLS, ...gridReset }}>
-          <Th label="Item Name" style={countHead} />
-          <Th label="Unit of Count" style={countHead} />
+      <div className="invm-col invm-table">
+        <div className="invm-thead invm-thead--cells" style={{ gridTemplateColumns: TEMPLATE_COLS }}>
+          <Th label="Item Name" className="invm-th--pad" />
+          <Th label="Unit of Count" className="invm-th--pad" />
           <span />
         </div>
-        {TEMPLATE_ROWS.map((r) => (
-          <div key={r.name} className="invm-row" style={{ display: 'grid', gridTemplateColumns: TEMPLATE_COLS, ...gridReset }}>
-            <div style={countCellDiv}><ItemName type={r.type} name={r.name} /></div>
-            <div className="invm-field" style={countCellDiv}>{r.unit}</div>
-            <RowActions />
-          </div>
-        ))}
+        <div className="invm-rowgroup invm-rowgroup--gap">
+          {TEMPLATE_ROWS.map((r) => (
+            <div key={r.name} className="invm-row invm-row--bordered" style={{ gridTemplateColumns: TEMPLATE_COLS }}>
+              <div className="invm-cell invm-cell--pad invm-cell--divider"><ItemName type={r.type} name={r.name} /></div>
+              <div className="invm-cell invm-cell--pad invm-cell--divider invm-field">{r.unit}</div>
+              <RowActions />
+            </div>
+          ))}
+        </div>
       </div>
-    </Content>
+    </div>
   </BrowserFrame>
 );
 
 /* ------------------------------------------------------------------ Screen 3
-   Active count — "Walk-in cooler". */
+   Active count — "Walk-in cooler" (Figma 705:2080). */
 const COUNT_ROWS = [
   { type: 'ingredient', name: 'Blueberries', qty: 12, unit: 'case(12/16oz-fl)' },
   { type: 'ingredient', name: 'Shredded lettuce', qty: 10, unit: 'lb' },
@@ -132,78 +125,82 @@ const COUNT_ROWS = [
 export const CountScreen = () => (
   <BrowserFrame className="invm-screen-count">
     <DesktopNav crumbs={['Inventory', 'Walk-in cooler']} />
-    <Content>
-      <header className="invm-header">
-        <h1 className="invm-title invm-title--sheet">Walk-in cooler</h1>
+    <div className="invm-doc-body invm-doc-body--padb">
+      <header className="invm-col invm-sheet-header">
+        <div className="invm-sheet-name"><h1 className="invm-sheet-title">Walk-in cooler</h1></div>
         <div className="invm-subtitle">
           <LocationChip name="New York" /> <Dot /> Last submitted: Sept 08, 2024 <Dot /> <ViewReport />
         </div>
       </header>
 
-      <SearchBar placeholder="Search recipes or ingredients to add to inventory sheet" />
+      <div className="invm-col"><SearchBar placeholder="Search recipes or ingredients to add" /></div>
 
-      <div className="invm-table">
-        <div className="invm-thead" style={{ display: 'grid', gridTemplateColumns: COUNT_COLS, ...gridReset }}>
-          <Th label="Item Name" style={countHead} />
-          <Th label="Quantity" style={countHead} />
-          <Th label="Unit of Count" style={countHead} />
+      <div className="invm-col invm-table">
+        <div className="invm-thead invm-thead--cells" style={{ gridTemplateColumns: COUNT_COLS }}>
+          <Th label="Item Name" className="invm-th--pad" />
+          <Th label="Quantity" className="invm-th--pad" />
+          <Th label="Unit of Count" className="invm-th--pad" />
         </div>
-        {COUNT_ROWS.map((r) => (
-          <div key={r.name} className="invm-row" style={{ display: 'grid', gridTemplateColumns: COUNT_COLS, ...gridReset }}>
-            <div style={countCellDiv}><ItemName type={r.type} name={r.name} /></div>
-            <div className="invm-field" style={countCellDiv}>{r.qty}</div>
-            <div className="invm-field" style={countCell}>{r.unit}</div>
-          </div>
-        ))}
+        <div className="invm-rowgroup">
+          {COUNT_ROWS.map((r) => (
+            <div key={r.name} className="invm-row invm-row--bordered" style={{ gridTemplateColumns: COUNT_COLS }}>
+              <div className="invm-cell invm-cell--pad invm-cell--divider"><ItemName type={r.type} name={r.name} /></div>
+              <div className="invm-cell invm-cell--pad invm-cell--divider invm-field invm-cell--qty">{r.qty}</div>
+              <div className="invm-cell invm-cell--pad invm-field">{r.unit}</div>
+            </div>
+          ))}
+        </div>
       </div>
 
       <div className="invm-submit-row">
         <button className="invm-submit-btn">Submit count</button>
       </div>
-    </Content>
+    </div>
   </BrowserFrame>
 );
 
 /* ------------------------------------------------------------------ Screen 4
-   Mobile count — "Walk-in cooler" (same data as the desktop count screen). */
+   Mobile count — "Walk-in refrigerator" (Figma 705:2175). */
+const MOBILE_ROWS = COUNT_ROWS.slice(0, 6);
+
 export const CountMobileScreen = () => (
   <div className="invm-frame invm-frame--mobile">
     <nav className="invm-mnav">
       <div className="invm-mnav__left">
-        <span className="invm-icon-btn"><MenuIcon size={24} /></span>
+        <span className="invm-iconbtn invm-mnav__menu"><MenuIcon size={19.2} /></span>
         <img src={meezIconPng} alt="meez" className="invm-mnav__logo" />
       </div>
       <div className="invm-mnav__right">
-        <span className="invm-icon-btn"><SearchIcon size={24} /></span>
-        <span className="invm-icon-btn"><BellIcon size={24} /></span>
+        <SearchIcon size={19.2} />
+        <BellIcon size={19.2} />
       </div>
     </nav>
 
     <div className="invm-mbody">
-      <h1 className="invm-mtitle">Walk-in cooler</h1>
-      <div className="invm-msearch">
-        <span className="invm-icon"><SearchIcon size={18} /></span>
-        Search recipes or ingredients to add
+      <div className="invm-mhead">
+        <div className="invm-msheet-name"><h1 className="invm-mtitle">Walk-in refrigerator</h1></div>
+        <div className="invm-msearch">
+          <SearchIcon size={19.2} />
+          <span className="invm-msearch__text">Search recipes or ingredients to add</span>
+        </div>
       </div>
 
       <div className="invm-mrows">
-        {COUNT_ROWS.map((r, i) => (
+        {MOBILE_ROWS.map((r, i) => (
           <div key={i} className="invm-mcard">
             <div className="invm-mcard__name">
               <TypeIcon type={r.type} />
               {r.name}
             </div>
             <div className="invm-mcard__fields">
-              <div className="invm-mcard__field">{r.qty}</div>
-              <div className="invm-mcard__field">{r.unit}</div>
+              <div className="invm-mcard__qty">{r.qty}</div>
+              <div className="invm-mcard__unit">{r.unit}</div>
             </div>
           </div>
         ))}
       </div>
-    </div>
 
-    <div className="invm-msubmit">
-      <button className="invm-submit-btn invm-submit-btn--block">Submit count</button>
+      <button className="invm-msubmit">Submit count</button>
     </div>
   </div>
 );

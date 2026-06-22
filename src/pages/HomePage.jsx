@@ -2,7 +2,7 @@ import React from 'react';
 import { TypingTagline } from '../components/home/TypingTagline';
 
 export const HomePage = () => (
-  <section className="w-full h-[calc(100dvh-var(--header-h))] flex items-center justify-center">
+  <section className="w-full h-[calc(100dvh-var(--header-h))] flex flex-col items-center justify-start pt-[32vh]">
     {/* Visually hidden, but read by search engines and screen readers so the
         default landing view has a real heading with the name + role. */}
     <h1 className="sr-only">Amy Carmichael — Senior Product Designer for B2B SaaS</h1>

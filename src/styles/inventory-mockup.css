@@ -1,9 +1,10 @@
 /* ============================================================================
    Inventory mockup styles
    ----------------------------------------------------------------------------
-   Self-contained styles for the meez "Inventory" hi-fi mockup screens.
-   These screens intentionally do NOT share styling with the rest of the site,
-   so everything here is scoped under `.invm` and lives outside global.css.
+   Self-contained styles for the meez "Inventory" hi-fi mockup screens, scoped
+   under `.invm` (outside global.css). Every pixel value is taken verbatim from
+   the Figma artboards (frame 705:1891), which are authored at the same 0.8×
+   scale as the Filters mockup — so the type lands at ~12px, matching it.
    Font: Circular CustCapNum (the product's real typeface).
    ============================================================================ */
 
@@ -11,37 +12,17 @@
 @font-face {
   font-family: 'Circular CustCapNum';
   src: url('../assets/CircularCustCapNum/OpenType-TT/CircularCustCapNum-Book.otf') format('opentype');
-  font-weight: 400 450;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Circular CustCapNum';
-  src: url('../assets/CircularCustCapNum/OpenType-TT/CircularCustCapNum-BookItalic.otf') format('opentype');
-  font-weight: 400 450;
-  font-style: italic;
-  font-display: swap;
+  font-weight: 400 450; font-style: normal; font-display: swap;
 }
 @font-face {
   font-family: 'Circular CustCapNum';
   src: url('../assets/CircularCustCapNum/OpenType-TT/CircularCustCapNum-Medium.otf') format('opentype');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Circular CustCapNum';
-  src: url('../assets/CircularCustCapNum/OpenType-TT/CircularCustCapNum-Bold.otf') format('opentype');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
+  font-weight: 500; font-style: normal; font-display: swap;
 }
 @font-face {
   font-family: 'Circular CustCapNum';
   src: url('../assets/CircularCustCapNum/OpenType-TT/CircularCustCapNum-Black.otf') format('opentype');
-  font-weight: 900;
-  font-style: normal;
-  font-display: swap;
+  font-weight: 900; font-style: normal; font-display: swap;
 }
 
 /* ----- Tokens (scoped) ---------------------------------------------------- */
@@ -49,20 +30,18 @@
   /* surfaces */
   --invm-bg: #fbfbfb;
   --invm-surface: #ffffff;
-  --invm-surface-alt: #e8ebf0;
-  --invm-border: #ececec;
-  --invm-border-soft: #ececec; /* all borders use #ECECEC per design direction */
-  --invm-hover: #f1f5fe; /* field/row hover highlight */
+  --invm-border: #ececec;     /* table-header / sheet-name underlines */
+  --invm-line: #f3f3f3;       /* row hairlines, field borders */
+  --invm-hover: #f1f5fe;      /* field / row hover highlight */
 
   /* text */
   --invm-text: #050841;
-  --invm-text-secondary: #5b5d70;
-  --invm-text-tertiary: #95969c;
+  --invm-text-deep: #202962;  /* sub-headers */
+  --invm-muted: #95969c;
   --invm-placeholder: #a5a9c1;
 
   /* brand / accents */
   --invm-blue: #3d5df6;
-  --invm-blue-deep: #202962;
   --invm-green: #40b49a;
   --invm-orange: #f3a642;
 
@@ -75,514 +54,257 @@
   font-weight: 400;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
-}
 
-.invm *,
-.invm *::before,
-.invm *::after {
-  box-sizing: border-box;
-}
-
-/* SVG icon alignment helper */
-.invm-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  line-height: 0;
-}
-
-/* Brand avatar (PNG) */
-.invm-avatar {
-  border-radius: 999px;
-  object-fit: cover;
-  flex: none;
-  display: block;
-}
-
-/* ----- Stack of screens --------------------------------------------------- */
-.invm-stack {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 28px;
+  /* Scroll container: when the viewport is narrower than the frame's min-width
+     (819.2px, per the Figma annotation) the mockup scrolls horizontally rather
+     than shrinking the design further. Mirrors the Filters mockup. */
   width: 100%;
+  overflow-x: auto;
+  scrollbar-width: thin;
 }
-.invm-screen-label {
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--invm-text-tertiary);
-  margin: 0 0 -16px 2px;
+.invm *, .invm *::before, .invm *::after { box-sizing: border-box; }
+.invm img { user-select: none; -webkit-user-drag: none; }
+.invm::-webkit-scrollbar { height: 8px; }
+.invm::-webkit-scrollbar-track { background: transparent; }
+.invm::-webkit-scrollbar-thumb { background: rgba(5, 8, 65, 0.25); border-radius: 4px; }
+.invm::-webkit-scrollbar-thumb:hover { background: rgba(5, 8, 65, 0.4); }
+
+/* SVG-glyph alignment helper (icons render at native size, centered in a box). */
+.invm-icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  line-height: 0; flex: none;
 }
 
-/* ----- Screen frame ------------------------------------------------------- */
+/* Brand logo (PNG) */
+.invm-avatar { border-radius: 999px; object-fit: cover; flex: none; display: block; }
+
+/* ----- Stack of screens (concluding hero) --------------------------------- */
+/* align-items: stretch (not center) so each frame centers via its own
+   `margin: 0 auto`; centering a flex item wider than this scroll container
+   would clip its left edge out of reach. */
+.invm-stack { display: flex; flex-direction: column; align-items: stretch; gap: 28px; width: 100%; }
+
+/* ----- Frame -------------------------------------------------------------- */
 /* Flat full-bleed app screen (matches the Figma artboards — no card chrome).
-   Desktop = 1120px wide; mobile = 390px. */
+   Desktop = 1024 wide, fluid down to its 819.2 min-width; mobile = 312. */
 .invm-frame {
-  width: 1120px;
-  max-width: 100%;
+  width: 100%;
+  max-width: 1024px;
   margin: 0 auto;
   background: var(--invm-bg);
   overflow: hidden;
 }
 .invm-frame--mobile {
-  width: 390px;
-  max-height: 844px; /* frame already clips overflow */
-}
-.invm-frame--tall {
-  height: 820px;
-}
-
-/* The 1024px content column centered in the 1120 frame (→ 48px side gutters) */
-.invm-content {
-  width: 1024px;
+  width: 312px;
   max-width: 100%;
-  margin: 0 auto;
-  padding-bottom: 48px;
+  max-height: 681.6px;
+  display: flex;
+  flex-direction: column;
 }
 
-/* ----- Desktop navbar ----------------------------------------------------- */
-/* Two equal halves; chromeless (#FBFBFB, no bottom border). */
+/* The content column fills the body's inner width (frame minus the 10% gutters). */
+.invm-col { width: 100%; }
+
+/* ----- Desktop navbar (Figma navbar 705:1893) ----------------------------- */
 .invm-nav {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 24px;
-  height: 64px;
-  padding: 0 8px;
-  background: var(--invm-bg);
+  display: flex; align-items: center; justify-content: center;
+  gap: 19.2px; height: 51.2px; padding: 0 6.4px;
+  background: var(--invm-bg); width: 100%;
 }
-.invm-nav__left,
-.invm-nav__right {
-  flex: 1 0 0;
-  min-width: 0;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+.invm-nav__side { flex: 1 0 0; min-width: 0; display: flex; align-items: center; gap: 6.4px; }
+.invm-iconbtn {
+  display: flex; align-items: center; justify-content: center;
+  padding: 8px; background: none; border: none; cursor: default;
 }
-/* No gap between +New and the Help/Notifications group; keep 8px after search */
-.invm-nav__right {
-  gap: 0;
-}
-.invm-nav__right .invm-new-btn {
-  margin-left: 8px;
-}
-.invm-breadcrumb {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 14px;
-  white-space: nowrap;
-}
-.invm-breadcrumb__crumb {
-  color: var(--invm-text);
-}
-.invm-breadcrumb__sep {
-  color: var(--invm-text-tertiary);
-}
-.invm-iconbtn-group {
-  display: flex;
-  align-items: center;
-  flex: none;
-}
-.invm-icon-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--invm-placeholder);
-  background: none;
-  border: none;
-  cursor: default;
-}
-/* Nav buttons (menu / help / notifications) carry 10px padding → 44px target */
-.invm-nav .invm-icon-btn {
-  padding: 10px;
-}
+.invm-breadcrumb { display: flex; align-items: center; font-size: 11.2px; white-space: nowrap; color: var(--invm-text); }
+.invm-breadcrumb__sep { color: var(--invm-muted); white-space: pre; }
+.invm-iconbtn-group { display: flex; align-items: center; flex: none; }
 
 /* Search field (navbar) — elastic, fills the right half */
-.invm-searchfield {
-  flex: 1 0 0;
-  min-width: 0;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  height: 40px;
-  padding: 0 8px;
-  background: var(--invm-surface);
-  border: 1px solid var(--invm-border);
-  border-radius: 4px;
-  color: var(--invm-placeholder);
-  font-size: 15px;
+.invm-search {
+  flex: 1 0 0; min-width: 0;
+  display: flex; align-items: center; gap: 3.2px;
+  height: 32px; padding: 6.4px; overflow: hidden;
+  background: var(--invm-surface); border: 0.8px solid var(--invm-line);
+  border-radius: 4px; color: var(--invm-placeholder); font-size: 12px; white-space: nowrap;
 }
-
 /* "New" button */
-.invm-new-btn {
+.invm-new {
   flex: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  height: 32px;
-  padding: 0 16px;
-  background: var(--invm-blue);
-  color: #fff;
-  border: none;
-  border-radius: 20px;
-  font-size: 16px;
-  font-weight: 500;
-  cursor: default;
+  display: inline-flex; align-items: center; justify-content: center; gap: 3.2px;
+  height: 25.6px; padding: 0 12.8px;
+  background: var(--invm-blue); color: #fff; border: none; border-radius: 20px;
+  font-size: 12.8px; font-weight: 500; white-space: nowrap; cursor: default;
 }
 
-/* ----- Page header (within content) -------------------------------------- */
-.invm-header {
-  padding-top: 36px;
+/* ----- List screen: header (Figma 705:1895) ------------------------------- */
+/* All content below the global nav sits in a fluid column with 10% side gutters
+   (Figma: content x=102.4 / w=819.2 within the 1024 frame → 10% / 80%). No fixed
+   widths, so nothing bleeds as the frame scales down. */
+.invm-list-body {
+  display: flex; flex-direction: column; align-items: center;
+  padding: 0 10% 28px;
 }
-.invm-header__top {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 24px;
+.invm-list-header { display: flex; align-items: center; gap: 12.8px; padding: 25.6px 0; }
+.invm-list-header__main {
+  flex: 1 0 0; min-width: 0;
+  display: flex; align-items: center; justify-content: space-between; gap: 12.8px;
 }
-.invm-loc {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-.invm-loc__logo {
-  width: 70px;
-  height: 70px;
-  border-radius: 999px;
-  flex: none;
-}
-.invm-title {
-  font-size: 28px;
-  font-weight: 900;
-  line-height: 1.3;
-  margin: 0;
-  letter-spacing: -0.01em;
-}
-/* Sheet-name title (template/count) has a text-width bottom border */
-.invm-title--sheet {
-  display: inline-block;
-  border-bottom: 1px solid var(--invm-border);
-}
+.invm-title-block { display: flex; flex-direction: column; gap: 6.4px; min-width: 0; }
+.invm-title { font-size: 22.4px; font-weight: 900; line-height: 1.5; margin: 0; white-space: nowrap; }
+
 .invm-subtitle {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 8px;
-  font-size: 15px;
-  color: var(--invm-blue-deep);
+  display: flex; align-items: center; flex-wrap: wrap; gap: 6.4px;
+  font-size: 12px; color: var(--invm-text-deep);
 }
-.invm-sub-dot {
-  color: var(--invm-blue-deep);
-}
-.invm-loc-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-.invm-loc-chip__logo {
-  width: 18px;
-  height: 18px;
-  border-radius: 999px;
-}
-.invm-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  color: var(--invm-blue);
-  font-weight: 500;
-}
-.invm-helper {
-  margin-top: 14px;
-  font-size: 14px;
-  color: var(--invm-text-tertiary);
-}
+.invm-sub-dot { color: var(--invm-text-deep); }
+.invm-loc-chip { display: inline-flex; align-items: center; gap: 4.8px; color: var(--invm-text-deep); }
+.invm-link { display: inline-flex; align-items: center; gap: 4px; color: var(--invm-blue); }
 
 /* Outlined pill button ("Post count") */
 .invm-pill-btn {
-  display: inline-flex;
-  align-items: center;
-  height: 40px;
-  padding: 0 22px;
-  background: var(--invm-surface);
-  border: 1px solid var(--invm-text);
-  border-radius: 999px;
-  color: var(--invm-text);
-  font-size: 15px;
-  font-weight: 500;
-  white-space: nowrap;
-  cursor: default;
+  flex: none;
+  display: inline-flex; align-items: center; justify-content: center;
+  height: 32px; padding: 0 19.2px;
+  background: transparent; border: 0.8px solid var(--invm-text);
+  border-radius: 20px; color: var(--invm-text);
+  font-size: 11.2px; font-weight: 500; white-space: nowrap; cursor: default;
 }
 
-/* ----- Content search bar (full width) ------------------------------------ */
+/* ----- Template / count screens: document body (Figma 705:1969 / 705:2082) - */
+.invm-doc-body {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 19.2px; padding: 19.2px 10% 0;
+}
+.invm-doc-body--padb { padding-bottom: 28.8px; }
+
+.invm-sheet-header { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
+.invm-sheet-name { display: inline-flex; align-items: center; align-self: flex-start; border-bottom: 0.8px solid var(--invm-border); }
+.invm-sheet-title { font-size: 22.4px; font-weight: 900; line-height: 1.3; margin: 0; white-space: nowrap; }
+.invm-helper { font-size: 12px; color: var(--invm-placeholder); margin: 0; }
+
+/* ----- Content search bar (Figma single-item-search-add) ------------------ */
 .invm-searchbar {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  height: 44px;
-  max-width: 625px;
-  margin-top: 24px;
-  padding: 0 16px;
-  background: var(--invm-surface);
-  border: 1px solid var(--invm-border-soft);
-  border-radius: 4px;
-  color: var(--invm-placeholder);
-  font-size: 15px;
+  display: flex; align-items: center; gap: 6.4px;
+  height: 35.2px; width: 100%; max-width: 499.968px;
+  padding: 0 12.8px; overflow: hidden;
+  background: var(--invm-surface); border: 0.8px solid var(--invm-line);
+  border-radius: 3.2px; color: var(--invm-placeholder); font-size: 12px; white-space: nowrap;
 }
 
 /* ----- Table -------------------------------------------------------------- */
-.invm-table {
-  width: 100%;
-  margin-top: 24px;
-}
-.invm-thead {
-  display: flex;
-  align-items: center;
-  height: 39px;
-  padding: 0 16px;
-}
+.invm-table { width: 100%; display: flex; flex-direction: column; }
+.invm-thead { display: grid; align-items: center; padding: 6.4px 0; }
+.invm-thead--list { column-gap: 6.4px; border-bottom: 0.8px solid var(--invm-border); }
+.invm-thead--cells { column-gap: 0; }
 .invm-th {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 15px;
-  color: var(--invm-placeholder);
+  display: flex; align-items: center; gap: 3.2px;
+  font-size: 12px; color: var(--invm-placeholder); white-space: nowrap;
 }
-.invm-row {
-  display: flex;
-  align-items: center;
-  height: 56px;
-  padding: 0 16px;
-  border-top: 1px solid var(--invm-border);
-  background: var(--invm-surface);
-  font-size: 15px;
-}
-.invm-row:last-child {
-  border-bottom: 1px solid var(--invm-border);
-}
+.invm-th--pad { padding-left: 12.8px; }
+
+.invm-rowgroup { display: flex; flex-direction: column; }
+.invm-rowgroup--gap { gap: 3.2px; }
+
+.invm-row { display: grid; align-items: center; height: 44.8px; background: var(--invm-surface); }
+.invm-row--list { column-gap: 6.4px; border-bottom: 0.8px solid var(--invm-line); }
+.invm-row--bordered { border-top: 0.8px solid var(--invm-border); border-bottom: 0.8px solid var(--invm-border); }
+
 .invm-cell {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  min-width: 0;
+  display: flex; align-items: center; min-width: 0;
+  font-size: 12px; color: var(--invm-text); height: 100%;
 }
-.invm-cell--muted {
-  color: var(--invm-text);
-}
+.invm-cell--pad { padding: 0 12.8px; }
+.invm-cell--divider { border-right: 0.8px solid var(--invm-border); }
+.invm-cell--qty { font-size: 12px; }
+.invm-cell--status { padding-right: 19.2px; }
 
 /* Item name cell (icon + label) */
-.invm-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-.invm-item__name {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
+.invm-item { display: flex; align-items: center; gap: 6.4px; min-width: 0; }
+.invm-item__name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-/* Type icon (recipe / ingredient) */
-.invm-typeicon {
-  width: 20px;
-  height: 20px;
-  border-radius: 999px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex: none;
-  color: #fff;
+/* Type icon (16px circle: recipe / ingredient) */
+.invm-type {
+  width: 16px; height: 16px; border-radius: 100px; flex: none;
+  display: flex; align-items: center; justify-content: center;
 }
-.invm-typeicon--recipe { background: var(--invm-recipe); }
-.invm-typeicon--ingredient { background: var(--invm-ingredient); }
+.invm-type--recipe { background: var(--invm-recipe); }
+.invm-type--ingredient { background: var(--invm-ingredient); }
 
 /* Status indicator */
-.invm-status {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  color: var(--invm-text);
-}
-.invm-status__dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 999px;
-  flex: none;
-}
+.invm-status { display: inline-flex; align-items: center; gap: 4.8px; font-size: 12px; color: var(--invm-text); white-space: nowrap; }
+.invm-status__dot { width: 6.4px; height: 6.4px; border-radius: 100px; flex: none; }
 .invm-status--saved .invm-status__dot { background: var(--invm-green); }
 .invm-status--pending .invm-status__dot { background: var(--invm-blue); }
 .invm-status--not-started .invm-status__dot { background: var(--invm-orange); }
 
-/* Row action buttons (delete / drag) */
-.invm-row-actions {
-  display: flex;
-  align-items: center;
-  gap: 0;
-  margin-left: auto;
-}
-.invm-row-actions .invm-icon-btn {
-  width: 44px;
-  height: 44px;
-  color: var(--invm-placeholder);
-}
+/* Row action buttons (delete / drag) — template rows */
+.invm-row-actions { display: flex; align-items: center; justify-self: start; }
+.invm-row-actions .invm-iconbtn { color: var(--invm-placeholder); }
 
-/* Read-only "input" cells used in count / template screens */
-.invm-input {
-  display: flex;
-  align-items: center;
-  height: 40px;
-  padding: 0 12px;
-  border: 1px solid var(--invm-border-soft);
-  border-radius: 4px;
-  background: var(--invm-surface);
-  color: var(--invm-text);
-  font-size: 15px;
-}
-.invm-input--ghost {
-  border-color: transparent;
-  background: transparent;
-  padding-left: 0;
-}
-
-/* Submit CTA */
-.invm-submit-row {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 28px;
-}
+/* ----- Submit CTA (count desktop) ----------------------------------------- */
+.invm-submit-row { width: 100%; display: flex; justify-content: flex-end; }
 .invm-submit-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  height: 54px;
-  padding: 0 40px;
-  background: var(--invm-blue);
-  color: #fff;
-  border: none;
-  border-radius: 999px;
-  font-size: 16px;
-  font-weight: 500;
-  cursor: default;
-}
-.invm-submit-btn--block {
-  width: 100%;
+  display: inline-flex; align-items: center; justify-content: center; gap: 6.4px;
+  height: 43.52px; width: 222.712px; max-width: 100%; padding: 0 32px;
+  background: var(--invm-blue); color: #fff; border: none; border-radius: 40px;
+  font-size: 12.8px; font-weight: 500; white-space: nowrap; cursor: default;
 }
 
-/* ----- Mobile navbar / layout -------------------------------------------- */
+/* ----- Mobile screen (Figma 705:2175) ------------------------------------- */
 .invm-mnav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 40px;
-  padding: 0 16px;
-  background: var(--invm-surface);
-  border-bottom: 1px solid var(--invm-border);
+  flex: none;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 32px; padding: 0 6.4px;
+  background: var(--invm-surface); border-bottom: 0.8px solid var(--invm-line);
 }
-.invm-mnav__left {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.invm-mnav__logo {
-  width: 19px;
-  height: auto;
-  display: block;
-}
-.invm-mnav__right {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.invm-mbody {
-  padding: 12px 29px;
-}
-.invm-mtitle {
-  font-size: 22px;
-  font-weight: 900;
-  margin: 0 0 12px;
-}
-.invm-msearch {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  height: 56px;
-  padding: 0 14px;
-  background: var(--invm-surface);
-  border: 1px solid var(--invm-border);
-  border-radius: 4px;
-  color: var(--invm-placeholder);
-  font-size: 15px;
-}
+.invm-mnav__left { display: flex; align-items: center; gap: 1.6px; height: 100%; }
+.invm-mnav__menu { width: 32px; padding: 0; }
+.invm-mnav__logo { width: 17.28px; height: auto; display: block; }
+.invm-mnav__right { display: flex; align-items: center; gap: 8px; }
 
-/* Mobile item rows: 2-row block (name on top, Qty | Unit below),
-   separated only by #ECECEC hairlines — no cards, no radius. */
-.invm-mrows {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 10px;
+.invm-mbody { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 9.6px 23.44px; width: 100%; }
+.invm-mhead { flex: none; display: flex; flex-direction: column; align-items: flex-start; gap: 8px; width: 100%; }
+.invm-msheet-name { display: inline-flex; align-items: center; align-self: flex-start; border-bottom: 0.8px solid var(--invm-border); }
+.invm-mtitle { font-size: 17.6px; font-weight: 900; line-height: 1.3; margin: 0; color: var(--invm-text-deep); white-space: nowrap; }
+.invm-msearch {
+  display: flex; align-items: center; gap: 6.4px;
+  height: 44.8px; width: 100%; padding: 0 6.4px; overflow: hidden;
+  background: var(--invm-surface); border: 0.8px solid var(--invm-line);
+  border-radius: 3.2px; color: var(--invm-placeholder); font-size: 11.2px; line-height: 1.2;
 }
-.invm-mcard {
-  background: var(--invm-surface);
-  border-top: 1px solid var(--invm-border);
-  border-bottom: 1px solid var(--invm-border);
-}
+.invm-msearch__text { flex: 1 1 0; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.invm-mrows { flex: 1 1 auto; min-height: 0; overflow-y: auto; scrollbar-width: none; width: 100%; border-top: 0.8px solid var(--invm-line); display: flex; flex-direction: column; gap: 8px; }
+.invm-mrows::-webkit-scrollbar { display: none; }
+.invm-mcard { background: var(--invm-surface); border-top: 0.8px solid var(--invm-line); border-bottom: 0.8px solid var(--invm-line); }
 .invm-mcard__name {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  height: 56px;
-  padding: 0 8px;
-  font-size: 15px;
-  border-bottom: 1px solid var(--invm-border);
+  display: flex; align-items: center; gap: 6.4px;
+  height: 44.8px; padding: 0 6.4px; font-size: 12px;
+  border-bottom: 0.8px solid var(--invm-line);
 }
-.invm-mcard__fields {
-  display: flex;
+.invm-mcard__fields { display: flex; }
+.invm-mcard__qty, .invm-mcard__unit {
+  flex: 1; display: flex; align-items: center;
+  height: 44.8px; padding: 0 6.4px; font-size: 12px; color: var(--invm-text);
 }
-.invm-mcard__field {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  height: 56px;
-  padding: 0 8px;
-  font-size: 15px;
-}
-.invm-mcard__field:first-child {
-  border-right: 1px solid var(--invm-border);
-}
+.invm-mcard__qty { border-right: 0.8px solid var(--invm-line); }
 .invm-msubmit {
-  padding: 16px;
+  flex: none;
+  width: 100%; height: 33.6px; padding: 0 32px;
+  display: flex; align-items: center; justify-content: center; gap: 6.4px;
+  background: var(--invm-blue); color: #fff; border: none; border-radius: 32px;
+  font-size: 11.2px; font-weight: 500; cursor: default;
 }
 
 /* ----- Interactive hover states ------------------------------------------ */
 /* List page: the entire table row highlights. */
-.invm-screen-list .invm-row:hover {
-  background: var(--invm-hover);
-  cursor: pointer;
-}
-
+.invm-screen-list .invm-row--list:hover { background: var(--invm-hover); cursor: pointer; }
 /* Count + template pages: the full-width search bar highlights. */
-.invm-searchbar:hover {
-  background: var(--invm-hover);
-  cursor: pointer;
-}
-
-/* Individual input field cells highlight on their own:
-   count → quantity + unit of count; template → unit of count. */
-.invm-field:hover {
-  background: var(--invm-hover);
-  cursor: pointer;
-}
-
+.invm-searchbar:hover { background: var(--invm-hover); cursor: pointer; }
+/* Individual input field cells highlight on their own (count qty/unit, template unit). */
+.invm-field:hover { background: var(--invm-hover); cursor: pointer; }
+.invm-mcard__qty:hover, .invm-mcard__unit:hover { background: var(--invm-hover); cursor: pointer; }
 /* Row action controls (template rows). */
-.invm-del-btn:hover {
-  color: #f63d48;
-  cursor: pointer;
-}
-.invm-drag-btn:hover {
-  color: #3d5df6;
-  cursor: pointer;
-}
+.invm-del-btn:hover { color: #f63d48; cursor: pointer; }
+.invm-drag-btn:hover { color: var(--invm-blue); cursor: pointer; }

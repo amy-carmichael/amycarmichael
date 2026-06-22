@@ -1,16 +1,23 @@
 import React from 'react';
-import { IMG } from '../../components/meez/meezPageData';
-import { Panel } from '../../components/meez/Panel';
 import { ProjectPage } from '../../components/meez/ProjectPage';
 import { CaseStudyTitle } from '../../components/filters/CaseStudyTitle';
 import { CaseStudyBody as Body } from '../../components/filters/CaseStudyBody';
 import { MockupBlock, MOCKUP_MEDIA } from '../../components/filters/MockupBlock';
-import { InventoryListMock, InventoryMockups, CountScreen } from '../../components/inventory-mockup';
+import { InteractivePrototype } from '../../components/filters/InteractivePrototype';
+import { InventoryListMock, InventoryMockups, InventorySheetTemplateMock, CountScreen } from '../../components/inventory-mockup';
 import invIaDiagram from '../../assets/inventory/information-architecture-diagram.png';
 import invWfEmpty from '../../assets/inventory/inventory-empty-state-wireframe.png';
 import invWfList from '../../assets/inventory/inventory-list-wireframe.png';
 import invWfTemplate from '../../assets/inventory/inventory-template-wireframe.png';
 import invWfCount from '../../assets/inventory/inventory-count-wireframe.png';
+import invGrid1 from '../../assets/inventory/inventory-grid-1.png';
+import invGrid2 from '../../assets/inventory/inventory-grid-2.png';
+import invGrid3 from '../../assets/inventory/inventory-grid-3.png';
+import invGrid4 from '../../assets/inventory/inventory-grid-4.png';
+import invGrid5 from '../../assets/inventory/inventory-grid-5.png';
+import invGrid6 from '../../assets/inventory/inventory-grid-6.png';
+
+const INVENTORY_GRID = [invGrid1, invGrid2, invGrid3, invGrid4, invGrid5, invGrid6];
 
 export const InventoryPage = ({ showPage }) => (
   <ProjectPage showPage={showPage} projectId="inventory">
@@ -90,40 +97,26 @@ export const InventoryPage = ({ showPage }) => (
         </p>
       </Body>
 
-      {/* Concluding hero — hi-fi mockups of the finished feature */}
+      {/* Concluding hero — sheet template in the interactive-prototype frame */}
+      <MockupBlock surface={false}>
+        <InteractivePrototype>
+          <InventorySheetTemplateMock />
+        </InteractivePrototype>
+      </MockupBlock>
+
+      {/* Mobile count mockup */}
       <MockupBlock>
         <InventoryMockups />
       </MockupBlock>
+
+      {/* Photo grid — 3 × 2, full-bleed so the outer photos sit flush to the page
+          edges, with even spacing between. Stays 3-up and scales down on smaller
+          viewports. */}
+      <div className="-mx-4 grid grid-cols-3 gap-2 sm:gap-3">
+        {INVENTORY_GRID.map((src, i) => (
+          <img key={i} src={src} alt="" className="block w-full shadow-xl" />
+        ))}
+      </div>
     </div>
-
-    {/* Existing content (kept at the bottom of the page) */}
-    <Panel bg={IMG.invPg1Bg}>
-      <div className="flex w-full flex-col gap-4 md:h-full md:flex-row">
-        <img
-          src={IMG.mInvA}
-          alt="Inventory count"
-          className="w-full rounded-[8px] object-contain drop-shadow-2xl md:h-full md:min-h-0 md:min-w-0 md:flex-[1.4]"
-        />
-        <img
-          src={IMG.invPg1a}
-          alt=""
-          className="aspect-[4/3] w-full rounded-[8px] object-cover md:aspect-auto md:h-full md:min-h-0 md:min-w-0 md:flex-1"
-        />
-      </div>
-    </Panel>
-
-    <Panel bgClass="bg-gradient-to-br from-[#5f78c2] to-[#9a8fc6]">
-      <div className="flex w-full flex-col gap-4 md:h-full md:flex-row">
-        <img
-          src={IMG.mInvB}
-          alt="Inventory count sheet"
-          className="w-full rounded-[8px] object-contain drop-shadow-xl md:h-full md:min-h-0 md:min-w-0 md:flex-[1.4]"
-        />
-        <div className="flex w-full flex-col gap-4 md:min-h-0 md:min-w-0 md:flex-1">
-          <img src={IMG.invPg2a} alt="" className="aspect-[4/3] w-full rounded-[8px] object-cover md:aspect-auto md:min-h-0 md:flex-1" />
-          <img src={IMG.invPg2b} alt="" className="aspect-[4/3] w-full rounded-[8px] object-cover md:aspect-auto md:min-h-0 md:flex-1" />
-        </div>
-      </div>
-    </Panel>
   </ProjectPage>
 );

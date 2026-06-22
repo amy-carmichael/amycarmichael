@@ -17,11 +17,17 @@ export const InventoryListMock = () => (
   </div>
 );
 
-// The remaining screens (sheet template, count, mobile count).
+// Mobile count screen — the concluding mobile mockup.
 export const InventoryMockups = () => (
   <div className="invm invm-stack">
-    <SheetTemplateScreen />
     <CountMobileScreen />
+  </div>
+);
+
+// Sheet template editor — shown on its own inside the interactive-prototype frame.
+export const InventorySheetTemplateMock = () => (
+  <div className="invm">
+    <SheetTemplateScreen />
   </div>
 );
 

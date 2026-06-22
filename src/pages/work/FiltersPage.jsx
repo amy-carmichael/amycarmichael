@@ -6,6 +6,7 @@ import { ProjectPage } from '../../components/meez/ProjectPage';
 import { CaseStudyTitle } from '../../components/filters/CaseStudyTitle';
 import { CaseStudyBody as Body } from '../../components/filters/CaseStudyBody';
 import { MockupBlock, MOCKUP_MEDIA } from '../../components/filters/MockupBlock';
+import { InteractivePrototype } from '../../components/filters/InteractivePrototype';
 import { FilterMockup } from '../../components/filter-mockup';
 import { FilterAnimation } from '../../components/filter-animation';
 import filterActiveMenu from '../../assets/filter-active-menu.png';
@@ -73,8 +74,10 @@ export const FiltersPage = ({ showPage }) => (
       </Body>
 
       {/* Mockup 4 — interactive (auto-playing) demo of the redesigned filter */}
-      <MockupBlock caption="The redesigned filter, surfaced directly on the page.">
-        <FilterMockup />
+      <MockupBlock surface={false}>
+        <InteractivePrototype>
+          <FilterMockup />
+        </InteractivePrototype>
       </MockupBlock>
 
       <Body>

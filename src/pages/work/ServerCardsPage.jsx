@@ -1,6 +1,4 @@
 import React from 'react';
-import { IMG } from '../../components/meez/meezPageData';
-import { Panel } from '../../components/meez/Panel';
 import { ProjectPage } from '../../components/meez/ProjectPage';
 import { CaseStudyTitle } from '../../components/filters/CaseStudyTitle';
 import { CaseStudyBody as Body } from '../../components/filters/CaseStudyBody';
@@ -8,6 +6,21 @@ import { MockupBlock, MOCKUP_MEDIA } from '../../components/filters/MockupBlock'
 import scMockup from '../../assets/server cards/server-card-mockup.png';
 import scResearch from '../../assets/server cards/research-analysis.png';
 import scIaDiagram from '../../assets/server cards/information-architecture-diagram.png';
+import scGrid1 from '../../assets/server cards/servercard-grid-1.png';
+import scGrid2 from '../../assets/server cards/servercard-grid-2.png';
+import scGrid3 from '../../assets/server cards/servercard-grid-3.png';
+import scGrid4 from '../../assets/server cards/servercard-grid-4.png';
+import scGrid5 from '../../assets/server cards/servercard-grid-5.png';
+import scGrid6 from '../../assets/server cards/servercard-grid-6.png';
+import scGrid7 from '../../assets/server cards/servercard-grid-7.png';
+import scGrid8 from '../../assets/server cards/servercard-grid-8.png';
+import scGrid9 from '../../assets/server cards/servercard-grid-9.png';
+import scAddSection1 from '../../assets/server cards/server-card-add-section-1.png';
+import scAddSection2 from '../../assets/server cards/server-card-add-section-2.png';
+
+const SERVER_CARD_GRID = [
+  scGrid1, scGrid2, scGrid3, scGrid4, scGrid5, scGrid6, scGrid7, scGrid8, scGrid9,
+];
 
 export const ServerCardsPage = ({ showPage }) => (
   <ProjectPage showPage={showPage} projectId="server-cards">
@@ -21,7 +34,7 @@ export const ServerCardsPage = ({ showPage }) => (
       {/* Mockup 1 — server card mockup on the shared surface card (bottom ~40% cropped) */}
       <MockupBlock caption="The server card feature paved the way for a new user group: front of house restaurant staff.">
         <div
-          className="w-full overflow-hidden rounded-[2px] drop-shadow-xl"
+          className="w-full overflow-hidden rounded-[8px] drop-shadow-xl"
           style={{ aspectRatio: '5771 / 3769' }}
         >
           <img
@@ -86,11 +99,13 @@ export const ServerCardsPage = ({ showPage }) => (
         </p>
       </Body>
 
-      {/* Mockup 4 — to be added later (empty placeholder) */}
-      <MockupBlock
-        empty
-        caption="Users would be able to create, bulk print and share a view-only version of server cards."
-      />
+      {/* Mockup 4 — add-section screens, side by side */}
+      <MockupBlock caption="Users would be able to create, bulk print and share a view-only version of server cards.">
+        <div className="grid w-full grid-cols-2 gap-4">
+          <img src={scAddSection1} alt="Adding a section to a server card" className={MOCKUP_MEDIA} />
+          <img src={scAddSection2} alt="Configuring the new server card section" className={MOCKUP_MEDIA} />
+        </div>
+      </MockupBlock>
 
       <Body>
         <p>
@@ -101,71 +116,20 @@ export const ServerCardsPage = ({ showPage }) => (
           physical touchpoints.
         </p>
       </Body>
+
+      {/* Photo grid — 3 × 3, full-bleed so the outer photos sit flush to the page
+          edges, with even spacing between. Stays 3-up and scales down on smaller
+          viewports. */}
+      <div className="-mx-4 grid grid-cols-3 gap-2 sm:gap-3">
+        {SERVER_CARD_GRID.map((src, i) => (
+          <img
+            key={i}
+            src={src}
+            alt=""
+            className="block aspect-[45/32] w-full object-cover shadow-xl"
+          />
+        ))}
+      </div>
     </div>
-
-    {/* Existing content (kept at the bottom of the page) */}
-    <Panel bg={IMG.introBg}>
-      <div className="flex w-full gap-4 md:h-full">
-        <div className="flex w-full flex-1 flex-col gap-4 md:min-h-0 md:min-w-0">
-          <img src={IMG.introC0} alt="" className="aspect-[5/3] w-full rounded-[8px] object-cover md:aspect-auto md:min-h-0 md:flex-1" />
-          <img src={IMG.introC2} alt="" className="aspect-[5/6] w-full rounded-[8px] object-cover md:aspect-auto md:min-h-0 md:flex-1" />
-        </div>
-        <div className="flex w-full flex-1 flex-col gap-4 md:min-h-0 md:min-w-0">
-          <img src={IMG.introC5} alt="" className="aspect-[11/10] w-full rounded-[8px] object-cover md:aspect-auto md:min-h-0 md:flex-1" />
-          <img src={IMG.introC4} alt="" className="aspect-[3/2] w-full rounded-[8px] object-cover md:aspect-auto md:min-h-0 md:flex-1" />
-          <img src={IMG.introC1} alt="" className="aspect-[16/9] w-full rounded-[8px] object-cover object-[center_75%] md:aspect-auto md:min-h-0 md:flex-1" />
-        </div>
-      </div>
-    </Panel>
-
-    <Panel bg={IMG.scPg1Bg}>
-      <div className="flex w-full flex-col gap-4 md:h-full md:flex-row">
-        <img
-          src={IMG.serverCardBg}
-          alt=""
-          className="aspect-[3/2] w-full rounded-[8px] object-cover drop-shadow-xl md:aspect-auto md:h-full md:min-h-0 md:min-w-0 md:flex-1"
-        />
-        <img
-          src={IMG.mSc1a}
-          alt="Server card editor"
-          className="w-full rounded-[8px] object-contain drop-shadow-2xl md:h-full md:min-h-0 md:min-w-0 md:flex-1"
-        />
-      </div>
-    </Panel>
-
-    <Panel bg={IMG.scPg2Bg}>
-      <div className="flex w-full flex-col gap-4 md:h-full md:flex-row">
-        <div className="flex w-full flex-col gap-4 md:min-h-0 md:min-w-0 md:flex-1">
-          <img
-            src={IMG.mScCreate}
-            alt="Create server card dialog"
-            className="w-full rounded-[8px] object-contain drop-shadow-xl md:min-h-0 md:flex-[1.4]"
-          />
-          <img src={IMG.scPg2a} alt="" className="aspect-[4/3] w-full rounded-[8px] object-cover md:aspect-auto md:min-h-0 md:flex-1" />
-        </div>
-        <img src={IMG.scPg2b} alt="" className="aspect-[4/3] w-full rounded-[8px] object-cover md:aspect-auto md:h-full md:min-h-0 md:min-w-0 md:flex-1" />
-      </div>
-    </Panel>
-
-    <Panel bgClass="bg-[#a7b3a8]">
-      <div className="flex w-full flex-col gap-4 md:h-full md:flex-row">
-        <div className="flex w-full flex-col gap-4 md:min-h-0 md:min-w-0 md:flex-1">
-          <img src={IMG.scPg3a} alt="" className="aspect-[4/3] w-full rounded-[8px] object-cover md:aspect-auto md:min-h-0 md:flex-1" />
-          <img
-            src={IMG.mSc2a}
-            alt="Print options dialog"
-            className="w-full rounded-[8px] object-contain drop-shadow-xl md:min-h-0 md:flex-1"
-          />
-        </div>
-        <div className="flex w-full flex-col gap-4 md:min-h-0 md:min-w-0 md:flex-1">
-          <img
-            src={IMG.mSc2b}
-            alt="Choose existing photo dialog"
-            className="w-full rounded-[8px] object-contain drop-shadow-xl md:min-h-0 md:flex-1"
-          />
-          <img src={IMG.scPg3b} alt="" className="aspect-[4/3] w-full rounded-[8px] object-cover md:aspect-auto md:min-h-0 md:flex-1" />
-        </div>
-      </div>
-    </Panel>
   </ProjectPage>
 );

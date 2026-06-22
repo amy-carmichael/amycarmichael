@@ -74,13 +74,18 @@ export const TypingTagline = () => {
     <div
       role="img"
       aria-label='Animated text that ends reading "product designer"'
-      className="max-w-full overflow-hidden px-6"
+      className="max-w-full px-6"
       style={{
-        fontSize: '3rem',
+        // Fluid size so the longest line scales down on narrow viewports
+        // instead of bleeding past the frame.
+        fontSize: 'clamp(1.5rem, 6vw, 3rem)',
         fontWeight: 450,
         letterSpacing: '0.48px',
         lineHeight: 1.4,
-        whiteSpace: 'pre',
+        // pre-wrap preserves the typing whitespace but still lets the line
+        // wrap; overflowWrap guards against any single long token.
+        whiteSpace: 'pre-wrap',
+        overflowWrap: 'break-word',
         textAlign: 'center',
         color: 'var(--color-text-primary)',
       }}

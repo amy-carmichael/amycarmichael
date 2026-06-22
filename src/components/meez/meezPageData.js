@@ -1,10 +1,4 @@
-import introBg from '../../assets/meez-pg-assets/intro-bg.jpg';
 import meezLogoWhite from '../../assets/meez-pg-assets/meez-logo-white.png';
-import introC0 from '../../assets/meez-pg-assets/intro-collage-0.jpg';
-import introC1 from '../../assets/meez-pg-assets/intro-collage-1.jpg';
-import introC2 from '../../assets/meez-pg-assets/intro-collage-2.jpg';
-import introC4 from '../../assets/meez-pg-assets/intro-collage-4.jpg';
-import introC5 from '../../assets/meez-pg-assets/intro-collage-5.jpg';
 import filters1Bg from '../../assets/meez-pg-assets/filters-bg-1.jpg';
 import mFilters1 from '../../assets/meez-pg-assets/filter-landing-page-mockup.png';
 import filter2Bg from '../../assets/meez-pg-assets/filter-2-bg.jpg';
@@ -38,7 +32,7 @@ export const IMG = {
   filters1Bg, mFilters1, filter2Bg, mFilters2,
   serverCardBg, mSc1a, mSc2a, mSc2b,
   mInvA, mInvB, designSystemBg, mDs, mDs2,
-  introBg, meezLogoWhite, introC0, introC1, introC2, introC4, introC5,
+  meezLogoWhite,
   mFilters3, fPg3a, fPg3b, fPg3c,
   scPg1Bg, mScCreate, scPg2Bg, scPg2a, scPg2b, scPg3a, scPg3b,
   invPg1Bg, invPg1a, invPg2a, invPg2b,

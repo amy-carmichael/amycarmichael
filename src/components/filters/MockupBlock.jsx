@@ -2,7 +2,7 @@ import React from 'react';
 
 // Shared class for framed mockup media (image/video) — matches the established
 // rounded-[8px] + drop-shadow-xl convention used across the meez case studies.
-export const MOCKUP_MEDIA = 'w-full rounded-[2px] drop-shadow-xl';
+export const MOCKUP_MEDIA = 'w-full rounded-[8px] drop-shadow-xl';
 
 // Reusable mockup container + caption.
 // - Pass the mockup media (img/video) as children; by default it sits in a soft surface card.

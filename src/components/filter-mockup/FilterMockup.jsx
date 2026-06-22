@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import '../../styles/filter-mockup.css';
 import { Icon, FilterGlyph } from './icons';
 import { IC } from './icons.data';
@@ -16,25 +16,59 @@ const PILLS = [
   { name: 'New Purchased Items', icon: 'pillPurchase', bg: '#3f908a' },
 ];
 
+// Filter categories, in the Filter-dropdown order. `search` flags the one
+// category (Created by) whose menu carries a search field. (Figma 122:15030)
 const CATS = [
   { name: 'Needs Attention', icon: 'catNeedsAttention' },
   { name: 'Allergens', icon: 'catAllergens' },
-  { name: 'Created by', icon: 'catCreatedby' },
+  { name: 'Created by', icon: 'catCreatedby', search: true },
   { name: 'Prep Stations', icon: 'catPrepstations' },
   { name: 'Ingredients', icon: 'catIngredients' },
   { name: 'Tags', icon: 'catTags' },
 ];
 
-// In-flow "applied filter" chips. Each uses the same glyph as its category row
-// in the Filter dropdown; values are representative selections from Figma.
-const CHIPS = [
-  { cat: 'Needs Attention', icon: 'catNeedsAttention', value: 'Missing UoM' },
-  { cat: 'Allergens', icon: 'catAllergens', value: 'Allium' },
-  { cat: 'Created by', icon: 'catCreatedby', value: 'Carlos Ost' },
-  { cat: 'Prep Stations', icon: 'catPrepstations', value: 'Bakery' },
-  { cat: 'Ingredients', icon: 'catIngredients', value: 'Carrot' },
-  { cat: 'Tags', icon: 'catTags', value: 'App' },
-];
+// Each category's checkbox options — name + count split so chips can show the
+// count separately. Content is verbatim from the Figma menus in frame 122:15030.
+const OPTIONS = {
+  'Needs Attention': [
+    { name: 'Empty recipes', count: '(8)' },
+    { name: 'Missing total yield', count: '(3)' },
+    { name: 'Contains undefined ingredients', count: '(11)' },
+  ],
+  'Allergens': [
+    { name: 'Allium', count: '(6)' },
+    { name: 'Celery', count: '(1)' },
+    { name: 'Eggs', count: '(2)' },
+    { name: 'Fish', count: '(4)' },
+    { name: 'Legumes', count: '(3)' },
+  ],
+  'Created by': [
+    { name: 'Carlos Ost', count: '(8)' },
+    { name: 'Dan Roestorf', count: '(3)' },
+    { name: 'Ernesto Muñoz', count: '(11)' },
+    { name: 'Marina Melaré', count: '(18)' },
+    { name: 'Pad Madigan', count: '(4)' },
+  ],
+  'Prep Stations': [
+    { name: 'Bakery', count: '(13)' },
+    { name: 'Bar', count: '(18)' },
+    { name: 'Fry', count: '(31)' },
+    { name: 'Sauté', count: '(40)' },
+    { name: 'To go', count: '(4)' },
+  ],
+  'Ingredients': [
+    { name: 'Carrot', count: '(31)' },
+    { name: 'Onion', count: '(84)' },
+    { name: 'Potato', count: '(3)' },
+    { name: 'Leek', count: '(8)' },
+    { name: 'Tomato', count: '(11)' },
+  ],
+  'Tags': [
+    { name: 'App', count: '(33)' },
+    { name: 'Bar', count: '(18)' },
+    { name: 'Dinner', count: '(66)' },
+  ],
+};
 
 const STATUS = { review: 'Ready for Review', draft: 'Draft', published: 'Published' };
 
@@ -52,33 +86,27 @@ const ROWS = [
   { n: 'Sweet Potato Fries Delight', s: 'published', u: 'April 11' },
 ];
 
-// Needs-Attention checkbox sub-menu options (name + count split for chips).
-const CHECKS = [
-  { name: 'Empty recipes', count: '(8)' },
-  { name: 'Missing total yield', count: '(3)' },
-  { name: 'Contains undefined ingredients', count: '(11)' },
-];
-
 /* ----- AND/OR selector ----------------------------------------------------
    Specs from the filter-category-dropdown-and-or frame (Figma 122:15029):
    trigger #F3F3F3 / 12px / radius 4 / pad 3.2×6.4; hover #E8ECF7 + #3D5DF6.
    Dropdown: white, radius 6.4, pad 3.2, w64; rows pad 6.4 radius 3.2; the
    selected row is #F1F5FE + check, hover row rgba(5,8,65,0.08). */
 // Category glyph tinted to #3D5DF6 (masked so any category recolors to the
-// active blue). `box` matches <Icon box>; `fit` scales the glyph like <Icon fit>.
-const CatIconBlue = ({ name, box = 16, fit }) => {
-  let [src, w, h] = IC[name];
-  if (fit) { const s = fit / Math.max(w, h); w = w * s; h = h * s; }
-  const size = fit || box;
+// active blue). Category glyphs are authored in a 16px frame, so the glyph is
+// scaled by box/16 — box={16} renders it native (dropdown rows), box={12.8}
+// renders the 0.8× chip icon (Figma chip icons are 12.8px boxes).
+const CatIconBlue = ({ name, box = 16 }) => {
+  const [src, w, h] = IC[name];
+  const s = box / 16;
   return (
     <span
       className="fltm-caticon-blue"
       style={{
-        width: size, height: size,
+        width: box, height: box,
         // Quote the URL — Vite inlines these SVGs as data URIs whose special
         // chars make an unquoted url() invalid (silently dropped → blue square).
         WebkitMaskImage: `url("${src}")`, maskImage: `url("${src}")`,
-        WebkitMaskSize: `${w}px ${h}px`, maskSize: `${w}px ${h}px`,
+        WebkitMaskSize: `${w * s}px ${h * s}px`, maskSize: `${w * s}px ${h * s}px`,
       }}
     />
   );
@@ -105,48 +133,140 @@ const AndOr = ({ op, onChange, isOpen, onToggle }) => (
 );
 
 /* ----- Interactive filter mockup -----------------------------------------
-   Click the Filter button → category dropdown → pick "Needs Attention" to add
-   the applied-filter chips + open its checkbox sub-menu. Checking a box fills
-   the Filter count, surfaces selection chips (with AND/OR between them) and
-   turns "Clear all" live. AND/OR selectors share one value per group. */
+   Click Filter → category dropdown → pick a category to add its applied-filter
+   chip + open that category's menu. Each menu (Figma 122:15030) lists its
+   checkbox options (Created by adds a search field); checking a box surfaces a
+   selection chip in the menu's selected-container, fills the chip's value with
+   the chosen values, bumps the Filter count and turns "Clear all" live. AND/OR
+   selectors sit between selection chips and between in-flow chips. */
 export const FilterMockup = () => {
   const [dropOpen, setDropOpen] = useState(false);
-  const [subOpen, setSubOpen] = useState(false);
-  const [checked, setChecked] = useState([false, false, false]);
-  const [chips, setChips] = useState([]); // only categories the visitor has picked
-  const [subMenuOp, setSubMenuOp] = useState('And'); // shared AND/OR — sub-menu selection chips
+  const [openMenu, setOpenMenu] = useState(null);    // cat name whose menu is open
+  const [added, setAdded] = useState([]);            // chips present (cat names)
+  const [sel, setSel] = useState({});                // { cat: [optionName, ...] }
+  const [catOps, setCatOps] = useState({});          // { cat: 'And'|'Or' } — selected-container
   const [chipBarOp, setChipBarOp] = useState('And'); // shared AND/OR — in-flow chip bar
-  const [openAndOr, setOpenAndOr] = useState(null);   // id of the single open AND/OR dropdown
+  const [openAndOr, setOpenAndOr] = useState(null);  // id of the single open AND/OR dropdown
+  const [searchText, setSearchText] = useState('');  // Created-by menu search
 
-  const anyChecked = checked.some(Boolean); // a real selection → Filter (1) + Clear all live
-  const checkedItems = CHECKS.filter((_, i) => checked[i]);
-  const activeChips = CHIPS.filter((c) => chips.includes(c.cat)); // keep canonical order
+  const chips = CATS.filter((c) => added.includes(c.name)); // keep canonical order
+  const activeCount = added.filter((c) => (sel[c] || []).length).length;
+  const hasFilters = added.length > 0;
+
+  // Selected options for a category, in canonical (option) order.
+  const selectedFor = (cat) => OPTIONS[cat].filter((o) => (sel[cat] || []).includes(o.name));
+
+  // Click outside a popover closes it: the category dropdown (unless the click
+  // is on its trigger or inside it), each chip's menu (unless inside a chip or
+  // an AND/OR control), and any open AND/OR dropdown.
+  useEffect(() => {
+    const onDown = (e) => {
+      const t = e.target;
+      if (!(t instanceof Element)) return;
+      if (!t.closest('.fltm-andor-wrap')) setOpenAndOr(null);
+      if (!t.closest('.fltm-filterbtn') && !t.closest('.fltm-dropdown')) setDropOpen(false);
+      if (!t.closest('.fltm-chip') && !t.closest('.fltm-andor-wrap')) setOpenMenu(null);
+    };
+    document.addEventListener('mousedown', onDown);
+    return () => document.removeEventListener('mousedown', onDown);
+  }, []);
 
   const toggleDrop = () => setDropOpen((v) => !v);
-  const toggleSub = () => setSubOpen((v) => !v);
-  const toggleCheck = (i) => setChecked((arr) => arr.map((c, idx) => (idx === i ? !c : c)));
+  const openCatMenu = (cat) => { setOpenMenu(cat); setSearchText(''); setOpenAndOr(null); };
   const toggleAndOr = (id) => setOpenAndOr((cur) => (cur === id ? null : id));
+  const pickCatOp = (cat, v) => { setCatOps((m) => ({ ...m, [cat]: v })); setOpenAndOr(null); };
+  const pickBarOp = (v) => { setChipBarOp(v); setOpenAndOr(null); };
 
-  const pickSub = (v) => { setSubMenuOp(v); setOpenAndOr(null); };
-  const pickBar = (v) => { setChipBarOp(v); setOpenAndOr(null); };
-
-  // Picking a category adds its chip; "Needs Attention" also opens the sub-menu.
+  // Picking a category adds its chip and opens its menu.
   const addCategory = (cat) => {
-    setChips((arr) => (arr.includes(cat) ? arr : [...arr, cat]));
-    if (cat === 'Needs Attention') setSubOpen(true);
+    setAdded((arr) => (arr.includes(cat) ? arr : [...arr, cat]));
+    openCatMenu(cat);
     setDropOpen(false);
   };
 
-  const removeChip = (cat) => {
-    setChips((arr) => arr.filter((c) => c !== cat));
-    if (cat === 'Needs Attention') {
-      setSubOpen(false);
-      setChecked([false, false, false]);
-    }
+  const toggleChipMenu = (cat) => {
+    setOpenMenu((cur) => (cur === cat ? null : cat));
+    setSearchText('');
+    setOpenAndOr(null);
   };
 
-  // "Clear all" — wipe every selection in the open category.
-  const clearAll = () => setChecked([false, false, false]);
+  const removeChip = (cat) => {
+    setAdded((arr) => arr.filter((c) => c !== cat));
+    setSel((m) => { const n = { ...m }; delete n[cat]; return n; });
+    setOpenMenu((cur) => (cur === cat ? null : cur));
+  };
+
+  const toggleOption = (cat, name) => {
+    setSel((m) => {
+      const cur = m[cat] || [];
+      const next = cur.includes(name) ? cur.filter((x) => x !== name) : [...cur, name];
+      return { ...m, [cat]: next };
+    });
+  };
+
+  // "Clear all" — wipe every applied filter (chips + selections).
+  const clearAll = () => { setAdded([]); setSel({}); setOpenMenu(null); setOpenAndOr(null); };
+
+  // A category's menu, anchored under its chip (Figma 122:15030 menus).
+  const renderMenu = (c, isOpen) => {
+    const cat = c.name;
+    const selected = selectedFor(cat);
+    const opts = c.search
+      ? OPTIONS[cat].filter((o) => o.name.toLowerCase().includes(searchText.trim().toLowerCase()))
+      : OPTIONS[cat];
+    const op = catOps[cat] || 'And';
+    return (
+      <div className={`fltm-pop fltm-chipmenu${isOpen ? ' fltm-pop--open' : ''}`}>
+        <div className="fltm-submenu">
+          {selected.length > 0 && (
+            <div className="fltm-selcontainer">
+              {selected.map((item, idx) => (
+                <Fragment key={item.name}>
+                  {idx > 0 && (
+                    <AndOr
+                      op={op}
+                      onChange={(v) => pickCatOp(cat, v)}
+                      isOpen={openAndOr === `sub-${cat}-${idx}`}
+                      onToggle={() => toggleAndOr(`sub-${cat}-${idx}`)}
+                    />
+                  )}
+                  <span className="fltm-selchip">
+                    <span className="fltm-selchip__name">{item.name}</span>
+                    <span>{item.count}</span>
+                  </span>
+                </Fragment>
+              ))}
+            </div>
+          )}
+          <div className="fltm-submenu__list">
+            {c.search && (
+              <div className="fltm-search-wrap">
+                <div className="fltm-menusearch">
+                  <Icon name="navSearch" box={12.8} />
+                  <input
+                    className="fltm-menusearch__input"
+                    placeholder="Search"
+                    value={searchText}
+                    onChange={(e) => setSearchText(e.target.value)}
+                    onClick={(e) => e.stopPropagation()}
+                  />
+                </div>
+              </div>
+            )}
+            {opts.map((item) => {
+              const isChecked = (sel[cat] || []).includes(item.name);
+              return (
+                <div key={item.name} className="fltm-checkitem" onClick={() => toggleOption(cat, item.name)} role="button" tabIndex={0}>
+                  <Icon name={isChecked ? 'checkboxChecked' : 'checkboxUnchecked'} box={14.4} />
+                  {item.name} {item.count}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div className="fltm">
@@ -185,42 +305,42 @@ export const FilterMockup = () => {
               ))}
             </div>
             <div
-              className={`fltm-filterbtn${dropOpen ? ' fltm-filterbtn--open' : ''}${anyChecked ? ' fltm-filterbtn--count' : ''}`}
+              className={`fltm-filterbtn${dropOpen ? ' fltm-filterbtn--open' : ''}${activeCount ? ' fltm-filterbtn--count' : ''}`}
               onClick={toggleDrop}
               role="button"
               tabIndex={0}
             >
-              <FilterGlyph blue={anyChecked} />
-              {anyChecked ? 'Filter (1)' : 'Filter'}
+              <FilterGlyph blue={!!activeCount} />
+              {activeCount ? `Filter (${activeCount})` : 'Filter'}
             </div>
           </div>
 
           {/* ---- Active-filter bar (in flow; chips push the table down) ---- */}
           <div className={`fltm-filterbar${chips.length ? ' fltm-filterbar--active' : ''}`}>
-            {activeChips.map((c, idx) => {
-              const isNA = c.cat === 'Needs Attention';
+            {chips.map((c, idx) => {
+              const isOpen = openMenu === c.name;
+              const valueText = selectedFor(c.name).map((o) => o.name).join(', ');
               return (
-                <Fragment key={c.cat}>
+                <Fragment key={c.name}>
                   {idx > 0 && (
                     <AndOr
                       op={chipBarOp}
-                      onChange={pickBar}
+                      onChange={pickBarOp}
                       isOpen={openAndOr === `bar-${idx}`}
                       onToggle={() => toggleAndOr(`bar-${idx}`)}
                     />
                   )}
                   <div className="fltm-chip fltm-chip--active">
-                    <div
-                      className="fltm-chip__main"
-                      onClick={isNA ? toggleSub : undefined}
-                      role="button"
-                      tabIndex={0}
-                    >
-                      <CatIconBlue name={c.icon} fit={12.8} />
-                      <span className="fltm-chip__text"><b>{c.cat}:</b><span>{c.value}</span></span>
-                      <span className="fltm-chip__arrow" style={{ transform: isNA && subOpen ? 'rotate(180deg)' : 'none' }}><Icon name="chipArrow" box={12.8} /></span>
+                    <div className="fltm-chip__main" onClick={() => toggleChipMenu(c.name)} role="button" tabIndex={0}>
+                      <CatIconBlue name={c.icon} box={12.8} />
+                      <span className="fltm-chip__text">
+                        <b>{c.name}{valueText ? ':' : ''}</b>
+                        {valueText && <span>{valueText}</span>}
+                      </span>
+                      <span className="fltm-chip__arrow" style={{ transform: isOpen ? 'rotate(180deg)' : 'none' }}><Icon name="chipArrow" box={12.8} /></span>
                     </div>
-                    <div className="fltm-chip__close" onClick={() => removeChip(c.cat)} role="button" tabIndex={0}><Icon name="chipClose" box={12.8} /></div>
+                    <div className="fltm-chip__close" onClick={() => removeChip(c.name)} role="button" tabIndex={0} title="Remove"><Icon name="chipClose" box={12.8} /></div>
+                    {renderMenu(c, isOpen)}
                   </div>
                 </Fragment>
               );
@@ -265,7 +385,7 @@ export const FilterMockup = () => {
           <div className="fltm-dropdown">
             <div>
               {CATS.map((c) => {
-                const isActive = chips.includes(c.name);
+                const isActive = added.includes(c.name);
                 return (
                   <div
                     key={c.name}
@@ -284,46 +404,12 @@ export const FilterMockup = () => {
               })}
             </div>
             <div
-              className={`fltm-clearall${anyChecked ? ' fltm-clearall--active' : ''}`}
-              onClick={anyChecked ? clearAll : undefined}
+              className={`fltm-clearall${hasFilters ? ' fltm-clearall--active' : ''}`}
+              onClick={hasFilters ? clearAll : undefined}
               role="button"
               tabIndex={0}
             >
               Clear all
-            </div>
-          </div>
-        </div>
-
-        {/* ---- Checkbox sub-menu (flush under the active chip's bottom edge) ---- */}
-        <div className={`fltm-pop${subOpen ? ' fltm-pop--open' : ''}`} style={{ left: 64, top: 148 }}>
-          <div className="fltm-submenu">
-            {anyChecked && (
-              <div className="fltm-selcontainer">
-                {checkedItems.map((item, idx) => (
-                  <Fragment key={item.name}>
-                    {idx > 0 && (
-                      <AndOr
-                        op={subMenuOp}
-                        onChange={pickSub}
-                        isOpen={openAndOr === `sub-${idx}`}
-                        onToggle={() => toggleAndOr(`sub-${idx}`)}
-                      />
-                    )}
-                    <span className="fltm-selchip">
-                      <span className="fltm-selchip__name">{item.name}</span>
-                      <span>{item.count}</span>
-                    </span>
-                  </Fragment>
-                ))}
-              </div>
-            )}
-            <div className="fltm-submenu__list">
-              {CHECKS.map((item, i) => (
-                <div key={item.name} className="fltm-checkitem" onClick={() => toggleCheck(i)} role="button" tabIndex={0}>
-                  <Icon name={checked[i] ? 'checkboxChecked' : 'checkboxUnchecked'} box={14.4} />
-                  {item.name} {item.count}
-                </div>
-              ))}
             </div>
           </div>
         </div>

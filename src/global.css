@@ -3,38 +3,38 @@
 /* Futura PT — local static weights (replaces Lexend Deca) */
 @font-face {
   font-family: 'Futura PT';
-  src: url('./assets/Futura PT/FuturaCyrillicLight.ttf') format('truetype');
+  src: url('./assets/Futura PT/FuturaCyrillicLight.woff2') format('woff2');
   font-weight: 300; font-style: normal; font-display: swap;
 }
 @font-face {
   font-family: 'Futura PT';
-  src: url('./assets/Futura PT/FuturaCyrillicBook.ttf') format('truetype');
+  src: url('./assets/Futura PT/FuturaCyrillicBook.woff2') format('woff2');
   font-weight: 400; font-style: normal; font-display: swap;
 }
 @font-face {
   font-family: 'Futura PT';
-  src: url('./assets/Futura PT/FuturaCyrillicMedium.ttf') format('truetype');
+  src: url('./assets/Futura PT/FuturaCyrillicMedium.woff2') format('woff2');
+  font-weight: 450; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Futura PT';
+  src: url('./assets/Futura PT/FuturaCyrillicDemi.woff2') format('woff2');
   font-weight: 500; font-style: normal; font-display: swap;
 }
 @font-face {
   font-family: 'Futura PT';
-  src: url('./assets/Futura PT/FuturaCyrillicDemi.ttf') format('truetype');
-  font-weight: 600; font-style: normal; font-display: swap;
-}
-@font-face {
-  font-family: 'Futura PT';
-  src: url('./assets/Futura PT/FuturaCyrillicBold.ttf') format('truetype');
+  src: url('./assets/Futura PT/FuturaCyrillicBold.woff2') format('woff2');
   font-weight: 700; font-style: normal; font-display: swap;
 }
 @font-face {
   font-family: 'Futura PT';
-  src: url('./assets/Futura PT/FuturaCyrillicExtraBold.ttf') format('truetype');
+  src: url('./assets/Futura PT/FuturaCyrillicExtraBold.woff2') format('woff2');
   font-weight: 800; font-style: normal; font-display: swap;
 }
 @font-face {
   font-family: 'Futura PT';
-  src: url('./assets/Futura PT/FuturaCyrillicHeavy.ttf') format('truetype');
-  font-weight: 900; font-style: normal; font-display: swap;
+  src: url('./assets/Futura PT/FuturaCyrillicHeavy.woff2') format('woff2');
+  font-weight: 600; font-style: normal; font-display: swap;
 }
 
 :root {
@@ -127,7 +127,7 @@ body::before {
   border: 1px solid var(--color-accent-primary);
   border-radius: 100px;
   font-size: 1.125rem;
-  font-weight: 500;
+  font-weight: 450;
   line-height: 1.2;
   letter-spacing: 0.1px;
   text-decoration: none;
@@ -164,7 +164,7 @@ body::before {
 .btn-primary {
   background-color: var(--color-accent-soft);
   color: #16161D;
-  font-weight: 500;
+  font-weight: 450;
   transition: all .2s ease;
   border: 1px solid transparent;
 }
@@ -176,33 +176,33 @@ body::before {
 /* Typography Utility Classes */
 @utility display-large {
   font-size: 2rem;
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1.2;
   letter-spacing: -0.01em;
 }
 
 @utility headline-large {
   font-size: 2rem;
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1.3;
   letter-spacing: -0.01em;
 }
 
 @utility headline-medium {
   font-size: 1.75rem;
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1.3;
 }
 
 @utility headline-small {
   font-size: 1.25rem;
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1.3;
 }
 
 @utility title-large {
   font-size: 1.375rem;
-  font-weight: 500;
+  font-weight: 450;
   line-height: 1.4;
 }
 
@@ -214,7 +214,13 @@ body::before {
 
 @utility title-small {
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: 450;
+  line-height: 1.5;
+}
+
+@utility body-xlarge {
+  font-size: 1.5rem;
+  font-weight: 400;
   line-height: 1.5;
 }
 
@@ -238,25 +244,25 @@ body::before {
 
 @utility body-bold {
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: 450;
   line-height: 1.5;
 }
 
 @utility button {
   font-size: 0.9375rem;
-  font-weight: 500;
+  font-weight: 450;
   line-height: 1.2;
 }
 
 @utility label-large {
   font-size: 0.875rem;
-  font-weight: 500;
+  font-weight: 450;
   line-height: 1.5;
 }
 
 @utility label-small {
   font-size: 0.75rem;
-  font-weight: 500;
+  font-weight: 450;
   letter-spacing: 0.025em;
   line-height: 1.2;
 }
