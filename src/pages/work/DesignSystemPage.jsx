@@ -11,8 +11,8 @@ export const DesignSystemPage = ({ showPage }) => (
     {/* Case-study scroll layout — mirrors the Figma `design-system-webpage` frame */}
     <div className="flex flex-col gap-16 px-4 pt-8 pb-4 sm:gap-20">
       <CaseStudyTitle
-        title="Design System: Color Tokens"
-        subtitle="I was the project lead. I identified what work was the most valuable and then crafted an execution plan. I created product requirements and wrote tickets and then reviewed work before release."
+        title="Color Token Library"
+        subtitle="Design Lead for a color consolidation effort that turned fragmented legacy styling into the foundation for a scalable design system."
       />
 
       {/* Mockup 1 — the new color token library. Figma node 696:2098:

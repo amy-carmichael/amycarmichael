@@ -19,7 +19,7 @@ export const FiltersPage = ({ showPage }) => (
     <div className="flex flex-col gap-16 px-4 pt-8 pb-4 sm:gap-20">
       <CaseStudyTitle
         title="Filters"
-        subtitle="Design Lead to re-imagine a system to users narrow down large culinary libraries through structured search criteria."
+        subtitle="Design Lead to re-imagine a system for users narrow down large culinary libraries through structured search criteria."
       />
 
       {/* Mockup 1 — filter menu active */}
@@ -106,13 +106,8 @@ export const FiltersPage = ({ showPage }) => (
           this kind of update is reintroduce the level of cognitive load that existed with the old
           feature. I needed to maintain a clear distinction between active category chips, AND/OR
           pills and between category selection pills. To accomplish this, I strategically utilized
-          differing border radii, subtle border colors as well as layering active state colors.
-        </p>
-      </Body>
-
-      <Body>
-        <p>
-          The result was a filtering feature that consistently works across feature pages and with a
+          differing border radii, subtle border colors as well as layering active state colors. The
+          result was a filtering feature that consistently works across feature pages and with a
           multitude of device viewports. Within the first month of release, we saw an interaction
           increase of about 22%.
         </p>
