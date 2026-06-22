@@ -40,7 +40,7 @@ const MeezBlock = () => (
           <div className="flex-auto min-w-0">
             <h4 className="title-small text-[var(--color-text-primary)]">{r.title}</h4>
             <ExpDates dates={r.dates} span={r.span} />
-            {r.bullets.length > 0 && (
+            {r.bullets?.length > 0 && (
               <ul className="exp-bullets">
                 {r.bullets.map((b) => (
                   <li className="body-small text-[var(--color-text-secondary)]" key={b}>{b}</li>

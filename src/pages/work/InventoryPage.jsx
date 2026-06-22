@@ -1,12 +1,11 @@
 import React from 'react';
-import { IMG, COPY } from '../../components/meez/meezPageData';
+import { IMG } from '../../components/meez/meezPageData';
 import { Panel } from '../../components/meez/Panel';
-import { NarrativeCard } from '../../components/meez/NarrativeCard';
 import { ProjectPage } from '../../components/meez/ProjectPage';
 import { CaseStudyTitle } from '../../components/filters/CaseStudyTitle';
 import { CaseStudyBody as Body } from '../../components/filters/CaseStudyBody';
 import { MockupBlock, MOCKUP_MEDIA } from '../../components/filters/MockupBlock';
-import { InventoryListMock, InventoryMockups } from '../../components/inventory-mockup';
+import { InventoryListMock, InventoryMockups, CountScreen } from '../../components/inventory-mockup';
 import invIaDiagram from '../../assets/inventory/information-architecture-diagram.png';
 import invWfEmpty from '../../assets/inventory/inventory-empty-state-wireframe.png';
 import invWfList from '../../assets/inventory/inventory-list-wireframe.png';
@@ -73,11 +72,12 @@ export const InventoryPage = ({ showPage }) => (
         </p>
       </Body>
 
-      {/* Mockup 4 — final designs, to be added later */}
-      <MockupBlock
-        empty
-        caption="The final product was three new fully responsive features and a new and stronger connection between the Recipes and Ingredient features."
-      />
+      {/* Mockup 4 — inventory count page */}
+      <MockupBlock caption="The final product was three new fully responsive features and a new and stronger connection between the Recipes and Ingredient features.">
+        <div className="invm">
+          <CountScreen />
+        </div>
+      </MockupBlock>
 
       <Body>
         <p>
@@ -98,45 +98,30 @@ export const InventoryPage = ({ showPage }) => (
 
     {/* Existing content (kept at the bottom of the page) */}
     <Panel bg={IMG.invPg1Bg}>
-      <div className="flex h-full w-full flex-col gap-6 md:flex-row md:gap-8">
-        <div className="flex w-full flex-col gap-4 md:w-[46%]">
-          <h2 className="display-large uppercase tracking-tight text-white">Inventory</h2>
-          <NarrativeCard label="The Problem" tone="dark">{COPY.inventoryProblem}</NarrativeCard>
-          <img
-            src={IMG.invPg1a}
-            alt=""
-            className="aspect-[4/3] w-full rounded-[8px] object-cover md:aspect-auto md:min-h-0 md:flex-1"
-          />
-        </div>
-        <div className="flex w-full items-center justify-center md:h-full md:flex-1 md:min-w-0">
-          <img
-            src={IMG.mInvA}
-            alt="Inventory count"
-            className="max-h-full w-auto max-w-full drop-shadow-2xl md:h-full"
-          />
-        </div>
+      <div className="flex w-full flex-col gap-4 md:h-full md:flex-row">
+        <img
+          src={IMG.mInvA}
+          alt="Inventory count"
+          className="w-full rounded-[8px] object-contain drop-shadow-2xl md:h-full md:min-h-0 md:min-w-0 md:flex-[1.4]"
+        />
+        <img
+          src={IMG.invPg1a}
+          alt=""
+          className="aspect-[4/3] w-full rounded-[8px] object-cover md:aspect-auto md:h-full md:min-h-0 md:min-w-0 md:flex-1"
+        />
       </div>
     </Panel>
 
     <Panel bgClass="bg-gradient-to-br from-[#5f78c2] to-[#9a8fc6]">
-      <div className="flex h-full w-full flex-col gap-4 md:flex-row">
-        <div className="flex w-full flex-col gap-4 md:w-[42%]">
-          <div className="flex min-h-0 flex-1 items-center justify-center">
-            <img
-              src={IMG.mInvB}
-              alt="Inventory count sheet"
-              className="max-h-full w-auto max-w-full drop-shadow-xl"
-            />
-          </div>
-          <NarrativeCard label="Process" tone="dark">{COPY.inventoryProcess}</NarrativeCard>
-        </div>
-        <div className="flex w-full flex-col gap-4 md:flex-1">
-          <NarrativeCard label="Outcome" tone="dark">{COPY.inventoryOutcome}</NarrativeCard>
-          <NarrativeCard label="What's Next" tone="dark">{COPY.inventoryNext}</NarrativeCard>
-          <div className="flex min-h-0 flex-1 gap-4">
-            <img src={IMG.invPg2a} alt="" className="aspect-[4/3] w-full flex-1 rounded-[8px] object-cover md:aspect-auto" />
-            <img src={IMG.invPg2b} alt="" className="aspect-[4/3] w-full flex-1 rounded-[8px] object-cover md:aspect-auto" />
-          </div>
+      <div className="flex w-full flex-col gap-4 md:h-full md:flex-row">
+        <img
+          src={IMG.mInvB}
+          alt="Inventory count sheet"
+          className="w-full rounded-[8px] object-contain drop-shadow-xl md:h-full md:min-h-0 md:min-w-0 md:flex-[1.4]"
+        />
+        <div className="flex w-full flex-col gap-4 md:min-h-0 md:min-w-0 md:flex-1">
+          <img src={IMG.invPg2a} alt="" className="aspect-[4/3] w-full rounded-[8px] object-cover md:aspect-auto md:min-h-0 md:flex-1" />
+          <img src={IMG.invPg2b} alt="" className="aspect-[4/3] w-full rounded-[8px] object-cover md:aspect-auto md:min-h-0 md:flex-1" />
         </div>
       </div>
     </Panel>

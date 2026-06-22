@@ -1,0 +1,226 @@
+/* ============================================================================
+   Filters — "element build" animation (non-interactive)
+   ----------------------------------------------------------------------------
+   Replays the Figma `filter-element-animation` storyboard: the active-filter
+   chip and the filter dropdown are each assembled one element at a time, with
+   NO layout shift (every element holds its final footprint and only fades /
+   rises into place). All pixel, type, colour and SVG values are taken verbatim
+   from Figma (frame 696:3770). Scoped under `.fa`.
+   ============================================================================ */
+
+/* ----- Fonts (Circular CustCapNum — Book 450 / Medium 500) ---------------- */
+@font-face {
+  font-family: 'Circular CustCapNum';
+  src: url('../assets/CircularCustCapNum/OpenType-TT/CircularCustCapNum-Book.otf') format('opentype');
+  font-weight: 400 450; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Circular CustCapNum';
+  src: url('../assets/CircularCustCapNum/OpenType-TT/CircularCustCapNum-Medium.otf') format('opentype');
+  font-weight: 500; font-style: normal; font-display: swap;
+}
+
+/* ----- Stage (page-component → "component page layout", node 696:3766) -----
+   Scoped tokens mirror the sibling mockups (`.invm`, `.fltm`). Hex values are
+   the Figma variables; the surface reuses the global design-system token. */
+.fa {
+  --fa-surface: var(--color-bg-surface, #e8ebf0); /* bg-surface */
+  --fa-blue150: #dbe4ff;  /* Blue/blue150 */
+  --fa-blue300: #3d5df6;  /* Blue/blue300 */
+  --fa-blue100: #f1f5fe;  /* Blue/blue100 */
+  --fa-blue600: #050841;  /* Blue/blue600 */
+  --fa-grey25:  #fbfbfb;  /* Grey/grey25 */
+  --fa-grey50:  #f3f3f3;  /* Grey/grey50 */
+  --fa-grey100: #ececec;  /* Grey/grey100 */
+  --fa-greyblue100: #a5a9c1; /* GreyBlue/greyBlue100 */
+  /* meez-shadow (variable): #00000014 0/3/3/1 + #00000026 0/1/4/1.
+     The dev-mode drop-shadow auto-export is lossy (no spread, halved blur) —
+     transcribed straight from the variable instead. */
+  --fa-shadow: 0 3px 3px 1px #00000014, 0 1px 4px 1px #00000026;
+  --fa-scale: 1;          /* set by ResizeObserver; proportional down-scale */
+
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 0;
+  background: var(--fa-surface);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.fa *, .fa *::before, .fa *::after { box-sizing: border-box; }
+.fa img { display: block; user-select: none; -webkit-user-drag: none; }
+
+/* Sizer reserves the *scaled* footprint (both axes) so a down-scaled canvas
+   leaves no dead band; the canvas paints into it from the top-left. */
+.fa-sizer {
+  width: calc(743px * var(--fa-scale));   /* 743 = chip 263 + gap 80 + dd 400 */
+  height: calc(360px * var(--fa-scale));
+  flex: none;
+}
+.fa-canvas {
+  width: 743px;
+  height: 360px;
+  transform: scale(var(--fa-scale));
+  transform-origin: top left;
+  transition: opacity 0.5s ease;          /* unit fade-out on loop reset */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 80px;
+  font-family: 'Circular CustCapNum', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: var(--fa-blue600);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+.fa-canvas--out { opacity: 0; }
+
+/* ----- Reveal primitive (one-by-one, no layout shift) ---------------------
+   Pure cross-fade — no positional movement. */
+.fa-rv {
+  opacity: 0;
+  transition: opacity 0.55s ease;
+}
+.fa-rv.fa-in {
+  opacity: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .fa-rv { opacity: 1; transform: none; transition: none; }
+  .fa-canvas { transition: none; }
+}
+
+/* Shared 16px icon box */
+.fa-ic16 { width: 16px; height: 16px; flex: none; }
+.fa-ic16 img { width: 16px; height: 16px; }
+
+/* ============================ Active filter chip ==========================
+   filter-chip 696:3525 — 263×31, gap 1px between selection + delete halves. */
+/* Elevation: the shared mockup-image shadow (Tailwind drop-shadow-xl, applied
+   in the markup) — a filter drop-shadow traces the pill outline. */
+.fa-chip { display: flex; gap: 1px; align-items: stretch; flex: none; }
+
+.fa-chip__sel {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  padding: 4px 6px 4px 8px;     /* pl8 pr6 py4 */
+  background: var(--fa-blue150);
+  border-radius: 99px 0 0 99px;
+}
+.fa-chip__del {
+  display: flex;
+  align-items: center;
+  padding: 4px 6px;
+  background: var(--fa-blue150);
+  border-radius: 0 100px 100px 0;
+}
+
+/* label-text 696:3528 — fixed 180px so the value can fade in with no shift. */
+.fa-chip__label {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  width: 180px;
+  white-space: nowrap;
+  color: var(--fa-blue300);
+  font-size: 15px;
+}
+.fa-chip__title { font-weight: 500; flex: none; }            /* Medium */
+.fa-chip__value {
+  font-weight: 450;            /* Book */
+  flex: 1 1 0;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ============================== Dropdown menu =============================
+   dropdown-menu-final-state 696:3651 — 400×360. */
+.fa-dd {
+  width: 400px;
+  height: 360px;
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px;
+  background: var(--fa-grey25);
+  border-radius: 4px;
+  box-shadow: var(--fa-shadow);
+}
+
+/* applied-filters-container 696:3652 — fixed 86px (two wrapped rows). */
+.fa-applied {
+  width: 100%;
+  height: 86px;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  background: #ffffff;
+  border-radius: 4px;
+  box-shadow: inset 0 0 0 1px var(--fa-grey100);   /* border w/ no layout px */
+}
+.fa-selfilter {
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 8px;
+  background: var(--fa-blue100);
+  border-radius: 4px;
+  font-size: 15px;
+  font-weight: 450;
+  color: var(--fa-blue600);
+  white-space: nowrap;
+}
+.fa-andor {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  padding: 4px 8px;
+  background: var(--fa-grey50);
+  border-radius: 4px;
+  font-size: 15px;
+  font-weight: 450;
+  color: var(--fa-blue600);
+  text-align: center;
+}
+
+/* filter-item-container 696:3666 — fixed 250px. */
+.fa-items {
+  width: 100%;
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  background: #ffffff;
+  border-radius: 4px;
+  box-shadow: inset 0 0 0 1px var(--fa-grey100);
+}
+.fa-search-wrap { padding: 8px; }
+.fa-search {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 8px;
+  background: var(--fa-grey25);
+  border-radius: 4px;
+  box-shadow: inset 0 0 0 1px var(--fa-grey100);
+}
+.fa-search__ph { font-size: 15px; font-weight: 450; color: var(--fa-greyblue100); }
+
+.fa-opt {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 8px;
+  font-size: 15px;
+  font-weight: 450;
+  color: var(--fa-blue600);
+}
+.fa-cb { width: 18px; height: 18px; flex: none; }
+.fa-cb img { width: 18px; height: 18px; }

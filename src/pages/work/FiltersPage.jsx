@@ -1,12 +1,14 @@
 import React from 'react';
-import { IMG, COPY } from '../../components/meez/meezPageData';
+import { IMG } from '../../components/meez/meezPageData';
 import { Panel } from '../../components/meez/Panel';
-import { NarrativeCard } from '../../components/meez/NarrativeCard';
+import { SlideTitle } from '../../components/meez/SlideTitle';
 import { ProjectPage } from '../../components/meez/ProjectPage';
 import { CaseStudyTitle } from '../../components/filters/CaseStudyTitle';
 import { CaseStudyBody as Body } from '../../components/filters/CaseStudyBody';
 import { MockupBlock, MOCKUP_MEDIA } from '../../components/filters/MockupBlock';
 import { FilterMockup } from '../../components/filter-mockup';
+import { FilterAnimation } from '../../components/filter-animation';
+import filterActiveMenu from '../../assets/filter-active-menu.png';
 import chatgptPrompt from '../../assets/filters/chatgpt-prompt.png';
 import filterScroll from '../../assets/filters/filter-scroll.mov';
 
@@ -19,8 +21,14 @@ export const FiltersPage = ({ showPage }) => (
         subtitle="Design Lead to re-imagine a system to users narrow down large culinary libraries through structured search criteria."
       />
 
-      {/* Mockup 1 — omitted for this iteration */}
-      <MockupBlock empty />
+      {/* Mockup 1 — filter menu active */}
+      <MockupBlock>
+        <img
+          src={filterActiveMenu}
+          alt="The redesigned filter with the category menu active"
+          className={`${MOCKUP_MEDIA} object-top`}
+        />
+      </MockupBlock>
 
       <Body>
         <p>
@@ -36,7 +44,7 @@ export const FiltersPage = ({ showPage }) => (
         <img
           src={chatgptPrompt}
           alt="ChatGPT breaking down the existing filter aggregation logic"
-          className={`${MOCKUP_MEDIA} max-w-2xl`}
+          className="w-full rounded-[8px] drop-shadow-xl max-w-2xl"
         />
       </MockupBlock>
 
@@ -77,8 +85,13 @@ export const FiltersPage = ({ showPage }) => (
         </p>
       </Body>
 
-      {/* Mockup 5 — omitted for this iteration */}
-      <MockupBlock empty />
+      {/* Mockup 5 — element-build animation (active filter chip + dropdown) */}
+      <MockupBlock
+        surface={false}
+        caption="I strategically utilized differing border radii, subtle border colors as well as layering active state colors."
+      >
+        <FilterAnimation />
+      </MockupBlock>
 
       <Body>
         <p>
@@ -103,56 +116,53 @@ export const FiltersPage = ({ showPage }) => (
       </Body>
     </div>
 
-    {/* Existing content (kept at the bottom of the page) */}
-    <Panel bg={IMG.filters1Bg}>
-      <div className="flex h-full w-full flex-col gap-6 md:flex-row md:items-center md:gap-8">
-        <div className="flex w-full flex-col gap-5 md:w-[38%]">
-          <h2 className="display-large uppercase tracking-tight text-white">Filters</h2>
-          <NarrativeCard label="The Why" tone="dark">{COPY.filtersWhy}</NarrativeCard>
-        </div>
-        <div className="flex w-full items-center justify-end md:flex-1 md:min-w-0">
-          <img
-            src={IMG.mFilters1}
-            alt="Filters interface"
-            className="w-full drop-shadow-2xl"
-          />
-        </div>
-      </div>
-    </Panel>
-
-    <Panel bg={IMG.filter2Bg}>
-      <div className="flex h-full w-full flex-col items-center justify-center gap-8 md:flex-row">
-        <NarrativeCard label="The Process" tone="light" className="w-full max-w-[280px] shrink-0 md:w-[280px]">
-          {COPY.filtersProcess}
-        </NarrativeCard>
+    {/* End-of-page mockup slides (Figma `filter-slides`, node 697:3786) — reduced
+        mockups placed on the background photo, each with the meez/Filters title. */}
+    <Panel bare bg={IMG.filters1Bg}>
+      <div className="relative flex flex-col gap-6 p-6 md:absolute md:inset-0 md:gap-0 md:p-0">
+        <SlideTitle title="Filters" tone="light" className="md:absolute md:left-[6.7%] md:top-[16.7%] md:z-10" />
         <img
-          src={IMG.mFilters2}
-          alt="Filter UI collage"
-          className="h-auto max-h-[60vh] w-auto max-w-full object-contain drop-shadow-xl md:h-[400px] md:max-h-full"
+          src={IMG.mFilters1}
+          alt="Redesigned filter landing page with the category menu open"
+          className="w-full rounded-[8px] drop-shadow-2xl md:absolute md:left-[32%] md:top-[15.7%] md:w-[62%]"
         />
       </div>
     </Panel>
 
-    <Panel bgClass="bg-[#e4ecf6]">
-      <div className="flex h-full w-full flex-col gap-6">
-        <div className="flex flex-col gap-5 md:min-h-0 md:flex-1 md:flex-row">
-          <div className="flex justify-center md:shrink-0">
-            <img
-              src={IMG.mFilters3}
-              alt="Created-by filter"
-              className="max-h-[60vh] w-auto object-contain drop-shadow-xl md:h-full md:max-h-full"
-            />
-          </div>
-          <div className="flex flex-1 flex-col gap-5">
-            <img src={IMG.fPg3a} alt="" className="aspect-[4/3] w-full rounded-[8px] object-cover md:aspect-auto md:min-h-0 md:flex-1" />
-            <img src={IMG.fPg3b} alt="" className="aspect-[4/3] w-full rounded-[8px] object-cover object-top md:aspect-auto md:min-h-0 md:flex-1" />
-          </div>
-          <img src={IMG.fPg3c} alt="" className="aspect-[3/4] w-full rounded-[8px] object-cover md:aspect-auto md:h-full md:w-[26%]" />
-        </div>
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-          <NarrativeCard label="The Outcome">{COPY.filtersOutcome}</NarrativeCard>
-          <NarrativeCard label="Future">{COPY.filtersFuture}</NarrativeCard>
-        </div>
+    <Panel bare bg={IMG.filter2Bg}>
+      <div className="relative flex flex-col gap-6 p-6 md:absolute md:inset-0 md:gap-0 md:p-0">
+        <SlideTitle title="Filters" tone="dark" className="md:absolute md:left-[6.8%] md:top-[37%] md:z-10" />
+        <img
+          src={IMG.mFilters2}
+          alt="Filter category builder with AND/OR controls"
+          className="w-full rounded-[8px] drop-shadow-xl md:absolute md:left-[21.8%] md:top-[18.8%] md:w-[56.5%]"
+        />
+      </div>
+    </Panel>
+
+    <Panel bare bgClass="bg-[#e4ecf6]">
+      <div className="relative flex flex-col gap-6 p-6 md:absolute md:inset-0 md:gap-0 md:p-0">
+        <img
+          src={IMG.mFilters3}
+          alt="Created-by filter menu"
+          className="w-full rounded-[8px] drop-shadow-xl md:absolute md:left-[8.75%] md:top-[14.2%] md:w-[24.6%]"
+        />
+        <img
+          src={IMG.fPg3a}
+          alt=""
+          className="aspect-[3/2] w-full rounded-[8px] object-cover md:absolute md:left-[37.6%] md:top-[13.1%] md:aspect-auto md:h-[28.6%] md:w-[27.8%]"
+        />
+        <img
+          src={IMG.fPg3c}
+          alt=""
+          className="aspect-[2/3] w-full rounded-[8px] object-cover md:absolute md:left-[67%] md:top-[13.3%] md:aspect-auto md:h-[58.1%] md:w-[24.2%]"
+        />
+        <img
+          src={IMG.fPg3b}
+          alt=""
+          className="aspect-[3/2] w-full rounded-[8px] object-cover md:absolute md:left-[37.6%] md:top-[44%] md:aspect-auto md:h-[28.6%] md:w-[27.8%]"
+        />
+        <SlideTitle title="Filters" tone="dark" className="md:absolute md:left-[78%] md:top-[79.7%] md:z-10" />
       </div>
     </Panel>
   </ProjectPage>

@@ -99,7 +99,7 @@ export const Th = ({ label, sort = false, style }) => (
 /* Trailing delete + drag controls on template rows. */
 export const RowActions = () => (
   <div className="invm-row-actions">
-    <span className="invm-icon-btn"><DeleteIcon size={22} /></span>
-    <span className="invm-icon-btn"><DragIcon size={20} /></span>
+    <span className="invm-icon-btn invm-del-btn"><DeleteIcon size={22} /></span>
+    <span className="invm-icon-btn invm-drag-btn"><DragIcon size={20} /></span>
   </div>
 );

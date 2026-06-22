@@ -52,6 +52,7 @@
   --invm-surface-alt: #e8ebf0;
   --invm-border: #ececec;
   --invm-border-soft: #ececec; /* all borders use #ECECEC per design direction */
+  --invm-hover: #f1f5fe; /* field/row hover highlight */
 
   /* text */
   --invm-text: #050841;
@@ -127,9 +128,10 @@
 }
 .invm-frame--mobile {
   width: 390px;
+  max-height: 844px; /* frame already clips overflow */
 }
 .invm-frame--tall {
-  height: 900px;
+  height: 820px;
 }
 
 /* The 1024px content column centered in the 1120 frame (→ 48px side gutters) */
@@ -553,4 +555,34 @@
 }
 .invm-msubmit {
   padding: 16px;
+}
+
+/* ----- Interactive hover states ------------------------------------------ */
+/* List page: the entire table row highlights. */
+.invm-screen-list .invm-row:hover {
+  background: var(--invm-hover);
+  cursor: pointer;
+}
+
+/* Count + template pages: the full-width search bar highlights. */
+.invm-searchbar:hover {
+  background: var(--invm-hover);
+  cursor: pointer;
+}
+
+/* Individual input field cells highlight on their own:
+   count → quantity + unit of count; template → unit of count. */
+.invm-field:hover {
+  background: var(--invm-hover);
+  cursor: pointer;
+}
+
+/* Row action controls (template rows). */
+.invm-del-btn:hover {
+  color: #f63d48;
+  cursor: pointer;
+}
+.invm-drag-btn:hover {
+  color: #3d5df6;
+  cursor: pointer;
 }

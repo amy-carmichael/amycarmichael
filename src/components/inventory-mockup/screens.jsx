@@ -30,7 +30,7 @@ const LIST_ROWS = [
 ];
 
 export const InventoryListScreen = () => (
-  <BrowserFrame className="invm-frame--tall">
+  <BrowserFrame className="invm-frame--tall invm-screen-list">
     <DesktopNav crumbs={['Home', 'Inventory']} />
     <Content>
       <header className="invm-header">
@@ -80,7 +80,7 @@ const TEMPLATE_ROWS = [
 ];
 
 export const SheetTemplateScreen = () => (
-  <BrowserFrame>
+  <BrowserFrame className="invm-screen-template">
     <DesktopNav crumbs={['Inventory', 'Walk-in cooler']} />
     <Content>
       <header className="invm-header">
@@ -105,7 +105,7 @@ export const SheetTemplateScreen = () => (
         {TEMPLATE_ROWS.map((r) => (
           <div key={r.name} className="invm-row" style={{ display: 'grid', gridTemplateColumns: TEMPLATE_COLS, ...gridReset }}>
             <div style={countCellDiv}><ItemName type={r.type} name={r.name} /></div>
-            <div style={countCellDiv}>{r.unit}</div>
+            <div className="invm-field" style={countCellDiv}>{r.unit}</div>
             <RowActions />
           </div>
         ))}
@@ -130,7 +130,7 @@ const COUNT_ROWS = [
 ];
 
 export const CountScreen = () => (
-  <BrowserFrame>
+  <BrowserFrame className="invm-screen-count">
     <DesktopNav crumbs={['Inventory', 'Walk-in cooler']} />
     <Content>
       <header className="invm-header">
@@ -151,8 +151,8 @@ export const CountScreen = () => (
         {COUNT_ROWS.map((r) => (
           <div key={r.name} className="invm-row" style={{ display: 'grid', gridTemplateColumns: COUNT_COLS, ...gridReset }}>
             <div style={countCellDiv}><ItemName type={r.type} name={r.name} /></div>
-            <div style={countCellDiv}>{r.qty}</div>
-            <div style={countCell}>{r.unit}</div>
+            <div className="invm-field" style={countCellDiv}>{r.qty}</div>
+            <div className="invm-field" style={countCell}>{r.unit}</div>
           </div>
         ))}
       </div>

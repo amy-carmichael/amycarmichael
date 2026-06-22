@@ -21,7 +21,6 @@ export const InventoryListMock = () => (
 export const InventoryMockups = () => (
   <div className="invm invm-stack">
     <SheetTemplateScreen />
-    <CountScreen />
     <CountMobileScreen />
   </div>
 );

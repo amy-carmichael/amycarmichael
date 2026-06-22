@@ -1,12 +1,11 @@
 import React from 'react';
-import { IMG, COPY, INTRO } from '../../components/meez/meezPageData';
+import { IMG } from '../../components/meez/meezPageData';
 import { Panel } from '../../components/meez/Panel';
-import { NarrativeCard } from '../../components/meez/NarrativeCard';
 import { ProjectPage } from '../../components/meez/ProjectPage';
 import { CaseStudyTitle } from '../../components/filters/CaseStudyTitle';
 import { CaseStudyBody as Body } from '../../components/filters/CaseStudyBody';
 import { MockupBlock, MOCKUP_MEDIA } from '../../components/filters/MockupBlock';
-import scIpad from '../../assets/server cards/server-card-mockup-ipad.png';
+import scMockup from '../../assets/server cards/server-card-mockup.png';
 import scResearch from '../../assets/server cards/research-analysis.png';
 import scIaDiagram from '../../assets/server cards/information-architecture-diagram.png';
 
@@ -19,13 +18,18 @@ export const ServerCardsPage = ({ showPage }) => (
         subtitle="Design Lead on a service-reference feature that turns recipe data into staff-facing item guidance."
       />
 
-      {/* Mockup 1 — iPad device render, bare on the page */}
-      <MockupBlock surface={false}>
-        <img
-          src={scIpad}
-          alt="Server card displayed on an iPad"
-          className="mx-auto w-full max-w-xl"
-        />
+      {/* Mockup 1 — server card mockup on the shared surface card (bottom ~40% cropped) */}
+      <MockupBlock caption="The server card feature paved the way for a new user group: front of house restaurant staff.">
+        <div
+          className="w-full overflow-hidden rounded-[2px] drop-shadow-xl"
+          style={{ aspectRatio: '5771 / 3769' }}
+        >
+          <img
+            src={scMockup}
+            alt="Server card mockup"
+            className="h-full w-full object-cover object-top"
+          />
+        </div>
       </MockupBlock>
 
       <Body>
@@ -101,112 +105,65 @@ export const ServerCardsPage = ({ showPage }) => (
 
     {/* Existing content (kept at the bottom of the page) */}
     <Panel bg={IMG.introBg}>
-      <div className="flex h-full w-full flex-col gap-8 md:flex-row md:items-center">
-        <div className="flex w-full flex-col md:w-[44%]">
-          <div className="flex flex-col gap-6">
-            <img
-              src={IMG.meezLogoWhite}
-              alt="meez"
-              className="h-[30px] w-auto self-start"
-            />
-            <p className="headline-medium text-white">{INTRO.body}</p>
-            <div className="flex flex-wrap gap-2">
-              {INTRO.pills.map((p) => (
-                <span
-                  key={p}
-                  className="rounded-full border border-white/40 px-3 py-1 body-small text-white"
-                >
-                  {p}
-                </span>
-              ))}
-            </div>
-          </div>
-          <div className="mt-8 md:mt-20">
-            <p className="title-large text-white">{INTRO.role}</p>
-            <p className="title-large text-white">{INTRO.year}</p>
-          </div>
+      <div className="flex w-full gap-4 md:h-full">
+        <div className="flex w-full flex-1 flex-col gap-4 md:min-h-0 md:min-w-0">
+          <img src={IMG.introC0} alt="" className="aspect-[5/3] w-full rounded-[8px] object-cover md:aspect-auto md:min-h-0 md:flex-1" />
+          <img src={IMG.introC2} alt="" className="aspect-[5/6] w-full rounded-[8px] object-cover md:aspect-auto md:min-h-0 md:flex-1" />
         </div>
-
-        <div className="flex w-full items-center gap-3 md:flex-1">
-          <div className="flex flex-1 flex-col gap-3">
-            <img src={IMG.introC0} alt="" className="w-full aspect-[5/3] rounded-[8px] object-cover" />
-            <img src={IMG.introC2} alt="" className="w-full aspect-[5/6] rounded-[8px] object-cover" />
-          </div>
-          <div className="flex flex-1 flex-col gap-3">
-            <img src={IMG.introC5} alt="" className="w-full aspect-[11/10] rounded-[8px] object-cover" />
-            <img src={IMG.introC4} alt="" className="w-full aspect-[3/2] rounded-[8px] object-cover" />
-            <img src={IMG.introC1} alt="" className="w-full aspect-[16/9] rounded-[8px] object-cover object-[center_75%]" />
-          </div>
+        <div className="flex w-full flex-1 flex-col gap-4 md:min-h-0 md:min-w-0">
+          <img src={IMG.introC5} alt="" className="aspect-[11/10] w-full rounded-[8px] object-cover md:aspect-auto md:min-h-0 md:flex-1" />
+          <img src={IMG.introC4} alt="" className="aspect-[3/2] w-full rounded-[8px] object-cover md:aspect-auto md:min-h-0 md:flex-1" />
+          <img src={IMG.introC1} alt="" className="aspect-[16/9] w-full rounded-[8px] object-cover object-[center_75%] md:aspect-auto md:min-h-0 md:flex-1" />
         </div>
       </div>
     </Panel>
 
     <Panel bg={IMG.scPg1Bg}>
-      <div className="flex h-full w-full flex-col gap-6 md:flex-row md:items-stretch md:gap-6">
-        <div className="flex w-full flex-col md:w-[500px]">
-          <img
-            src={IMG.serverCardBg}
-            alt=""
-            className="aspect-[3/2] w-full rounded-[8px] object-cover drop-shadow-xl md:aspect-auto md:min-h-0 md:flex-1"
-          />
-          <h2 className="mt-6 display-large uppercase tracking-tight text-[var(--color-text-primary)]">
-            Server Cards
-          </h2>
-          <NarrativeCard label="The Why" className="mt-3">{COPY.serverWhy}</NarrativeCard>
-        </div>
-        <div className="flex w-full items-end justify-center md:h-full md:flex-1 md:min-w-0">
-          <img
-            src={IMG.mSc1a}
-            alt="Server card editor"
-            className="max-h-full w-auto max-w-full drop-shadow-2xl md:h-full"
-          />
-        </div>
+      <div className="flex w-full flex-col gap-4 md:h-full md:flex-row">
+        <img
+          src={IMG.serverCardBg}
+          alt=""
+          className="aspect-[3/2] w-full rounded-[8px] object-cover drop-shadow-xl md:aspect-auto md:h-full md:min-h-0 md:min-w-0 md:flex-1"
+        />
+        <img
+          src={IMG.mSc1a}
+          alt="Server card editor"
+          className="w-full rounded-[8px] object-contain drop-shadow-2xl md:h-full md:min-h-0 md:min-w-0 md:flex-1"
+        />
       </div>
     </Panel>
 
     <Panel bg={IMG.scPg2Bg}>
-      <div className="flex h-full w-full flex-col gap-4 md:flex-row">
-        <div className="flex w-full flex-col gap-4 md:w-1/2">
-          <div className="flex min-h-0 flex-[1.4] items-center justify-center">
-            <img
-              src={IMG.mScCreate}
-              alt="Create server card dialog"
-              className="max-h-full w-auto max-w-full drop-shadow-xl"
-            />
-          </div>
+      <div className="flex w-full flex-col gap-4 md:h-full md:flex-row">
+        <div className="flex w-full flex-col gap-4 md:min-h-0 md:min-w-0 md:flex-1">
+          <img
+            src={IMG.mScCreate}
+            alt="Create server card dialog"
+            className="w-full rounded-[8px] object-contain drop-shadow-xl md:min-h-0 md:flex-[1.4]"
+          />
           <img src={IMG.scPg2a} alt="" className="aspect-[4/3] w-full rounded-[8px] object-cover md:aspect-auto md:min-h-0 md:flex-1" />
         </div>
-        <div className="flex w-full flex-col gap-4 md:w-1/2">
-          <img src={IMG.scPg2b} alt="" className="aspect-[4/3] w-full rounded-[8px] object-cover md:aspect-auto md:min-h-0 md:flex-1" />
-          <NarrativeCard label="The Process" className="flex-1">{COPY.serverProcess}</NarrativeCard>
-        </div>
+        <img src={IMG.scPg2b} alt="" className="aspect-[4/3] w-full rounded-[8px] object-cover md:aspect-auto md:h-full md:min-h-0 md:min-w-0 md:flex-1" />
       </div>
     </Panel>
 
     <Panel bgClass="bg-[#a7b3a8]">
-      <div className="flex h-full w-full flex-col gap-4 md:flex-row">
-        <div className="flex flex-1 flex-col gap-3">
+      <div className="flex w-full flex-col gap-4 md:h-full md:flex-row">
+        <div className="flex w-full flex-col gap-4 md:min-h-0 md:min-w-0 md:flex-1">
           <img src={IMG.scPg3a} alt="" className="aspect-[4/3] w-full rounded-[8px] object-cover md:aspect-auto md:min-h-0 md:flex-1" />
-          <div className="flex items-center justify-center md:min-h-0 md:flex-1">
-            <img
-              src={IMG.mSc2a}
-              alt="Print options dialog"
-              className="max-h-[70vh] w-auto max-w-full drop-shadow-xl md:max-h-full"
-            />
-          </div>
+          <img
+            src={IMG.mSc2a}
+            alt="Print options dialog"
+            className="w-full rounded-[8px] object-contain drop-shadow-xl md:min-h-0 md:flex-1"
+          />
         </div>
-        <div className="flex flex-1 flex-col gap-3">
-          <div className="flex items-center justify-center md:min-h-0 md:flex-1">
-            <img
-              src={IMG.mSc2b}
-              alt="Choose existing photo dialog"
-              className="max-h-[70vh] w-auto max-w-full drop-shadow-xl md:max-h-full"
-            />
-          </div>
+        <div className="flex w-full flex-col gap-4 md:min-h-0 md:min-w-0 md:flex-1">
+          <img
+            src={IMG.mSc2b}
+            alt="Choose existing photo dialog"
+            className="w-full rounded-[8px] object-contain drop-shadow-xl md:min-h-0 md:flex-1"
+          />
           <img src={IMG.scPg3b} alt="" className="aspect-[4/3] w-full rounded-[8px] object-cover md:aspect-auto md:min-h-0 md:flex-1" />
-        </div>
-        <div className="flex w-full items-center md:w-[30%]">
-          <NarrativeCard label="Next">{COPY.serverNext}</NarrativeCard>
         </div>
       </div>
     </Panel>

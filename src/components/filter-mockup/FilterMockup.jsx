@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import '../../styles/filter-mockup.css';
-import { Icon, FilterGlyph, IC } from './icons';
+import { Icon, FilterGlyph } from './icons';
+import { IC } from './icons.data';
 import avatar from '../../assets/inventory/avatar.png';
 
 const Iconsrc = (name) => IC[name][0];
@@ -24,6 +25,17 @@ const CATS = [
   { name: 'Tags', icon: 'catTags' },
 ];
 
+// In-flow "applied filter" chips. Each uses the same glyph as its category row
+// in the Filter dropdown; values are representative selections from Figma.
+const CHIPS = [
+  { cat: 'Needs Attention', icon: 'catNeedsAttention', value: 'Missing UoM' },
+  { cat: 'Allergens', icon: 'catAllergens', value: 'Allium' },
+  { cat: 'Created by', icon: 'catCreatedby', value: 'Carlos Ost' },
+  { cat: 'Prep Stations', icon: 'catPrepstations', value: 'Bakery' },
+  { cat: 'Ingredients', icon: 'catIngredients', value: 'Carrot' },
+  { cat: 'Tags', icon: 'catTags', value: 'App' },
+];
+
 const STATUS = { review: 'Ready for Review', draft: 'Draft', published: 'Published' };
 
 const ROWS = [
@@ -39,60 +51,102 @@ const ROWS = [
   { n: 'Crunchy Garlic Parmesan Potato Fries', s: 'published', u: 'April 11' },
   { n: 'Sweet Potato Fries Delight', s: 'published', u: 'April 11' },
 ];
-const CHECKS = ['Empty recipes (8)', 'Missing total yield (3)', 'Contains undefined ingredients (11)'];
 
-/* ----- Animation timeline ------------------------------------------------- */
-// Each step: duration + the UI state it represents. Cursor is [x, y] in the
-// 1024×665.6 frame coordinate space. Move steps are >= the 0.55s cursor easing
-// so the pointer always settles before the next beat; the table never reorders.
-const STEPS = [
-  { ms: 1400, cur: [905, 86], idle: true },                                      // rest — cursor hidden; repositions onto the Filter btn invisibly
-  { ms: 500, cur: [905, 86] },                                                   // fade in ON the Filter btn (no move → no back-and-forth)
-  { ms: 450, cur: [905, 86], fHover: true },                                     // arrived → hover appears
-  { ms: 240, cur: [905, 86], fHover: true, down: true },                         // click
-  { ms: 1100, cur: [905, 86], fHover: true, drop: true },                        // dropdown open
-  { ms: 550, cur: [790, 130], fHover: true, drop: true },                        // MOVE to "Needs Attention" (no hover yet)
-  { ms: 450, cur: [790, 130], fHover: true, drop: true, catHover: true },        // arrived → row hover appears
-  { ms: 240, cur: [790, 130], fHover: true, drop: true, catHover: true, down: true }, // click
-  { ms: 950, cur: [110, 166], chip: true, sub: true },                           // chip + sub-menu in, move to checkbox 1
-  { ms: 240, cur: [110, 166], chip: true, sub: true, down: true },               // click
-  { ms: 820, cur: [110, 191], chip: true, sub: true, c1: true },                 // checked 1, move to checkbox 2
-  { ms: 240, cur: [110, 191], chip: true, sub: true, c1: true, down: true },     // click
-  { ms: 1800, cur: [110, 191], chip: true, sub: true, c1: true, c2: true },      // checked 2 → chip active, Filter (1)
-  { ms: 3000, cur: [110, 191], chip: true, c1: true, c2: true, idle: true },     // sub-menu fades out; cursor fades out; hold applied end state ~3s
-  { ms: 1100, cur: [110, 191], idle: true },                                     // chip fades out → rest (cursor stays hidden), then loop
+// Needs-Attention checkbox sub-menu options (name + count split for chips).
+const CHECKS = [
+  { name: 'Empty recipes', count: '(8)' },
+  { name: 'Missing total yield', count: '(3)' },
+  { name: 'Contains undefined ingredients', count: '(11)' },
 ];
 
-const Cursor = ({ x, y, down, hidden }) => (
-  <svg
-    className={`fltm-cursor${down ? ' fltm-cursor--down' : ''}${hidden ? ' fltm-cursor--hidden' : ''}`}
-    viewBox="0 0 24 24"
-    style={{ transform: `translate(${x}px, ${y}px)` }}
-    aria-hidden="true"
-  >
-    <path d="M4 2 L4 20 L9 15 L12.6 21.6 L15.1 20.4 L11.7 14 L18 14 Z" fill="#fff" stroke="#1a1a1a" strokeWidth="1.3" strokeLinejoin="round" />
-  </svg>
+/* ----- AND/OR selector ----------------------------------------------------
+   Specs from the filter-category-dropdown-and-or frame (Figma 122:15029):
+   trigger #F3F3F3 / 12px / radius 4 / pad 3.2×6.4; hover #E8ECF7 + #3D5DF6.
+   Dropdown: white, radius 6.4, pad 3.2, w64; rows pad 6.4 radius 3.2; the
+   selected row is #F1F5FE + check, hover row rgba(5,8,65,0.08). */
+// Category glyph tinted to #3D5DF6 (masked so any category recolors to the
+// active blue). `box` matches <Icon box>; `fit` scales the glyph like <Icon fit>.
+const CatIconBlue = ({ name, box = 16, fit }) => {
+  let [src, w, h] = IC[name];
+  if (fit) { const s = fit / Math.max(w, h); w = w * s; h = h * s; }
+  const size = fit || box;
+  return (
+    <span
+      className="fltm-caticon-blue"
+      style={{
+        width: size, height: size,
+        // Quote the URL — Vite inlines these SVGs as data URIs whose special
+        // chars make an unquoted url() invalid (silently dropped → blue square).
+        WebkitMaskImage: `url("${src}")`, maskImage: `url("${src}")`,
+        WebkitMaskSize: `${w}px ${h}px`, maskSize: `${w}px ${h}px`,
+      }}
+    />
+  );
+};
+
+const AndOr = ({ op, onChange, isOpen, onToggle }) => (
+  <span className="fltm-andor-wrap">
+    <button type="button" className="fltm-andor" onClick={onToggle}>{op}</button>
+    <div className={`fltm-andor-menu${isOpen ? ' fltm-andor-menu--open' : ''}`}>
+      {['Or', 'And'].map((o) => (
+        <div
+          key={o}
+          className={`fltm-andor-opt${op === o ? ' fltm-andor-opt--sel' : ''}`}
+          onClick={() => onChange(o)}
+          role="button"
+          tabIndex={0}
+        >
+          <span>{o}</span>
+          {op === o && <Icon name="andorCheck" box={12.8} />}
+        </div>
+      ))}
+    </div>
+  </span>
 );
 
+/* ----- Interactive filter mockup -----------------------------------------
+   Click the Filter button → category dropdown → pick "Needs Attention" to add
+   the applied-filter chips + open its checkbox sub-menu. Checking a box fills
+   the Filter count, surfaces selection chips (with AND/OR between them) and
+   turns "Clear all" live. AND/OR selectors share one value per group. */
 export const FilterMockup = () => {
-  const [step, setStep] = useState(0);
+  const [dropOpen, setDropOpen] = useState(false);
+  const [subOpen, setSubOpen] = useState(false);
+  const [checked, setChecked] = useState([false, false, false]);
+  const [chips, setChips] = useState([]); // only categories the visitor has picked
+  const [subMenuOp, setSubMenuOp] = useState('And'); // shared AND/OR — sub-menu selection chips
+  const [chipBarOp, setChipBarOp] = useState('And'); // shared AND/OR — in-flow chip bar
+  const [openAndOr, setOpenAndOr] = useState(null);   // id of the single open AND/OR dropdown
 
-  useEffect(() => {
-    let cancelled = false;
-    let t;
-    let i = 0;
-    const tick = () => {
-      if (cancelled) return;
-      setStep(i);
-      t = setTimeout(() => { i = (i + 1) % STEPS.length; tick(); }, STEPS[i].ms);
-    };
-    tick();
-    return () => { cancelled = true; clearTimeout(t); };
-  }, []);
+  const anyChecked = checked.some(Boolean); // a real selection → Filter (1) + Clear all live
+  const checkedItems = CHECKS.filter((_, i) => checked[i]);
+  const activeChips = CHIPS.filter((c) => chips.includes(c.cat)); // keep canonical order
 
-  const st = STEPS[step];
-  const [cx, cy] = st.cur;
-  const active = !!(st.c1 || st.c2); // a filter is applied → chip filled + "Filter (1)"
+  const toggleDrop = () => setDropOpen((v) => !v);
+  const toggleSub = () => setSubOpen((v) => !v);
+  const toggleCheck = (i) => setChecked((arr) => arr.map((c, idx) => (idx === i ? !c : c)));
+  const toggleAndOr = (id) => setOpenAndOr((cur) => (cur === id ? null : id));
+
+  const pickSub = (v) => { setSubMenuOp(v); setOpenAndOr(null); };
+  const pickBar = (v) => { setChipBarOp(v); setOpenAndOr(null); };
+
+  // Picking a category adds its chip; "Needs Attention" also opens the sub-menu.
+  const addCategory = (cat) => {
+    setChips((arr) => (arr.includes(cat) ? arr : [...arr, cat]));
+    if (cat === 'Needs Attention') setSubOpen(true);
+    setDropOpen(false);
+  };
+
+  const removeChip = (cat) => {
+    setChips((arr) => arr.filter((c) => c !== cat));
+    if (cat === 'Needs Attention') {
+      setSubOpen(false);
+      setChecked([false, false, false]);
+    }
+  };
+
+  // "Clear all" — wipe every selection in the open category.
+  const clearAll = () => setChecked([false, false, false]);
 
   return (
     <div className="fltm">
@@ -130,22 +184,47 @@ export const FilterMockup = () => {
                 </div>
               ))}
             </div>
-            <div className={`fltm-filterbtn${st.fHover ? ' fltm-filterbtn--hover' : ''}${active ? ' fltm-filterbtn--count' : ''}`}>
-              <FilterGlyph blue={active} />
-              {active ? 'Filter (1)' : 'Filter'}
+            <div
+              className={`fltm-filterbtn${dropOpen ? ' fltm-filterbtn--open' : ''}${anyChecked ? ' fltm-filterbtn--count' : ''}`}
+              onClick={toggleDrop}
+              role="button"
+              tabIndex={0}
+            >
+              <FilterGlyph blue={anyChecked} />
+              {anyChecked ? 'Filter (1)' : 'Filter'}
             </div>
           </div>
 
-          {/* ---- Active-filter bar (in flow; chip lives here and pushes the table down) ---- */}
-          <div className={`fltm-filterbar${st.chip ? ' fltm-filterbar--active' : ''}`}>
-            <div className={`fltm-chip${active ? ' fltm-chip--active' : ''}`}>
-              <div className="fltm-chip__main">
-                <Icon name="chipInfo" box={12.8} />
-                <span className="fltm-chip__text"><b>Needs Attention:</b><span>Missing UoM</span></span>
-                <span className="fltm-chip__arrow" style={{ transform: st.sub ? 'rotate(180deg)' : 'none' }}><Icon name="chipArrow" box={12.8} /></span>
-              </div>
-              <div className="fltm-chip__close"><Icon name="chipClose" box={12.8} /></div>
-            </div>
+          {/* ---- Active-filter bar (in flow; chips push the table down) ---- */}
+          <div className={`fltm-filterbar${chips.length ? ' fltm-filterbar--active' : ''}`}>
+            {activeChips.map((c, idx) => {
+              const isNA = c.cat === 'Needs Attention';
+              return (
+                <Fragment key={c.cat}>
+                  {idx > 0 && (
+                    <AndOr
+                      op={chipBarOp}
+                      onChange={pickBar}
+                      isOpen={openAndOr === `bar-${idx}`}
+                      onToggle={() => toggleAndOr(`bar-${idx}`)}
+                    />
+                  )}
+                  <div className="fltm-chip fltm-chip--active">
+                    <div
+                      className="fltm-chip__main"
+                      onClick={isNA ? toggleSub : undefined}
+                      role="button"
+                      tabIndex={0}
+                    >
+                      <CatIconBlue name={c.icon} fit={12.8} />
+                      <span className="fltm-chip__text"><b>{c.cat}:</b><span>{c.value}</span></span>
+                      <span className="fltm-chip__arrow" style={{ transform: isNA && subOpen ? 'rotate(180deg)' : 'none' }}><Icon name="chipArrow" box={12.8} /></span>
+                    </div>
+                    <div className="fltm-chip__close" onClick={() => removeChip(c.cat)} role="button" tabIndex={0}><Icon name="chipClose" box={12.8} /></div>
+                  </div>
+                </Fragment>
+              );
+            })}
           </div>
 
           {/* ---- Table ---- */}
@@ -181,39 +260,73 @@ export const FilterMockup = () => {
           </div>
         </div>
 
-        {/* ---- Category dropdown (right) ---- */}
-        <div className={`fltm-pop${st.drop ? ' fltm-pop--open' : ''}`} style={{ right: 64, top: 108 }}>
+        {/* ---- Category dropdown (flush under the Filter button) ---- */}
+        <div className={`fltm-pop${dropOpen ? ' fltm-pop--open' : ''}`} style={{ right: 64, top: 102.4 }}>
           <div className="fltm-dropdown">
             <div>
-              {CATS.map((c, i) => (
-                <div key={c.name} className={`fltm-catrow${st.catHover && i === 0 ? ' fltm-catrow--hover' : ''}`}>
-                  <span className="fltm-catrow__label"><Icon name={c.icon} box={16} /> {c.name}</span>
-                  <Icon name="catAdd" box={16} />
-                </div>
-              ))}
-            </div>
-            <div className="fltm-clearall">Clear all</div>
-          </div>
-        </div>
-
-        {/* ---- Checkbox sub-menu (overlay below the chip) ---- */}
-        <div className={`fltm-pop${st.sub ? ' fltm-pop--open' : ''}`} style={{ left: 64, top: 146 }}>
-          <div className="fltm-submenu">
-            <div className="fltm-submenu__list">
-              {CHECKS.map((label, i) => {
-                const checked = (i === 0 && st.c1) || (i === 1 && st.c2);
+              {CATS.map((c) => {
+                const isActive = chips.includes(c.name);
                 return (
-                  <div key={label} className="fltm-checkitem">
-                    <Icon name={checked ? 'checkboxChecked' : 'checkboxUnchecked'} box={14.4} />
-                    {label}
+                  <div
+                    key={c.name}
+                    className={`fltm-catrow${isActive ? ' fltm-catrow--active' : ''}`}
+                    onClick={() => addCategory(c.name)}
+                    role="button"
+                    tabIndex={0}
+                  >
+                    <span className="fltm-catrow__label">
+                      {isActive ? <CatIconBlue name={c.icon} box={16} /> : <Icon name={c.icon} box={16} />}
+                      {c.name}
+                    </span>
+                    <span className="fltm-catadd" aria-hidden="true" />
                   </div>
                 );
               })}
             </div>
+            <div
+              className={`fltm-clearall${anyChecked ? ' fltm-clearall--active' : ''}`}
+              onClick={anyChecked ? clearAll : undefined}
+              role="button"
+              tabIndex={0}
+            >
+              Clear all
+            </div>
           </div>
         </div>
 
-        <Cursor x={cx} y={cy} down={!!st.down} hidden={!!st.idle} />
+        {/* ---- Checkbox sub-menu (flush under the active chip's bottom edge) ---- */}
+        <div className={`fltm-pop${subOpen ? ' fltm-pop--open' : ''}`} style={{ left: 64, top: 148 }}>
+          <div className="fltm-submenu">
+            {anyChecked && (
+              <div className="fltm-selcontainer">
+                {checkedItems.map((item, idx) => (
+                  <Fragment key={item.name}>
+                    {idx > 0 && (
+                      <AndOr
+                        op={subMenuOp}
+                        onChange={pickSub}
+                        isOpen={openAndOr === `sub-${idx}`}
+                        onToggle={() => toggleAndOr(`sub-${idx}`)}
+                      />
+                    )}
+                    <span className="fltm-selchip">
+                      <span className="fltm-selchip__name">{item.name}</span>
+                      <span>{item.count}</span>
+                    </span>
+                  </Fragment>
+                ))}
+              </div>
+            )}
+            <div className="fltm-submenu__list">
+              {CHECKS.map((item, i) => (
+                <div key={item.name} className="fltm-checkitem" onClick={() => toggleCheck(i)} role="button" tabIndex={0}>
+                  <Icon name={checked[i] ? 'checkboxChecked' : 'checkboxUnchecked'} box={14.4} />
+                  {item.name} {item.count}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

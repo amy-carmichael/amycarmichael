@@ -3,12 +3,15 @@ import { IMG } from '../components/meez/meezPageData';
 import netflixThumb from '../assets/netflix-gallery-web/IMG_0027.jpg';
 import inventoryThumb from '../assets/inventory/inventory-device-mockup.png';
 import filterActiveMenu from '../assets/filter-active-menu.png';
+import serverCardThumb from '../assets/server cards/server-card-mockup.png';
+import dsThumbBg from '../assets/design system/thumbnail-bg.jpg';
+import dsColorSystem from '../assets/design system/Meez color system.png';
 
 const GALLERY = [
   { route: 'work/filters',       title: 'Filters',       desc: 'Scalable search and filtering',      img: IMG.filters1Bg,     imgClass: 'object-cover', overlay: filterActiveMenu, scrim: 'from-black/75 via-black/5 to-transparent' },
-  { route: 'work/server-cards',  title: 'Server Cards',  desc: 'Front-of-house allergen references',  img: IMG.scPg1Bg,        imgClass: 'object-cover' },
+  { route: 'work/server-cards',  title: 'Server Cards',  desc: 'Front-of-house allergen references',  img: serverCardThumb,    imgClass: 'object-cover object-top' },
   { route: 'work/inventory',     title: 'Inventory',     desc: 'Connected inventory and costing',     img: inventoryThumb,     imgClass: 'object-cover object-[50%_14%]', scrim: 'from-black/85 via-black/40 to-transparent' },
-  { route: 'work/design-system', title: 'Design System', desc: 'Tokens for a unified UI',             img: IMG.designSystemBg, imgClass: 'object-cover' },
+  { route: 'work/design-system', title: 'Design System', desc: 'Tokens for a unified UI',             img: dsThumbBg,          imgClass: 'object-cover', poster: dsColorSystem, scrim: 'from-black/70 via-black/10 to-transparent' },
   { route: 'netflix',            title: 'Netflix',       desc: "Showrunner's assistant concept",      img: netflixThumb,       imgClass: 'object-cover object-[50%_-40px]' },
 ];
 
@@ -37,6 +40,18 @@ export const WorkPage = ({ showPage }) => (
                   src={p.overlay}
                   alt=""
                   className="block aspect-[9/4] w-full object-cover object-top"
+                />
+              </div>
+            </div>
+          )}
+          {p.poster && (
+            <div className="pointer-events-none absolute inset-0">
+              {/* Color-token sheet floats as a poster on the soft gradient; top swatches read as the hero */}
+              <div className="absolute left-1/2 top-[8%] w-[64%] -translate-x-1/2 overflow-hidden rounded-lg bg-white shadow-[0_18px_45px_-12px_rgba(0,0,0,0.5)] ring-1 ring-black/10 transition-transform duration-300 group-hover:-translate-y-1 group-hover:scale-[1.02]">
+                <img
+                  src={p.poster}
+                  alt=""
+                  className="block aspect-[7/5] w-full object-cover object-top"
                 />
               </div>
             </div>
