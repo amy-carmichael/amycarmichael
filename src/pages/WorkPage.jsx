@@ -30,6 +30,8 @@ export const WorkPage = ({ showPage }) => (
           <img
             src={p.img}
             alt={`${p.title} project`}
+            loading="lazy"
+            decoding="async"
             className={`block aspect-[16/10] w-full transition-transform duration-300 group-hover:scale-[1.03] ${p.imgClass} ${p.overlay ? 'brightness-[0.95] saturate-[1.05]' : ''}`}
           />
           {p.overlay && (
@@ -39,6 +41,8 @@ export const WorkPage = ({ showPage }) => (
                 <img
                   src={p.overlay}
                   alt=""
+                  loading="lazy"
+                  decoding="async"
                   className="block aspect-[9/4] w-full object-cover object-top"
                 />
               </div>
@@ -51,6 +55,8 @@ export const WorkPage = ({ showPage }) => (
                 <img
                   src={p.poster}
                   alt=""
+                  loading="lazy"
+                  decoding="async"
                   className="block aspect-[7/5] w-full object-cover object-top"
                 />
               </div>

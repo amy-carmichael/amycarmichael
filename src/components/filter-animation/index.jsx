@@ -92,19 +92,19 @@ export const FilterAnimation = () => {
           <div className={`fa-chip fa-rv drop-shadow-xl ${on(1)}`}>
             <div className="fa-chip__sel">
               <span className={`fa-ic16 fa-rv ${on(2)}`}>
-                <img src={prepStationIcon} alt="" />
+                <img loading="lazy" decoding="async" src={prepStationIcon} alt="" />
               </span>
               <span className="fa-chip__label">
                 <span className={`fa-chip__title fa-rv ${on(3)}`}>Prep Stations:</span>
                 <span className={`fa-chip__value fa-rv ${on(4)}`}>Bakery, Sauté</span>
               </span>
               <span className={`fa-ic16 fa-rv ${on(5)}`}>
-                <img src={arrowDown} alt="" />
+                <img loading="lazy" decoding="async" src={arrowDown} alt="" />
               </span>
             </div>
             <div className="fa-chip__del">
               <span className={`fa-ic16 fa-rv ${on(6)}`}>
-                <img src={closeIconRounded} alt="" />
+                <img loading="lazy" decoding="async" src={closeIconRounded} alt="" />
               </span>
             </div>
           </div>
@@ -130,14 +130,14 @@ export const FilterAnimation = () => {
             <div className={`fa-items fa-rv ${on(9)}`}>
               <div className="fa-search-wrap">
                 <div className={`fa-search fa-rv ${on(10)}`}>
-                  <span className="fa-ic16"><img src={searchIcon} alt="" /></span>
+                  <span className="fa-ic16"><img loading="lazy" decoding="async" src={searchIcon} alt="" /></span>
                   <span className="fa-search__ph">Search</span>
                 </div>
               </div>
               {FILTER_OPTIONS.map((o) => (
                 <div key={o.label} className={`fa-opt fa-rv ${on(o.step)}`}>
                   <span className="fa-cb">
-                    <img src={o.checkAt && step >= o.checkAt ? checkboxChecked : checkboxIcon} alt="" />
+                    <img loading="lazy" decoding="async" src={o.checkAt && step >= o.checkAt ? checkboxChecked : checkboxIcon} alt="" />
                   </span>
                   <span>{o.label}</span>
                 </div>

@@ -19,7 +19,7 @@ export const DesignSystemPage = ({ showPage }) => (
           #FBFBFB (meez/grey25) card · 8px radius · shadow-medium · 699.891px wide */}
       <MockupBlock caption="The new color token library consisted of 44 key colors.">
         <div className="flex w-full max-w-[699.891px] flex-col items-center justify-center overflow-hidden rounded-[8px] bg-[#FBFBFB] shadow-[0px_12px_28px_0px_rgba(0,0,0,0.2),0px_2px_4px_0px_rgba(0,0,0,0.1),inset_0px_0px_0px_1px_rgba(255,255,255,0.05)]">
-          <img
+          <img loading="lazy" decoding="async"
             src={dsColorSystem}
             alt="Meez color token library organized by hue and shade"
             className="block w-full"

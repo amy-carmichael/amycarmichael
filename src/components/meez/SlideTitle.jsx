@@ -11,7 +11,7 @@ export const SlideTitle = ({ title, tone = 'dark', className = '' }) => {
   const light = tone === 'light';
   return (
     <div className={`flex flex-col items-start ${className}`}>
-      <img
+      <img loading="lazy" decoding="async"
         src={light ? meezLogoWhite : meezLogoDark}
         alt="meez"
         className="mb-1 h-5 w-auto sm:h-6"

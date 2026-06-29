@@ -14,7 +14,7 @@ const ExpDates = ({ dates, span }) => (
 const ExpLogo = ({ icon, mark }) => (
   <div className="exp-logo">
     {icon ? (
-      <img src={icon} alt="" />
+      <img src={icon} alt="" loading="lazy" decoding="async" />
     ) : (
       <span className="title-medium text-[var(--color-text-tertiary)] opacity-[0.55] select-none">{mark}</span>
     )}

@@ -22,6 +22,7 @@ export const NetflixPage = () => (
           src={img.src}
           alt=""
           loading="lazy"
+          decoding="async"
           className="mb-4 block w-full break-inside-avoid rounded-[8px] shadow-[0_1px_2px_rgba(0,0,0,0.08)]"
         />
       ))}

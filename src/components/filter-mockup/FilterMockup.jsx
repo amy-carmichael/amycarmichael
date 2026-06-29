@@ -363,15 +363,15 @@ export const FilterMockup = () => {
                 <div className="fltm-tgrid fltm-trow" key={r.n + i}>
                   <span className="fltm-cc"><Icon name="checkboxUnchecked" box={16} /></span>
                   <span className="fltm-type">
-                    <img className="bg" src={Iconsrc('typeBg')} width={19.2} height={19.2} alt="" />
-                    <img className="glyph" src={Iconsrc('typeRecipe')} width={9.64} height={10.29} alt="" />
+                    <img loading="lazy" decoding="async" className="bg" src={Iconsrc('typeBg')} width={19.2} height={19.2} alt="" />
+                    <img loading="lazy" decoding="async" className="glyph" src={Iconsrc('typeRecipe')} width={9.64} height={10.29} alt="" />
                   </span>
                   <span className="fltm-name">{r.n}</span>
                   <span className={`fltm-status fltm-status--${r.s}`}>
                     <span className="fltm-status__dot" />
                     <span className="fltm-status__label">{STATUS[r.s]}</span>
                   </span>
-                  <span><img className="fltm-avatar" src={avatar} alt="" /></span>
+                  <span><img loading="lazy" decoding="async" className="fltm-avatar" src={avatar} alt="" /></span>
                   <span className="fltm-updated">{r.u}</span>
                   <span className="fltm-cc"><Icon name="more" box={16} /></span>
                 </div>

@@ -7,7 +7,7 @@ export const Panel = ({ bg, bgPosition = 'object-center', bgClass = '', left, ri
     }`}
   >
     {bg && (
-      <img
+      <img loading="lazy" decoding="async"
         src={bg}
         alt=""
         aria-hidden="true"

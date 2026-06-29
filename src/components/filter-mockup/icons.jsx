@@ -19,7 +19,7 @@ export const Icon = ({ name, box, fit, style }) => {
     w = +(w * s).toFixed(3);
     h = +(h * s).toFixed(3);
   }
-  const img = <img src={src} width={w} height={h} alt="" style={{ display: 'block' }} />;
+  const img = <img loading="lazy" decoding="async" src={src} width={w} height={h} alt="" style={{ display: 'block' }} />;
   const size = box || fit;
   if (!size) return img;
   return (
@@ -37,7 +37,7 @@ export const FilterGlyph = ({ blue = false }) => {
     <span style={{ width: 19.2, height: 19.2, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flex: 'none' }}>
       <span style={{ display: 'inline-flex', alignItems: 'center', gap: 0.667, transform: 'rotate(-90deg) scaleY(-1)' }}>
         {bars.map((s, i) => (
-          <img key={i} src={s} width={3.33} height={12} alt="" style={{ display: 'block' }} />
+          <img loading="lazy" decoding="async" key={i} src={s} width={3.33} height={12} alt="" style={{ display: 'block' }} />
         ))}
       </span>
     </span>

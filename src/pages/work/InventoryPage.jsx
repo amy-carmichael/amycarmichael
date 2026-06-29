@@ -50,7 +50,7 @@ export const InventoryPage = ({ showPage }) => (
 
       {/* Mockup 2 — information architecture diagram */}
       <MockupBlock caption="Information architecture mapping to locate where in the product this feature would live.">
-        <img
+        <img loading="lazy" decoding="async"
           src={invIaDiagram}
           alt="Information architecture diagram for the inventory feature"
           className={MOCKUP_MEDIA}
@@ -60,10 +60,10 @@ export const InventoryPage = ({ showPage }) => (
       {/* Mockup 3 — early wireframes (2×2 grid) */}
       <MockupBlock caption="Early wireframes of the feature helped me plan ahead.">
         <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2">
-          <img src={invWfEmpty} alt="Inventory empty-state wireframe" className={MOCKUP_MEDIA} />
-          <img src={invWfList} alt="Inventory list wireframe" className={MOCKUP_MEDIA} />
-          <img src={invWfTemplate} alt="Inventory sheet template wireframe" className={MOCKUP_MEDIA} />
-          <img src={invWfCount} alt="Inventory count wireframe" className={MOCKUP_MEDIA} />
+          <img loading="lazy" decoding="async" src={invWfEmpty} alt="Inventory empty-state wireframe" className={MOCKUP_MEDIA} />
+          <img loading="lazy" decoding="async" src={invWfList} alt="Inventory list wireframe" className={MOCKUP_MEDIA} />
+          <img loading="lazy" decoding="async" src={invWfTemplate} alt="Inventory sheet template wireframe" className={MOCKUP_MEDIA} />
+          <img loading="lazy" decoding="async" src={invWfCount} alt="Inventory count wireframe" className={MOCKUP_MEDIA} />
         </div>
       </MockupBlock>
 
@@ -114,7 +114,7 @@ export const InventoryPage = ({ showPage }) => (
           viewports. */}
       <div className="-mx-4 grid grid-cols-3 gap-2 sm:gap-3">
         {INVENTORY_GRID.map((src, i) => (
-          <img key={i} src={src} alt="" className="block w-full shadow-xl" />
+          <img loading="lazy" decoding="async" key={i} src={src} alt="" className="block w-full shadow-xl" />
         ))}
       </div>
     </div>

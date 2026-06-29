@@ -168,7 +168,7 @@ export const CountMobileScreen = () => (
     <nav className="invm-mnav">
       <div className="invm-mnav__left">
         <span className="invm-iconbtn invm-mnav__menu"><MenuIcon size={19.2} /></span>
-        <img src={meezIconPng} alt="meez" className="invm-mnav__logo" />
+        <img loading="lazy" decoding="async" src={meezIconPng} alt="meez" className="invm-mnav__logo" />
       </div>
       <div className="invm-mnav__right">
         <SearchIcon size={19.2} />

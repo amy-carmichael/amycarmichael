@@ -12,7 +12,7 @@ export const BrowserFrame = ({ children, className = '' }) => (
 
 /* West Village location logo (PNG asset). */
 export const Avatar = ({ size = 56, className = '' }) => (
-  <img src={avatarPng} alt="" width={size} height={size} className={`invm-avatar ${className}`} />
+  <img loading="lazy" decoding="async" src={avatarPng} alt="" width={size} height={size} className={`invm-avatar ${className}`} />
 );
 
 /* Desktop global nav bar (Figma navbar 705:1893) — two equal halves:

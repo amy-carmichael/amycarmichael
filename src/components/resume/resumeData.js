@@ -49,5 +49,9 @@ export const CERTIFICATIONS = [
 ];
 
 export const SKILLS = [
-  "Can walk up a 'Down' escalator in 2 seconds; can fit my body into really small places; can sneak up to 3 dogs into a movie theater.",
+  "Functional Prototyping",
+  "AI-Assisted Design",
+  "User Research",
+  "Design Systems",
+  "Responsive Web Design",
 ];

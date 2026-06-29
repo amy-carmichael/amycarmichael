@@ -24,7 +24,7 @@ export const FiltersPage = ({ showPage }) => (
 
       {/* Mockup 1 — filter menu active */}
       <MockupBlock>
-        <img
+        <img loading="lazy" decoding="async"
           src={filterActiveMenu}
           alt="The redesigned filter with the category menu active"
           className={`${MOCKUP_MEDIA} object-top`}
@@ -42,7 +42,7 @@ export const FiltersPage = ({ showPage }) => (
 
       {/* Mockup 2 — ChatGPT prompt */}
       <MockupBlock caption="Prompting ChatGPT to breakdown current filter logic cutdown the time spent in discovery.">
-        <img
+        <img loading="lazy" decoding="async"
           src={chatgptPrompt}
           alt="ChatGPT breaking down the existing filter aggregation logic"
           className="w-full rounded-[8px] drop-shadow-xl max-w-2xl"
@@ -119,7 +119,7 @@ export const FiltersPage = ({ showPage }) => (
     <Panel bare bg={IMG.filters1Bg}>
       <div className="relative flex flex-col gap-6 p-6 md:absolute md:inset-0 md:gap-0 md:p-0">
         <SlideTitle title="Filters" tone="light" className="md:absolute md:left-[6.7%] md:top-[16.7%] md:z-10" />
-        <img
+        <img loading="lazy" decoding="async"
           src={IMG.mFilters1}
           alt="Redesigned filter landing page with the category menu open"
           className="w-full rounded-[8px] drop-shadow-2xl md:absolute md:left-[32%] md:top-[15.7%] md:w-[62%]"
@@ -130,7 +130,7 @@ export const FiltersPage = ({ showPage }) => (
     <Panel bare bg={IMG.filter2Bg}>
       <div className="relative flex flex-col gap-6 p-6 md:absolute md:inset-0 md:gap-0 md:p-0">
         <SlideTitle title="Filters" tone="dark" className="md:absolute md:left-[6.8%] md:top-[37%] md:z-10" />
-        <img
+        <img loading="lazy" decoding="async"
           src={IMG.mFilters2}
           alt="Filter category builder with AND/OR controls"
           className="w-full rounded-[8px] drop-shadow-xl md:absolute md:left-[21.8%] md:top-[18.8%] md:w-[56.5%]"
@@ -140,22 +140,22 @@ export const FiltersPage = ({ showPage }) => (
 
     <Panel bare bgClass="bg-[#e4ecf6]">
       <div className="relative flex flex-col gap-6 p-6 md:absolute md:inset-0 md:gap-0 md:p-0">
-        <img
+        <img loading="lazy" decoding="async"
           src={IMG.mFilters3}
           alt="Created-by filter menu"
           className="w-full rounded-[8px] drop-shadow-xl md:absolute md:left-[8.75%] md:top-[14.2%] md:w-[24.6%]"
         />
-        <img
+        <img loading="lazy" decoding="async"
           src={IMG.fPg3a}
           alt=""
           className="aspect-[3/2] w-full rounded-[8px] object-cover md:absolute md:left-[37.6%] md:top-[13.1%] md:aspect-auto md:h-[28.6%] md:w-[27.8%]"
         />
-        <img
+        <img loading="lazy" decoding="async"
           src={IMG.fPg3c}
           alt=""
           className="aspect-[2/3] w-full rounded-[8px] object-cover md:absolute md:left-[67%] md:top-[13.3%] md:aspect-auto md:h-[58.1%] md:w-[24.2%]"
         />
-        <img
+        <img loading="lazy" decoding="async"
           src={IMG.fPg3b}
           alt=""
           className="aspect-[3/2] w-full rounded-[8px] object-cover md:absolute md:left-[37.6%] md:top-[44%] md:aspect-auto md:h-[28.6%] md:w-[27.8%]"

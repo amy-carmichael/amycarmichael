@@ -12,6 +12,8 @@ export const AboutPage = () => (
         <img
           src={portrait}
           alt="Amy Carmichael, Senior Product Designer"
+          decoding="async"
+          fetchPriority="high"
           className="rounded-lg flex-shrink-0 lg:order-1"
           style={{ maxWidth: '240px', height: 'auto' }}
         />

@@ -37,7 +37,7 @@ export const ServerCardsPage = ({ showPage }) => (
           className="w-full overflow-hidden rounded-[8px] drop-shadow-xl"
           style={{ aspectRatio: '5771 / 3769' }}
         >
-          <img
+          <img loading="lazy" decoding="async"
             src={scMockup}
             alt="Server card mockup"
             className="h-full w-full object-cover object-top"
@@ -60,7 +60,7 @@ export const ServerCardsPage = ({ showPage }) => (
 
       {/* Mockup 2 — research analysis */}
       <MockupBlock caption="Research analysis of the user interviews I had conducted.">
-        <img
+        <img loading="lazy" decoding="async"
           src={scResearch}
           alt="Discovery summary from the user interviews"
           className={`${MOCKUP_MEDIA} max-w-4xl`}
@@ -82,7 +82,7 @@ export const ServerCardsPage = ({ showPage }) => (
 
       {/* Mockup 3 — information architecture diagram */}
       <MockupBlock caption="Initial information architecture mapping">
-        <img
+        <img loading="lazy" decoding="async"
           src={scIaDiagram}
           alt="Information architecture diagram for server cards"
           className={MOCKUP_MEDIA}
@@ -102,8 +102,8 @@ export const ServerCardsPage = ({ showPage }) => (
       {/* Mockup 4 — add-section screens, side by side */}
       <MockupBlock caption="Users would be able to create, bulk print and share a view-only version of server cards.">
         <div className="grid w-full grid-cols-2 gap-4">
-          <img src={scAddSection1} alt="Adding a section to a server card" className={MOCKUP_MEDIA} />
-          <img src={scAddSection2} alt="Configuring the new server card section" className={MOCKUP_MEDIA} />
+          <img loading="lazy" decoding="async" src={scAddSection1} alt="Adding a section to a server card" className={MOCKUP_MEDIA} />
+          <img loading="lazy" decoding="async" src={scAddSection2} alt="Configuring the new server card section" className={MOCKUP_MEDIA} />
         </div>
       </MockupBlock>
 
@@ -122,7 +122,7 @@ export const ServerCardsPage = ({ showPage }) => (
           viewports. */}
       <div className="-mx-4 grid grid-cols-3 gap-2 sm:gap-3">
         {SERVER_CARD_GRID.map((src, i) => (
-          <img
+          <img loading="lazy" decoding="async"
             key={i}
             src={src}
             alt=""

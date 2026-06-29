@@ -3,38 +3,38 @@
 /* Futura PT — local static weights (replaces Lexend Deca) */
 @font-face {
   font-family: 'Futura PT';
-  src: url('./assets/Futura PT/FuturaCyrillicLight.woff2') format('woff2');
+  src: url('/fonts/FuturaCyrillicLight.woff2') format('woff2');
   font-weight: 300; font-style: normal; font-display: swap;
 }
 @font-face {
   font-family: 'Futura PT';
-  src: url('./assets/Futura PT/FuturaCyrillicBook.woff2') format('woff2');
-  font-weight: 400; font-style: normal; font-display: swap;
+  src: url('/fonts/FuturaCyrillicBook.woff2') format('woff2');
+  font-weight: 400; font-style: normal; font-display: optional;
 }
 @font-face {
   font-family: 'Futura PT';
-  src: url('./assets/Futura PT/FuturaCyrillicMedium.woff2') format('woff2');
-  font-weight: 450; font-style: normal; font-display: swap;
+  src: url('/fonts/FuturaCyrillicMedium.woff2') format('woff2');
+  font-weight: 450; font-style: normal; font-display: optional;
 }
 @font-face {
   font-family: 'Futura PT';
-  src: url('./assets/Futura PT/FuturaCyrillicDemi.woff2') format('woff2');
-  font-weight: 500; font-style: normal; font-display: swap;
+  src: url('/fonts/FuturaCyrillicDemi.woff2') format('woff2');
+  font-weight: 500; font-style: normal; font-display: optional;
 }
 @font-face {
   font-family: 'Futura PT';
-  src: url('./assets/Futura PT/FuturaCyrillicBold.woff2') format('woff2');
+  src: url('/fonts/FuturaCyrillicBold.woff2') format('woff2');
   font-weight: 700; font-style: normal; font-display: swap;
 }
 @font-face {
   font-family: 'Futura PT';
-  src: url('./assets/Futura PT/FuturaCyrillicExtraBold.woff2') format('woff2');
+  src: url('/fonts/FuturaCyrillicExtraBold.woff2') format('woff2');
   font-weight: 800; font-style: normal; font-display: swap;
 }
 @font-face {
   font-family: 'Futura PT';
-  src: url('./assets/Futura PT/FuturaCyrillicHeavy.woff2') format('woff2');
-  font-weight: 600; font-style: normal; font-display: swap;
+  src: url('/fonts/FuturaCyrillicHeavy.woff2') format('woff2');
+  font-weight: 600; font-style: normal; font-display: optional;
 }
 
 :root {

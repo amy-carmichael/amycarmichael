@@ -14,7 +14,7 @@ import sortArrow from '../../assets/filter-mockup/sort-arrow.svg';
 
 const Glyph = ({ src, w, h, size }) => (
   <span className="invm-icon" style={{ width: size, height: size }}>
-    <img src={src} width={w} height={h} alt="" style={{ display: 'block' }} />
+    <img loading="lazy" decoding="async" src={src} width={w} height={h} alt="" style={{ display: 'block' }} />
   </span>
 );
 
