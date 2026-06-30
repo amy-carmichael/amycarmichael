@@ -10,11 +10,10 @@ export const MEEZ = {
       dates: 'Dec 2025 – present',
       span: '7 mos',
       bullets: [
-        "Led end-to-end design of enterprise features while restructuring meez's information architecture across navigation systems, search + filter, and cross-feature workflows, creating a more cohesive operational system for professional kitchens.",
-        'Led the design system refactor, leveraging Claude Code to audit the codebase and identify fragmented theme file organization. Owned project strategy to reconcile broken references and implement a reusable token and component library.',
-        'Conducted user research, platform audits, and competitive analysis to identify product opportunities, define requirements, write development tickets, and support roadmap planning across multiple product areas.',
-        'Designed and launched enterprise capabilities including Inventory Management, Menu Engineering, Analytics, pricing and packaging experiences, role-based access controls, and operational workflow improvements supporting restaurant groups.',
-        'Partnered with engineering and product teams to refactor sprint processes and accelerate release cadence from monthly to weekly—a 5x improvement—by strategically sequencing development efforts, coordinating feature timing, and communicating fluently across technical and product domains.',
+        'Fully autonomous, end-to-end designer. Owned the entire design function: research, IA, interaction, visual, and design QA. Initiated and led major features from zero, including Inventory, which opened meez to a new enterprise segment.',
+        'Technical product designer inside the codebase. Audited a legacy React / MUI codebase and built the design system from scratch, consolidating 243 hardcoded colors into 38 semantic design tokens across 231 files.',
+        'Measurable impact via intelligent AI usage. Cut support tickets 38% with a self-serve costing redesign and lifted filter interaction 22%. Used Claude Code to prototype, audit code, and pressure-test logic, and designed AI-native features with human-in-the-loop review.',
+        'Enterprise complexity made decision-ready. Designed analytics and data visualization, role-based permissions, and multi-org workflows that connect dense operational data to a clear next action.',
       ],
     },
     {
@@ -33,9 +32,20 @@ export const MEEZ = {
 };
 
 export const OTHERS = [
-  { title: 'Digital Designer', sub: 'Freelance', dates: 'Jan – Dec 2022', mark: 'F' },
-  { title: 'Assistant to Showrunner/Executive Producer', sub: 'Netflix', dates: 'Apr – Nov 2021', mark: 'N' },
-  { title: 'Assistant to Talent Manager', sub: 'Circle of Confusion', dates: 'Jul 2019 – Apr 2021', mark: 'C' },
+  {
+    title: 'Digital Designer',
+    sub: 'Freelance',
+    dates: 'Jan – Dec 2022',
+    mark: 'F',
+    desc: 'Led visual design execution for client brand and web relaunches, building marketing site pages in HTML, CSS and JavaScript and creating logo graphics and launch-ready assets across digital and print channels. Moved beyond static design into how pages behaved, structuring layouts, states and interactions.',
+  },
+  {
+    title: 'Assistant to Showrunner/Executive Producer',
+    sub: 'Netflix',
+    dates: 'Apr – Nov 2021',
+    mark: 'N',
+    desc: 'Worked closely with the showrunner and episodic directors to design storyboards and concept art used to build shotlists and oneliners. Reviewed scripts across the season for narrative continuity, tracking how each scene, setup and payoff connected across episodes.',
+  },
 ];
 
 export const EDUCATION = [

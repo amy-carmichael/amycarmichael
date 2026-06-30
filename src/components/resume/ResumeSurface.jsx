@@ -62,6 +62,9 @@ const SingleCompany = ({ c }) => (
         <h4 className="title-small text-[var(--color-text-primary)]">{c.title}</h4>
         <div className="body-medium text-[var(--color-text-secondary)]">{c.sub}</div>
         <ExpDates dates={c.dates} />
+        {c.desc && (
+          <p className="exp-single-desc body-small text-[var(--color-text-secondary)]">{c.desc}</p>
+        )}
       </div>
     </div>
   </div>
