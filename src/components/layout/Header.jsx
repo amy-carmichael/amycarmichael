@@ -1,16 +1,17 @@
 import React from 'react';
 import { ContactMenu } from './ContactMenu';
+import { Logo } from './Logo';
 
 export const Header = React.memo(({ showPage, toggleMobileMenu, activePage, mobileMenuButtonRef }) => (
-  <header className="fixed top-0 left-0 right-0 z-50 bg-[var(--color-bg-primary)] px-4 md:px-8 lg:px-12" style={{ height: 'var(--header-h)', boxShadow: '0 1px 3px rgba(0, 0, 0, 0.04)' }}>
-    <div className="h-full" style={{ maxWidth: '1200px', margin: '0 auto' }}>
+  <header className="fixed top-0 left-0 right-0 z-50 bg-[var(--color-bg-primary)] px-4 md:px-8 lg:px-12 shadow-[var(--shadow-xs)]" style={{ height: 'var(--header-h)' }}>
+    <div className="h-full max-w-7xl mx-auto">
       <nav className="flex items-center h-full" role="navigation" aria-label="Main navigation">
         <div className="hidden md:grid md:w-full md:grid-cols-3 md:items-center">
           <div className="flex items-center justify-self-start">
             <a
-              href="#/work"
-              className={`nav-link button uppercase ${activePage === 'work' || activePage.startsWith('work/') || activePage === 'netflix' ? 'active' : ''}`}
-              onClick={(e) => { e.preventDefault(); showPage('work'); }}
+              href="#/"
+              className={`nav-link button uppercase ${activePage === 'home' || activePage.startsWith('work/') || activePage === 'netflix' ? 'active' : ''}`}
+              onClick={(e) => { e.preventDefault(); showPage('home'); }}
             >
               Work
             </a>
@@ -23,15 +24,10 @@ export const Header = React.memo(({ showPage, toggleMobileMenu, activePage, mobi
             </a>
           </div>
 
-          <a
-            href="#/"
-            className="logo cursor-pointer justify-self-center"
+          <Logo
+            className="justify-self-center"
             onClick={(e) => { e.preventDefault(); showPage('home'); }}
-            aria-label="Amy Carmichael - Home"
-          >
-            <span className="text-[var(--color-text-primary)]">amy</span>
-            <span className="logo-gradient">carmichael</span>
-          </a>
+          />
 
           <div className="justify-self-end">
             <ContactMenu />
@@ -51,16 +47,11 @@ export const Header = React.memo(({ showPage, toggleMobileMenu, activePage, mobi
             </svg>
           </button>
           
-          <a
-            href="#/"
-            className="logo absolute left-1/2 -translate-x-1/2 cursor-pointer"
+          <Logo
+            className="absolute left-1/2 -translate-x-1/2"
             onClick={(e) => { e.preventDefault(); showPage('home'); }}
-            aria-label="Amy Carmichael - Home"
-          >
-            <span className="text-[var(--color-text-primary)]">amy</span>
-            <span className="logo-gradient">carmichael</span>
-          </a>
-          
+          />
+
           <div className="w-10"></div>
         </div>
       </nav>

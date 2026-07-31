@@ -3,7 +3,7 @@ import { CaseStudyTitle } from '../../components/filters/CaseStudyTitle';
 import { CaseStudyBody as Body } from '../../components/filters/CaseStudyBody';
 import { MockupBlock } from '../../components/filters/MockupBlock';
 import { ProjectPage } from '../../components/meez/ProjectPage';
-import dsColorSystem from '../../assets/design system/Meez color system.png';
+import { ColorSystem } from '../../components/design-system/ColorSystem';
 import dsColorVideo from '../../assets/design system/color-consolidation.mp4';
 
 export const DesignSystemPage = ({ showPage }) => (
@@ -15,15 +15,12 @@ export const DesignSystemPage = ({ showPage }) => (
         subtitle="Design Lead for a color consolidation effort that turned fragmented legacy styling into the foundation for a scalable design system."
       />
 
-      {/* Mockup 1 — the new color token library. Figma node 696:2098:
-          #FBFBFB (meez/grey25) card · 8px radius · shadow-medium · 699.891px wide */}
+      {/* Mockup 1 — the new color token library, rendered live rather than as a flat
+          export. Figma node 696:2098: #FBFBFB (meez/grey25) card · 8px radius ·
+          shadow-medium. Widened to max-w-4xl to match the other media on this page. */}
       <MockupBlock caption="The new color token library consisted of 44 key colors.">
-        <div className="flex w-full max-w-[699.891px] flex-col items-center justify-center overflow-hidden rounded-[8px] bg-[#FBFBFB] shadow-[0px_12px_28px_0px_rgba(0,0,0,0.2),0px_2px_4px_0px_rgba(0,0,0,0.1),inset_0px_0px_0px_1px_rgba(255,255,255,0.05)]">
-          <img loading="lazy" decoding="async"
-            src={dsColorSystem}
-            alt="Meez color token library organized by hue and shade"
-            className="block w-full"
-          />
+        <div className="flex w-full max-w-4xl flex-col items-center justify-center overflow-hidden rounded-[8px] bg-[#FBFBFB] shadow-[0px_12px_28px_0px_rgba(0,0,0,0.2),0px_2px_4px_0px_rgba(0,0,0,0.1),inset_0px_0px_0px_1px_rgba(255,255,255,0.05)]">
+          <ColorSystem />
         </div>
       </MockupBlock>
 

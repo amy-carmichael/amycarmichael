@@ -17,7 +17,7 @@ export const SlideTitle = ({ title, tone = 'dark', className = '' }) => {
         className="mb-1 h-5 w-auto sm:h-6"
       />
       <p
-        className={`font-bold leading-[1.2] text-[2rem] sm:text-[3rem] ${
+        className={`display-slide ${
           light ? 'text-white' : 'text-[var(--color-text-primary)]'
         }`}
       >

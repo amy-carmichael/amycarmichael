@@ -1,10 +1,10 @@
 import React from 'react';
 
-export const Panel = ({ bg, bgPosition = 'object-center', bgClass = '', left, right, bare = false, children }) => (
+export const Panel = ({ bg, bgPosition = 'object-center', bgClass = '', left, right, bare = false, className = '', children }) => (
   <section
-    className={`relative overflow-hidden rounded-[2px] shadow-[0_8px_30px_rgba(0,0,0,0.12)] md:aspect-[16/10] ${
+    className={`relative overflow-hidden rounded-[2px] shadow-[var(--shadow-lg)] md:aspect-[16/10] ${
       bg ? '' : bgClass
-    }`}
+    } ${className}`}
   >
     {bg && (
       <img loading="lazy" decoding="async"

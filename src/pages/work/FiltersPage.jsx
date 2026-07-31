@@ -16,6 +16,9 @@ import filterScroll from '../../assets/filters/filter-scroll.mov';
 export const FiltersPage = ({ showPage }) => (
   <ProjectPage showPage={showPage} projectId="filters">
     {/* Case-study scroll layout (new design) */}
+    {/* The slides are siblings of this column (under a parent `gap-4`), so the column's
+        own gap never applies between the last paragraph and the first slide. Pad the
+        column's bottom to top the parent's 16px gap up to the same 64/80px rhythm. */}
     <div className="flex flex-col gap-16 px-4 pt-8 pb-4 sm:gap-20">
       <CaseStudyTitle
         title="Filters"
@@ -75,7 +78,7 @@ export const FiltersPage = ({ showPage }) => (
 
       {/* Mockup 4 — interactive (auto-playing) demo of the redesigned filter */}
       <MockupBlock surface={false}>
-        <InteractivePrototype>
+        <InteractivePrototype align="right">
           <FilterMockup />
         </InteractivePrototype>
       </MockupBlock>
@@ -115,8 +118,10 @@ export const FiltersPage = ({ showPage }) => (
     </div>
 
     {/* End-of-page mockup slides (Figma `filter-slides`, node 697:3786) — reduced
-        mockups placed on the background photo, each with the meez/Filters title. */}
-    <Panel bare bg={IMG.filters1Bg}>
+        mockups placed on the background photo, each with the meez/Filters title.
+        Hidden below `md`: the slides are composed for the absolutely-positioned
+        desktop layout, so they carry nothing worth stacking on a phone. */}
+    <Panel bare bg={IMG.filters1Bg} className="hidden md:block">
       <div className="relative flex flex-col gap-6 p-6 md:absolute md:inset-0 md:gap-0 md:p-0">
         <SlideTitle title="Filters" tone="light" className="md:absolute md:left-[6.7%] md:top-[16.7%] md:z-10" />
         <img loading="lazy" decoding="async"
@@ -127,7 +132,7 @@ export const FiltersPage = ({ showPage }) => (
       </div>
     </Panel>
 
-    <Panel bare bg={IMG.filter2Bg}>
+    <Panel bare bg={IMG.filter2Bg} className="hidden md:block">
       <div className="relative flex flex-col gap-6 p-6 md:absolute md:inset-0 md:gap-0 md:p-0">
         <SlideTitle title="Filters" tone="dark" className="md:absolute md:left-[6.8%] md:top-[37%] md:z-10" />
         <img loading="lazy" decoding="async"
@@ -138,7 +143,7 @@ export const FiltersPage = ({ showPage }) => (
       </div>
     </Panel>
 
-    <Panel bare bgClass="bg-[#e4ecf6]">
+    <Panel bare bgClass="bg-[#e4ecf6]" className="hidden md:block">
       <div className="relative flex flex-col gap-6 p-6 md:absolute md:inset-0 md:gap-0 md:p-0">
         <img loading="lazy" decoding="async"
           src={IMG.mFilters3}

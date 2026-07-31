@@ -144,6 +144,7 @@
 
 /* Filter trigger */
 .fltm-filterbtn {
+  position: relative;
   flex: none;
   display: flex; align-items: center; gap: 6.4px;
   padding: 6.4px; border-radius: 100px;
@@ -158,6 +159,33 @@
 /* Active (count) trigger uses a blue state layer on hover, not the default dark
    one (Figma annotation on filter-trigger-btn 126:6516). */
 .fltm-filterbtn--count:hover { background: rgba(61, 93, 246, 0.08); }
+
+/* Affordance: the trigger is where the prototype starts, so it breathes its own
+   hover layer until the first hover/focus/click. The animation is a single fill
+   confined to the button's own pill — nothing radiates past its bounds — and it
+   never exceeds the real hover color, so at its peak it looks exactly hovered.
+   Painted on a pseudo-element so it can't race the button's :hover transition. */
+.fltm-filterbtn { --hint-fill: rgba(5, 8, 65, 0.08); }
+.fltm-filterbtn--count { --hint-fill: rgba(61, 93, 246, 0.08); }
+.fltm-filterbtn__glyph,
+.fltm-filterbtn__label { position: relative; z-index: 1; }
+.fltm-filterbtn--hint::before {
+  content: '';
+  position: absolute; inset: 0; z-index: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: var(--hint-fill);
+  animation: fltm-hintfill 2600ms var(--ease-std) infinite;
+}
+/* Breathes between a third of the hover tint and the full hover tint — a slow
+   drift rather than a blink, and never a bare button. */
+@keyframes fltm-hintfill {
+  0%, 100% { opacity: 0.3; }
+  50%      { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fltm-filterbtn--hint::before { animation: none; opacity: 1; }
+}
 
 /* ----- Active-filter bar (in-flow; chips wrap + push the table down) ------ */
 /* Collapsed: clipped to 0 height so it stays out of flow. Active: visible

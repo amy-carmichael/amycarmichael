@@ -30,10 +30,10 @@ export const MeezGate = ({ children }) => {
   if (unlocked) return children;
 
   return (
-    <div className="flex items-center justify-center" style={{ minHeight: '60vh' }}>
+    <div className="flex items-center justify-center min-h-[60vh]">
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-sm bg-[var(--color-bg-white)] rounded-[8px] p-8 shadow-[0_6px_16px_rgba(0,0,0,0.08)]"
+        className="w-full max-w-sm bg-[var(--color-bg-white)] rounded-[8px] p-8 shadow-[var(--shadow-md)]"
       >
         <h2 className="headline-medium text-[var(--color-text-primary)] mb-2">Protected project</h2>
         <p className="body-small text-[var(--color-text-secondary)] mb-6">

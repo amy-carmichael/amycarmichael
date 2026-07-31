@@ -1,10 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { ScheduleMeetingModal } from '../modals/ScheduleMeetingModal';
 import { ContactOptions } from './ContactOptions';
 
 export const ContactMenu = () => {
     const [open, setOpen] = useState(false);
-    const [showSchedule, setShowSchedule] = useState(false);
     const wrapRef = useRef(null);
 
     useEffect(() => {
@@ -20,11 +18,6 @@ export const ContactMenu = () => {
             document.removeEventListener('keydown', onKey);
         };
     }, [open]);
-
-    const openSchedule = () => {
-        setOpen(false);
-        setShowSchedule(true);
-    };
 
     return (
         <div className="relative" ref={wrapRef}>
@@ -52,13 +45,11 @@ export const ContactMenu = () => {
             {open && (
                 <div
                     role="menu"
-                    className="absolute right-0 top-full mt-2 w-72 rounded-md bg-[var(--color-bg-white)] p-2 shadow-[0_4px_12px_rgba(0,0,0,0.12)] z-50"
+                    className="absolute right-0 top-full mt-2 w-72 rounded-md bg-[var(--color-bg-white)] p-2 shadow-[var(--shadow-md)] z-50"
                 >
-                    <ContactOptions onSchedule={openSchedule} />
+                    <ContactOptions />
                 </div>
             )}
-
-            {showSchedule && <ScheduleMeetingModal closeModal={() => setShowSchedule(false)} />}
         </div>
     );
 };

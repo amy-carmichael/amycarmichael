@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { ScheduleMeetingModal } from '../modals/ScheduleMeetingModal';
 import { ContactOptions } from './ContactOptions';
+import { Logo } from './Logo';
 
 export const MobileMenu = ({ showPage, toggleMobileMenu }) => {
   const [showContact, setShowContact] = useState(false);
-  const [showSchedule, setShowSchedule] = useState(false);
 
   const headerRow = { height: 'var(--header-h)', marginTop: 'calc(-1 * var(--header-h))' };
 
@@ -22,22 +21,17 @@ export const MobileMenu = ({ showPage, toggleMobileMenu }) => {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
-              <a
-                href="#/"
-                className="justify-self-center logo cursor-pointer"
+              <Logo
+                className="justify-self-center"
                 onClick={(e) => { e.preventDefault(); showPage('home'); toggleMobileMenu(); }}
-                aria-label="Amy Carmichael - Home"
-              >
-                <span className="text-[var(--color-text-primary)]">amy</span>
-                <span className="logo-gradient">carmichael</span>
-              </a>
+              />
               <div className="justify-self-end w-10 h-full"></div>
             </div>
             <div className="flex-1 w-full flex flex-col items-center gap-2 text-center pt-1">
               <a
-                href="#/work"
+                href="#/"
                 className="title-medium uppercase py-2 cursor-pointer"
-                onClick={(e) => { e.preventDefault(); showPage('work'); toggleMobileMenu(); }}
+                onClick={(e) => { e.preventDefault(); showPage('home'); toggleMobileMenu(); }}
               >
                 Work
               </a>
@@ -75,14 +69,12 @@ export const MobileMenu = ({ showPage, toggleMobileMenu }) => {
             </div>
             <div className="flex-1 w-full flex flex-col items-center pt-1">
               <div className="w-full max-w-xs text-left" role="menu">
-                <ContactOptions onSchedule={() => setShowSchedule(true)} />
+                <ContactOptions />
               </div>
             </div>
           </div>
         </div>
       </div>
-
-      {showSchedule && <ScheduleMeetingModal closeModal={() => setShowSchedule(false)} />}
     </div>
   );
 };

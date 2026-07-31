@@ -110,9 +110,9 @@ export const InventoryPage = ({ showPage }) => (
       </MockupBlock>
 
       {/* Photo grid — 3 × 2, full-bleed so the outer photos sit flush to the page
-          edges, with even spacing between. Stays 3-up and scales down on smaller
-          viewports. */}
-      <div className="-mx-4 grid grid-cols-3 gap-2 sm:gap-3">
+          edges, with even spacing between. Collapses to a single stacked column
+          below `md`, where 3-up would shrink each photo past legibility. */}
+      <div className="-mx-4 grid grid-cols-1 gap-2 sm:gap-3 md:grid-cols-3">
         {INVENTORY_GRID.map((src, i) => (
           <img loading="lazy" decoding="async" key={i} src={src} alt="" className="block w-full shadow-xl" />
         ))}

@@ -23,8 +23,9 @@ dist-ssr
 *.sln
 *.sw?
 
-# Claude Code local config
-.claude/settings.local.json
+# Claude Code 
+.claude/
+*.claude
 
 # Environment & secrets
 .env
