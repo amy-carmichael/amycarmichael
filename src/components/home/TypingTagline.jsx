@@ -1,15 +1,19 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-const PREFIX = 'systems thinker rather than screen ';
-const SUFFIX = 'designer';
+// Line reads "systems thinker first, screen designer second", then the accent
+// word "designer" is held while the lead and tail morph into "product designer".
+const PREFIX = 'systems thinker first, screen ';
+const ANCHOR = 'designer';
+const TAIL = ' second';
 const PRODUCT = 'product ';
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 export const TypingTagline = () => {
   const [pre, setPre] = useState('');
-  const [suf, setSuf] = useState('');
-  const [caretAt, setCaretAt] = useState('pre'); // 'pre' | 'suf'
+  const [anchor, setAnchor] = useState('');
+  const [tail, setTail] = useState('');
+  const [caretAt, setCaretAt] = useState('pre'); // 'pre' | 'anchor' | 'tail'
   const runIdRef = useRef(0);
 
   useEffect(() => {
@@ -20,40 +24,61 @@ export const TypingTagline = () => {
     const run = async () => {
       while (!stale()) {
         setPre('');
-        setSuf('');
+        setAnchor('');
+        setTail('');
         setCaretAt('pre');
         await sleep(600);
         if (stale()) return;
 
+        // Type the lead: "systems thinker first, screen "
         for (let i = 1; i <= PREFIX.length; i++) {
           setPre(PREFIX.slice(0, i));
-          await sleep(42 + Math.random() * 45);
+          await sleep(55 + Math.random() * 55);
           if (stale()) return;
         }
 
-        setCaretAt('suf');
-        for (let i = 1; i <= SUFFIX.length; i++) {
-          setSuf(SUFFIX.slice(0, i));
-          await sleep(80 + Math.random() * 40);
+        // Type the accent anchor: "designer"
+        setCaretAt('anchor');
+        for (let i = 1; i <= ANCHOR.length; i++) {
+          setAnchor(ANCHOR.slice(0, i));
+          await sleep(105 + Math.random() * 50);
           if (stale()) return;
         }
 
+        // Type the tail: " second"
+        setCaretAt('tail');
+        for (let i = 1; i <= TAIL.length; i++) {
+          setTail(TAIL.slice(0, i));
+          await sleep(105 + Math.random() * 50);
+          if (stale()) return;
+        }
+
+        // Hold "systems thinker first, screen designer second".
         await sleep(1300);
         if (stale()) return;
 
+        // Delete the tail, back to "…screen designer".
+        for (let i = TAIL.length; i >= 0; i--) {
+          setTail(TAIL.slice(0, i));
+          await sleep(30 + Math.random() * 20);
+          if (stale()) return;
+        }
+
+        // Delete the lead, leaving just the accent word "designer".
         setCaretAt('pre');
         for (let i = PREFIX.length; i >= 0; i--) {
           setPre(PREFIX.slice(0, i));
-          await sleep(22 + Math.random() * 16);
+          await sleep(30 + Math.random() * 20);
           if (stale()) return;
         }
 
         await sleep(350);
         if (stale()) return;
 
+        // Retype the lead as "product " → "product designer".
         for (let i = 1; i <= PRODUCT.length; i++) {
           setPre(PRODUCT.slice(0, i));
-          await sleep(80 + Math.random() * 40);
+          await sleep(105 + Math.random() * 50);
           if (stale()) return;
         }
 
@@ -92,8 +117,10 @@ export const TypingTagline = () => {
     >
       <span>{pre}</span>
       {caretAt === 'pre' && <Caret />}
-      <span style={{ color: 'var(--color-accent-primary)' }}>{suf}</span>
-      {caretAt === 'suf' && <Caret />}
+      <span style={{ color: 'var(--color-accent-primary)' }}>{anchor}</span>
+      {caretAt === 'anchor' && <Caret />}
+      <span>{tail}</span>
+      {caretAt === 'tail' && <Caret />}
     </div>
   );
 };
