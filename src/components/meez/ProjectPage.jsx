@@ -26,7 +26,7 @@ export const ProjectPage = ({ showPage, projectId, children }) => {
   }, [idx, goToProject]);
 
   return (
-    <section className="pt-4 pb-12 max-w-[1200px] mx-auto">
+    <section className="pt-4 pb-12">
       <div className="flex flex-col gap-4">{children}</div>
     </section>
   );

@@ -148,6 +148,7 @@ export const FilterMockup = () => {
   const [chipBarOp, setChipBarOp] = useState('And'); // shared AND/OR — in-flow chip bar
   const [openAndOr, setOpenAndOr] = useState(null);  // id of the single open AND/OR dropdown
   const [searchText, setSearchText] = useState('');  // Created-by menu search
+  const [hinted, setHinted] = useState(false);       // trigger has pulsed until first hover/click
 
   const chips = CATS.filter((c) => added.includes(c.name)); // keep canonical order
   const activeCount = added.filter((c) => (sel[c] || []).length).length;
@@ -305,13 +306,15 @@ export const FilterMockup = () => {
               ))}
             </div>
             <div
-              className={`fltm-filterbtn${dropOpen ? ' fltm-filterbtn--open' : ''}${activeCount ? ' fltm-filterbtn--count' : ''}`}
-              onClick={toggleDrop}
+              className={`fltm-filterbtn${dropOpen ? ' fltm-filterbtn--open' : ''}${activeCount ? ' fltm-filterbtn--count' : ''}${hinted ? '' : ' fltm-filterbtn--hint'}`}
+              onClick={() => { setHinted(true); toggleDrop(); }}
+              onMouseEnter={() => setHinted(true)}
+              onFocus={() => setHinted(true)}
               role="button"
               tabIndex={0}
             >
-              <FilterGlyph blue={!!activeCount} />
-              {activeCount ? `Filter (${activeCount})` : 'Filter'}
+              <span className="fltm-filterbtn__glyph"><FilterGlyph blue={!!activeCount} /></span>
+              <span className="fltm-filterbtn__label">{activeCount ? `Filter (${activeCount})` : 'Filter'}</span>
             </div>
           </div>
 

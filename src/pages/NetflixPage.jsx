@@ -10,7 +10,7 @@ const images = Object.entries(modules)
   .map(([path, src]) => ({ key: path, src }));
 
 export const NetflixPage = () => (
-  <section className="pt-6 pb-6 md:pt-10 md:pb-20 max-w-[1200px] mx-auto">
+  <section className="pt-6 pb-6 md:pt-10 md:pb-20">
     <div className="mb-6 flex flex-col gap-2 md:mb-10">
       <h1 className="headline-medium text-[var(--color-text-primary)]">Showrunner's Assistant – Netflix, 2022</h1>
     </div>
@@ -23,7 +23,7 @@ export const NetflixPage = () => (
           alt=""
           loading="lazy"
           decoding="async"
-          className="mb-4 block w-full break-inside-avoid rounded-[8px] shadow-[0_1px_2px_rgba(0,0,0,0.08)]"
+          className="mb-4 block w-full break-inside-avoid rounded-[8px] shadow-[var(--shadow-xs)]"
         />
       ))}
     </div>

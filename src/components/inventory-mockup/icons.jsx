@@ -36,8 +36,8 @@ export const SortDownIcon = ({ size = 12.8 }) => <Glyph src={sortArrow} w={8.09}
 
 // ---------------------------------------------------------------------------
 // Material Symbols glyphs (auto_graph / remove_circle_outline / drag_indicator)
-// — the same glyph families meez uses; rendered from MUI path data because the
-// originals are served from a localhost asset server that can't be inlined.
+// — the same glyph families meez uses; rendered from MUI path data so they can
+// be inlined directly as SVG.
 // ---------------------------------------------------------------------------
 const M = ({ size = 24, children, vb = '0 0 24 24' }) => (
   <svg width={size} height={size} viewBox={vb} fill="currentColor" xmlns="http://www.w3.org/2000/svg" style={{ display: 'block', flex: 'none' }}>

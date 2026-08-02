@@ -78,7 +78,7 @@ export const TypingTagline = () => {
       style={{
         // Fluid size so the longest line scales down on narrow viewports
         // instead of bleeding past the frame.
-        fontSize: 'clamp(1.5rem, 6vw, 3rem)',
+        fontSize: 'clamp(1.5rem, 6vw, 2.5rem)',
         fontWeight: 450,
         letterSpacing: '0.48px',
         lineHeight: 1.4,

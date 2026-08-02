@@ -1,11 +1,11 @@
 import React from 'react';
-import { IMG } from '../components/meez/meezPageData';
-import netflixThumb from '../assets/netflix-gallery-web/IMG_0027.jpg';
-import inventoryThumb from '../assets/inventory/inventory-device-mockup.png';
-import filterActiveMenu from '../assets/filter-active-menu.png';
-import serverCardThumb from '../assets/server cards/server-card-mockup.png';
-import dsThumbBg from '../assets/design system/thumbnail-bg.jpg';
-import dsColorSystem from '../assets/design system/Meez color system.png';
+import { IMG } from '../meez/meezPageData';
+import netflixThumb from '../../assets/netflix-gallery-web/IMG_0027.jpg';
+import inventoryThumb from '../../assets/inventory/inventory-device-mockup.png';
+import filterActiveMenu from '../../assets/filter-active-menu.png';
+import serverCardThumb from '../../assets/server cards/server-card-mockup.png';
+import dsThumbBg from '../../assets/design system/thumbnail-bg.jpg';
+import dsColorSystem from '../../assets/design system/Meez color system.png';
 
 const GALLERY = [
   { route: 'work/filters',       title: 'Filters',       desc: 'Scalable search and filtering',      img: IMG.filters1Bg,     imgClass: 'object-cover', overlay: filterActiveMenu, scrim: 'from-black/75 via-black/5 to-transparent' },
@@ -15,17 +15,15 @@ const GALLERY = [
   { route: 'netflix',            title: 'Netflix',       desc: "Showrunner's assistant",      img: netflixThumb,       imgClass: 'object-cover object-[50%_-40px]' },
 ];
 
-export const WorkPage = ({ showPage }) => (
-  <section className="pt-6 pb-6 md:pt-10 md:pb-20 max-w-[1200px] mx-auto">
-    <h1 className="headline-small mb-6 md:hidden">Work</h1>
-
+export const WorkGallery = ({ showPage }) => (
+  <section className="pb-6 md:pb-20">
     <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
       {GALLERY.map((p) => (
         <button
           key={p.route}
           type="button"
           onClick={() => showPage(p.route)}
-          className="group relative block overflow-hidden rounded-md border border-[var(--color-bg-secondary)] text-left shadow-[0_2px_10px_rgba(0,0,0,0.08)] transition-all duration-200 hover:shadow-lg"
+          className="group relative block overflow-hidden rounded-md border border-[var(--color-bg-secondary)] text-left shadow-[var(--shadow-sm)] transition-all duration-200 hover:shadow-[var(--shadow-lg)]"
         >
           <img
             src={p.img}

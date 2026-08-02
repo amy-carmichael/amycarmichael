@@ -101,9 +101,12 @@ export const ServerCardsPage = ({ showPage }) => (
 
       {/* Mockup 4 — add-section screens, side by side */}
       <MockupBlock caption="Users would be able to create, bulk print and share a view-only version of server cards.">
+        {/* The two sources differ ~1% in aspect ratio (2400×2048 vs 1200×1035), which
+            reads as a ragged bottom edge side by side. Pin both to the first image's
+            ratio and let object-cover absorb the difference. */}
         <div className="grid w-full grid-cols-2 gap-4">
-          <img loading="lazy" decoding="async" src={scAddSection1} alt="Adding a section to a server card" className={MOCKUP_MEDIA} />
-          <img loading="lazy" decoding="async" src={scAddSection2} alt="Configuring the new server card section" className={MOCKUP_MEDIA} />
+          <img loading="lazy" decoding="async" src={scAddSection1} alt="Adding a section to a server card" className={`${MOCKUP_MEDIA} aspect-[75/64] object-cover`} />
+          <img loading="lazy" decoding="async" src={scAddSection2} alt="Configuring the new server card section" className={`${MOCKUP_MEDIA} aspect-[75/64] object-cover`} />
         </div>
       </MockupBlock>
 
@@ -118,9 +121,9 @@ export const ServerCardsPage = ({ showPage }) => (
       </Body>
 
       {/* Photo grid — 3 × 3, full-bleed so the outer photos sit flush to the page
-          edges, with even spacing between. Stays 3-up and scales down on smaller
-          viewports. */}
-      <div className="-mx-4 grid grid-cols-3 gap-2 sm:gap-3">
+          edges, with even spacing between. Collapses to a single stacked column
+          below `md`, where 3-up would shrink each photo past legibility. */}
+      <div className="-mx-4 grid grid-cols-1 gap-2 sm:gap-3 md:grid-cols-3">
         {SERVER_CARD_GRID.map((src, i) => (
           <img loading="lazy" decoding="async"
             key={i}

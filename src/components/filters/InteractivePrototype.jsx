@@ -16,15 +16,24 @@ const STROKE = 'var(--color-text-tertiary)'; // #85898D
 // Cap the frame so its screen interior equals the mockup's natural width (1024px) and never
 // stretches wider on roomy columns: 1024 + 4px screen border + 40px side padding + 8px outer
 // border = 1076px. Below that the frame is fluid and the mockup's own max-width:100% follows.
-export const InteractivePrototype = ({ children, label = 'Interactive Prototype', className = '' }) => (
+// `align` places the marker (label + connector) on either end of the frame. The
+// right variant is a mirror: the label hugs the right edge and the connector sits
+// 74px in from it, the same inset the left variant uses from the left edge.
+export const InteractivePrototype = ({ children, label = 'Interactive Prototype', align = 'left', className = '' }) => (
   <div className={`mx-auto w-full max-w-[1076px] ${className}`}>
     {/* Marker — label + dashed connector dropping to the frame top */}
     <div className="relative h-[57px]">
-      <span className="absolute left-0 top-0 text-[18px] font-[450] leading-[1.5] text-[var(--color-text-tertiary)]">
+      <span
+        className={`absolute top-0 text-[18px] font-[450] leading-[1.5] text-[var(--color-text-tertiary)] ${
+          align === 'right' ? 'right-0' : 'left-0'
+        }`}
+      >
         {label}
       </span>
       <div
-        className="absolute left-[74px] top-[20px] h-[37px] w-[1.5px]"
+        className={`absolute top-[20px] h-[37px] w-[1.5px] ${
+          align === 'right' ? 'right-[74px]' : 'left-[74px]'
+        }`}
         style={{ backgroundImage: `repeating-linear-gradient(to bottom, ${STROKE} 0 4px, transparent 4px 8px)` }}
         aria-hidden="true"
       />
