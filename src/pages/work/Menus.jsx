@@ -94,7 +94,7 @@ export const Menus = ({ showPage }) => (
     <div className="flex flex-col gap-16 px-4 pt-8 pb-4 sm:gap-20">
       <CaseStudyTitle
         title="Menus"
-        subtitle="Design Lead for a new feature that turns stock counts into real-time ingredient visibility for restaurant teams."
+        subtitle="Design Lead for a new feature that turns recipe, sales and cost data into a flexible profitability forecasting workflow."
       />
 
       {/* Hero — MenuIntro1 → 2 → 3 looping slideshow */}
