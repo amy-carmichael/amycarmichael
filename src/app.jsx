@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useLayoutEffect, useRef, useCallback } from 'react';
 import { Header } from './components/layout/Header';
 import { Footer } from './components/layout/Footer';
 import { MobileMenu } from './components/layout/MobileMenu';
@@ -11,13 +11,14 @@ import { FiltersPage } from './pages/work/FiltersPage';
 import { ServerCardsPage } from './pages/work/ServerCardsPage';
 import { InventoryPage } from './pages/work/InventoryPage';
 import { DesignSystemPage } from './pages/work/DesignSystemPage';
+import { Menus } from './pages/work/Menus';
 import { MeezGate } from './components/MeezGate';
 
 // Every navigable route. Anything else (unknown hash, or the legacy #/work that
 // was merged into home) falls back to 'home' so nav active-states stay correct.
 const KNOWN_ROUTES = new Set([
     'home', 'about-me', 'netflix',
-    'work/filters', 'work/server-cards', 'work/inventory', 'work/design-system',
+    'work/filters', 'work/server-cards', 'work/inventory', 'work/design-system', 'work/menus',
 ]);
 
 const App = () => {
@@ -26,6 +27,8 @@ const App = () => {
 
     const mainContentRef = useRef(null);
     const mobileMenuButtonRef = useRef(null);
+    const scrollPositions = useRef({});
+    const skipRestore = useRef(false);
 
     const toggleMobileMenu = useCallback(() => {
         setMobileMenuOpen(prev => !prev);
@@ -66,12 +69,38 @@ const App = () => {
     }, [isMobileMenuOpen, toggleMobileMenu]);
 
     const showPage = useCallback((page) => {
+        // Save where we are so browser Back returns to this scroll position, and
+        // flag this as a fresh navigation so the destination lands at the top.
+        scrollPositions.current[window.location.hash] = window.scrollY;
+        skipRestore.current = true;
         setActivePage(page);
-        window.scrollTo(0, 0);
         try {
             window.location.hash = `#/${page}`;
         } catch { /* ignore */ }
     }, []);
+
+    // Own scroll restoration. The browser resets to the top before the SPA renders
+    // the destination, so we track each route's scroll position and restore it on
+    // back/forward while sending fresh navigations to the top.
+    useEffect(() => {
+        const previous = 'scrollRestoration' in history ? history.scrollRestoration : null;
+        if (previous !== null) history.scrollRestoration = 'manual';
+        const save = () => { scrollPositions.current[window.location.hash] = window.scrollY; };
+        window.addEventListener('scroll', save, { passive: true });
+        return () => {
+            window.removeEventListener('scroll', save);
+            if (previous !== null) history.scrollRestoration = previous;
+        };
+    }, []);
+
+    useLayoutEffect(() => {
+        if (skipRestore.current) {
+            skipRestore.current = false;
+            window.scrollTo(0, 0);
+        } else {
+            window.scrollTo(0, scrollPositions.current[window.location.hash] ?? 0);
+        }
+    }, [activePage]);
     
     useEffect(() => {
         const parseHash = () => {
@@ -92,6 +121,7 @@ const App = () => {
             case 'work/server-cards': return <MeezGate><ServerCardsPage showPage={showPage} /></MeezGate>;
             case 'work/inventory': return <MeezGate><InventoryPage showPage={showPage} /></MeezGate>;
             case 'work/design-system': return <MeezGate><DesignSystemPage showPage={showPage} /></MeezGate>;
+            case 'work/menus': return <MeezGate><Menus showPage={showPage} /></MeezGate>;
             case 'home': return <HomePage showPage={showPage} />;
             default: return <HomePage showPage={showPage} />;
         }

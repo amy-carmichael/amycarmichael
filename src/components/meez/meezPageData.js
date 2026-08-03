@@ -88,4 +88,5 @@ export const PROJECTS = [
   { id: 'server-cards',  title: 'Server Cards' },
   { id: 'inventory',     title: 'Inventory' },
   { id: 'design-system', title: 'Design System' },
+  { id: 'menus',         title: 'Menus' },
 ];
