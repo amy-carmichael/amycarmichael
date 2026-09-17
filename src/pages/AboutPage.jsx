@@ -4,7 +4,7 @@ import { ResumeSurface } from '../components/resume/ResumeSurface';
 import { StarDivider } from '../components/about/StarDivider';
 
 export const AboutPage = () => (
-  <section className="pt-6 pb-6 md:pt-10 md:pb-20">
+  <section className="max-w-5xl mx-auto pt-6 pb-6 md:pt-10 md:pb-20">
     <h1 className="headline-small mb-6 md:hidden">About me</h1>
     <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 lg:items-start">
       <img
